@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" href="semantic.min.css" />
+    <link rel="stylesheet" href="style.css" />
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+
+    <!-- Insert this line above script imports  -->
+    <script>
+      if (typeof module === "object") {
+        window.module = module;
+        module = undefined;
+      }
+    </script>
+
+    <!-- normal script imports etc  -->
+    <script
+      src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"
+      type="text/javascript"
+    ></script>
+
+    <!-- Insert this line after script imports -->
+    <script>
+      if (window.module) module = window.module;
+    </script>
+
+    <script src="moment.js"></script>
+    <script src="moment-duration-format.js"></script>
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+      integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <title>Booyah! videos</title>
+  </head>
+  <body>
+    <div id="app">
+
+      <div v-if=" shortvideos == true || shortvideos == false && video.durationSecounds > 60 " class="ui card" v-for="(video,index) in reversevideos">
+        <div class="image">
+         
+          <a :href="video.url" target="_blank">
+            <img :src="video.thumbnail_url" />
+          </a>
+        </div>
+        <div class="content">
+          <a :href="video.url" target="_blank" class="header"
+            >{{video.title}}</a
+          >
+          <p class="firstrow">
+            <span :class="{ 'warning-color': video.views < 100}" class="views">
+              <i v-if="video.views >= 100" class="fas fa-eye"></i>
+              <i
+                v-if="video.views < 100"
+                title="Tiene pocas views, puede ser contenido baneable."
+                class="warning-color fas fa-exclamation-triangle"
+              ></i>
+              {{ new Intl.NumberFormat("es-CL").format(video.views) }}
+            </span>
+            <span class="duration"
+              ><i class="far fa-clock"></i>{{video.durationFormated }}</span
+            >
+          </p>
+          <p class="secoundrow">
+            <span class="date"
+              ><i class="fas fa-calendar-alt"></i>{{video.publishedAt }}</span
+            >
+
+            <span class="author"
+              ><i class="fas fa-user"></i>{{video.author }}</span
+            >
+            <span class="author"
+              ><i class="fas fa-thumbs-up"></i>{{video.likeratio}}%</span
+            >
+            <!-- <img @click="banvideo(video.id)" class="ban" src="ban.png"> </img> -->
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <script src="./render.js"></script>
+  </body>
+</html>

@@ -1,0 +1,33 @@
+{
+  "dependencies": {
+    "cheerio": "*",
+    "cherio": "*",
+    "electron-log": "^4.4.1",
+    "puppeteer": "^10.2.0",
+    "puppeteer-core": "^10.2.0",
+    "puppeteer-in-electron": "^3.0.5",
+    "session": "^0.1.0"
+  },
+  "devDependencies": {
+    "electron": "^13.2.2",
+    "electron-builder": "^22.11.7"
+  },
+  "build": {
+    "productName": "Booyah! Videos",
+    "appId": "com.elmarceloc.booyahvideos",
+    "win": {
+      "target": "nsis",
+      "icon": "icon.ico"
+    }
+  },
+  "name": "Booyahvideos",
+  "version": "0.2.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dist": "electron-builder --x64"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}
