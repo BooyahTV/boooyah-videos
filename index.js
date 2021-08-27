@@ -86,7 +86,7 @@ async function createWindow() {
     icon: __dirname + "/icon.ico",
   });
 
- // mainWindow.webContents.toggleDevTools();
+ //mainWindow.webContents.toggleDevTools();
 
   // Build the application menu
   var menu = Menu.buildFromTemplate([

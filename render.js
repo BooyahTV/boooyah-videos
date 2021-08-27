@@ -37,6 +37,7 @@ function showBanVideoPrompt(id){
     }
     );
 }
+
 function formatISOtime(duration) {
     var a = duration.match(/\d+/g);
 
@@ -96,12 +97,16 @@ ipcRenderer.on('shortvideos', function (event, data) {
 
 ipcRenderer.on('message', function (event, booyahMessage) {
     console.log(booyahMessage);
+    
+    addVideo(booyahMessage.id, booyahMessage.username)
+});  
 
-    if(banlist.includes(booyahMessage.id) || videolist.includes(booyahMessage.id)) return
+function addVideo(id, username){
+    if(banlist.includes(id) || videolist.includes(id)) return
 
-    videolist.push(booyahMessage.id)
+    videolist.push(id)
 
-    fetch(`https://www.googleapis.com/youtube/v3/videos?part=${parts}&id=${booyahMessage.id}&key=${key}`)
+    fetch(`https://www.googleapis.com/youtube/v3/videos?part=${parts}&id=${id}&key=${key}`)
     .then(response => response.json())
     .then(youtubeVideo => {
 
@@ -119,7 +124,7 @@ ipcRenderer.on('message', function (event, booyahMessage) {
         let likeratio = Math.floor((100 * likes) / (likes + dislikes))
         
         let video = {
-            author: booyahMessage.username,
+            author: username,
             
             thumbnail_url: youtubeVideo.items[0].snippet.thumbnails.medium.url,
             channel: youtubeVideo.items[0].snippet.channelTitle,
@@ -128,12 +133,37 @@ ipcRenderer.on('message', function (event, booyahMessage) {
             views: youtubeVideo.items[0].statistics.viewCount,
             durationSecounds: durationSecounds,
             durationFormated: formattedDuration,
-            url: 'https://youtu.be/'+booyahMessage.id,
-            id: booyahMessage.id,
+            url: 'https://youtu.be/'+id,
+            id: id,
             likeratio:  likeratio
         }
     
         app.videos.push(video)
     });
-    
-});  
+}
+
+const youtubeRegex = /http(?:s?):\/\/(?:www\.)?youtu(?:be\.com\/watch\?v=|\.be\/)([\w\-\_]*)(&(amp;)?‌​[\w\?‌​=]*)?/g
+
+const client = new tmi.Client({
+	channels: [ 'cristianghost' ]
+});
+
+client.connect();
+
+client.on('message', (channel, tags, message, self) => {
+	console.log(channel,message,tags,self);
+
+
+	if(message.match(youtubeRegex) !== null){
+		message.match(youtubeRegex).forEach((youtubeURL) => {
+			addVideo(youtubeURL.slice(-11), tags['display-name'])
+		});
+	}
+
+
+
+
+
+
+});
+		
