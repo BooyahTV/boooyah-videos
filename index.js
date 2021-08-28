@@ -4,6 +4,7 @@ const puppeteer = require("puppeteer");
 const cheerio = require("cherio");
 const settings = require('electron-settings');
 
+const chatroomID = 79543340 // 70910636
 
 // this should be placed at top of main.js to handle setup events quickly
 if (handleSquirrelEvent()) {
@@ -170,6 +171,10 @@ async function createWindow() {
 
     settings.get('videos.watched').then(videos => {
 
+      if (videos == null) {
+        videos = []
+      }
+
       if(videos.includes(videoId)) return
 
       const newWatchedVideos = [...(videos || []), videoId];
@@ -195,27 +200,30 @@ async function createWindow() {
   });
   const page = await browser.newPage();
 
-  console.log("Loading Page..");
+  const chatroomURL = "https://booyah.live/standalone/chatroom/"+chatroomID
+  
+  console.log("Loading Chatroom Page..",chatroomURL);
+  await page.goto(chatroomURL);
 
-  await page.goto("https://booyah.live/standalone/chatroom/79543340");
   console.log("Loading Chat..");
 
-  // Wait for the required DOM to be rendered
+  // wait unitl the page loads .scollbar-container (chat)
   await page.waitForSelector(".scroll-container");
   console.log("Chat Loaded, waiting for messages..");
 
-  // Get the link to all the required books
   await page.exposeFunction("onNewMessage", (newMessage) => {
     const $ = cheerio.load(newMessage);
 
     const username = $(".username").text();
     const message = $(".message-text").text();
+    
 
     let youtubePrefixRegex = /yt=(.){11}/g;
 
     if (message.match(youtubePrefixRegex) !== null) {
       message.match(youtubePrefixRegex).forEach((youtubeID) => {
-        console.log(username, message);
+
+        console.log(username +': '+ message);
 
         mainWindow.webContents.send("message", {
           username: username,
@@ -224,8 +232,8 @@ async function createWindow() {
       });
     }
   });
-
   await page.evaluate(() => {
+    console.log('mutation observer inserted')
     const target = document.querySelector(".scroll-container");
     const observer = new MutationObserver((mutations) => {
       for (const mutation of mutations) {

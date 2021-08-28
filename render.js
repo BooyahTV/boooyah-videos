@@ -135,7 +135,9 @@ ipcRenderer.on('showWatchedInSession', function (event, data) {
 ipcRenderer.on('getAlltimeWatchedVideos', function (event, videos) {
     console.log('watched in all time videos',videos);
 
-    app.watchedInAlltime = videos
+    if (videos != null){
+        app.watchedInAlltime = videos
+    }
 });  
 
 
