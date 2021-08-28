@@ -1,7 +1,9 @@
 // Modules to control application life and create native browser window
-const { Menu, app, BrowserWindow } = require("electron");
+const { Menu, app, BrowserWindow,ipcMain } = require("electron");
 const puppeteer = require("puppeteer");
 const cheerio = require("cherio");
+const settings = require('electron-settings');
+
 
 // this should be placed at top of main.js to handle setup events quickly
 if (handleSquirrelEvent()) {
@@ -86,7 +88,7 @@ async function createWindow() {
     icon: __dirname + "/icon.ico",
   });
 
- //mainWindow.webContents.toggleDevTools();
+  //mainWindow.webContents.toggleDevTools();
 
   // Build the application menu
   var menu = Menu.buildFromTemplate([
@@ -102,6 +104,19 @@ async function createWindow() {
             var state = item.checked;
 
             mainWindow.webContents.send("shortvideos", {
+              state: state,
+            });
+          },
+        },
+        {
+          id: "showWatchedInSession",
+          type: "checkbox",
+          label: "Mostrar Videos Vistos",
+          checked: true,
+          click: function (item, browser) {
+            var state = item.checked;
+
+            mainWindow.webContents.send("showWatchedInSession", {
               state: state,
             });
           },
@@ -128,20 +143,46 @@ async function createWindow() {
 
   Menu.setApplicationMenu(menu);
 
-  //mainWindow.setMenuBarVisibility(false)
-  // and load the index.html of the app.
+  //load the app page
   mainWindow.loadFile("index.html");
 
-  /* mainWindow.webContents.once('dom-ready', () => {
-    mainWindow.webContents.send('message', {
+   mainWindow.webContents.once('dom-ready', () => {
+    // send test video for debug
+   /* mainWindow.webContents.send('message', {
       username: 'elmarceloc',
       id: 'Zvv_0cO-k7M'
-    });
-  });*/
+    });*/
+
+    // send all time watched videos
+    settings.get('videos.watched').then(videos => {
+      mainWindow.webContents.send('getAlltimeWatchedVideos', videos);
+      console.log('all time watched',videos)
+    })
+
+  });
 
   mainWindow.webContents.on("new-window", function (e, url) {
     e.preventDefault();
     require("electron").shell.openExternal(url);
+  });
+
+  ipcMain.on("storeVideo", function (e, videoId) {
+
+    settings.get('videos.watched').then(videos => {
+
+      if(videos.includes(videoId)) return
+
+      const newWatchedVideos = [...(videos || []), videoId];
+      
+      console.log('new watched videos: ',newWatchedVideos)
+
+      settings.set('videos', {
+        watched: newWatchedVideos
+      });
+
+    })
+
+
   });
 
   var executablePath = puppeteer

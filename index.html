@@ -7,6 +7,7 @@
 
     <link rel="stylesheet" href="semantic.min.css" />
     <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="tab.css" />
 
     <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
     <script src="tmi.min.js"></script>
@@ -30,6 +31,9 @@
       if (window.module) module = window.module;
     </script>
 
+    <script src="https://unpkg.com/vue-tippy/dist/vue-tippy.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue-tippy/dist/vue-tippy.min.js"></script>
+
     <script src="moment.js"></script>
     <script src="moment-duration-format.js"></script>
 
@@ -45,19 +49,44 @@
   <body>
     <div id="app">
 
-      <div v-if=" shortvideos == true || shortvideos == false && video.durationSecounds > 60 " class="ui card" v-for="(video,index) in reversevideos">
+
+      <div class="ui inverted top attached tabular menu">
+        <div
+          @click="setTab(tab) "
+          v-for="(tab,index) in tabs"
+          :class="{ active: currentTab==tab }"
+          class="item"
+        >
+
+          {{tab}} 
+
+        </div>
+    </div>
+    </br></br>
+      <div 
+        v-if=" ( (currentTab=='Videos' && video.watchlater == false && ( shortvideos == true || shortvideos == false && video.durationSecounds > 60) ) ||
+               (currentTab=='Ver más tarde' && video.watchlater == true) ) &&
+                
+                (showWatchedInSession==true || (showWatchedInSession==false && !video.watched))
+               "
+
+                class="ui card" :class="{ watched: video.watched }" v-for="(video,index) in reversevideos">
         <div class="image">
          
-          <a :href="video.url" target="_blank">
+          <i v-if="currentTab=='Videos' && !video.watched" @click="addToWatchlater(video.id)" content="Ver más tarde" v-tippy class="watchlater fas fa-stopwatch"></i>
+          <i v-if="currentTab=='Ver más tarde' && !video.watched" @click="removeFromWatchlater(video.id)" content="Quitar de ver mas tarde" v-tippy class="watchlater fas fa-times"></i>
+          
+          <a @click="markAsWatched(video.id)" :href="video.url" target="_blank">
             <img :src="video.thumbnail_url" />
           </a>
         </div>
         <div class="content">
-          <a :href="video.url" target="_blank" class="header"
+          <a @click="markAsWatched(video.id)" :href="video.url" target="_blank" class="header"
             >{{video.title}}</a
           >
-          <p class="firstrow">
-            <span :class="{ 'warning-color': video.views < 100}" class="views">
+          <p class="info-row">
+
+            <span content="Visitas" v-tippy :class="{ 'warning-color': video.views < 100}" class="info views">
               <i v-if="video.views >= 100" class="fas fa-eye"></i>
               <i
                 v-if="video.views < 100"
@@ -66,25 +95,33 @@
               ></i>
               {{ new Intl.NumberFormat("es-CL").format(video.views) }}
             </span>
-            <span class="duration"
-              ><i class="far fa-clock"></i>{{video.durationFormated }}</span
-            >
-          </p>
-          <p class="secoundrow">
-            <span class="date"
-              ><i class="fas fa-calendar-alt"></i>{{video.publishedAt }}</span
-            >
 
-            <span class="author"
-              ><i class="fas fa-user"></i>{{video.author }}</span
+            <span content="Duracion" v-tippy class="info duration"
+              ><i class="far fa-clock"></i>{{ video.durationFormated }} {{video.durationFormated.length < 3 ? 's':''}}</span
             >
-            <span class="author"
-              ><i class="fas fa-thumbs-up"></i>{{video.likeratio}}%</span
+            <span content="Fecha de creacion" v-tippy class="info date"
+              ><i class="fas fa-calendar-alt"></i>{{ video.publishedAt }}</span
+            >
+            <span content="Canal" v-tippy class="info channel"
+              ><i class="youtube fab fa-youtube"></i>{{ video.channel }}</span
+            >
+            <span :content="'Video de '+video.platform" v-tippy class="info author"
+              >
+              
+              <img v-if="video.platform == 'twitch'" class="platform" src="twitch-icon.png"></img>
+              <img v-if="video.platform == 'booyah'" class="platform" src="booyah-icon.png"></img>
+
+              {{video.author }}</span
+            >
+            <span content="Likes" v-tippy class="info likeratio"
+              ><i v-if="video.likeratio > 85" class="good fas fa-thumbs-up"></i>
+               <i v-if="video.likeratio <= 85" class="bad fas fa-thumbs-down"></i>{{video.likeratio}}%</span
             >
             <!-- <img @click="banvideo(video.id)" class="ban" src="ban.png"> </img> -->
           </p>
         </div>
       </div>
+
     </div>
 
     <script src="./render.js"></script>

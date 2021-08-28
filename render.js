@@ -5,8 +5,8 @@ const ipcRenderer = require('electron').ipcRenderer;
 const dialog = require('electron').remote.dialog 
 
 
-var banlist = []
-var videolist = [] // for avoid repetition
+var bannedVideos = []
+
 
 function showBanVideoPrompt(id){
 
@@ -23,7 +23,7 @@ function showBanVideoPrompt(id){
     .then(result => {
         if (result.response === 0) {
             // lo agregamos a la banlist
-            banlist.push(app.videos[index].id) 
+            bannedVideos.push(app.videos[index].id) 
 
             // borramos el video de la lista actual
             if (index > -1) {
@@ -75,13 +75,37 @@ function formatISOtime(duration) {
 var app = new Vue({
     el: "#app",
     data: {
-      videos: [],
-      shortvideos: true,
+        videos: [],
+        watchedInSession: [],
+        watchedInAlltime: [],
+        shortvideos: true,
+        showWatchedInSession: true,
+        tabs: ['Videos', 'Ver más tarde'],
+        currentTab: 'Videos'
     },
     methods: {
-        banvideo: function(id){
+        setTab: function (tabName) {
+            this.currentTab = tabName;
+            console.log("tab '" + tabName + "' selected");
+        },
+        addToBanVideos: function(id){
             showBanVideoPrompt(id)
-        }
+        },
+        addToWatchlater: function(id){
+            let index = this.videos.findIndex(x => x.id === id);
+
+            this.videos[index].watchlater = true
+        },
+        removeFromWatchlater: function(id){
+            let index = this.videos.findIndex(x => x.id === id);
+
+            this.videos[index].watchlater = false
+        },
+        markAsWatched: function(id){
+            let index = this.videos.findIndex(x => x.id === id);
+
+            this.videos[index].watched = true
+        },
     },
     computed: {
     	reversevideos() {
@@ -90,26 +114,42 @@ var app = new Vue({
     }
 });
 
+ipcRenderer.on('message', function (event, booyahMessage) {
+    console.log(booyahMessage);
+    
+    addVideo(booyahMessage.id, booyahMessage.username, 'booyah')
+});  
+
+/* persistan watched in-all-time videos*/
 ipcRenderer.on('shortvideos', function (event, data) {
     console.log('short videos',data)
     app.shortvideos = data.state
 })
 
-ipcRenderer.on('message', function (event, booyahMessage) {
-    console.log(booyahMessage);
-    
-    addVideo(booyahMessage.id, booyahMessage.username)
+ipcRenderer.on('showWatchedInSession', function (event, data) {
+    console.log('show watched videos during session (stream) status',data)
+    app.showWatchedInSession = data.state
+})
+
+// Gets all videos watched in other streams
+ipcRenderer.on('getAlltimeWatchedVideos', function (event, videos) {
+    console.log('watched in all time videos',videos);
+
+    app.watchedInAlltime = videos
 });  
 
-function addVideo(id, username){
-    if(banlist.includes(id) || videolist.includes(id)) return
 
-    videolist.push(id)
+function addVideo(id, username, platform){
+    // avoid video repetition
+    if( app.watchedInSession.includes(id)) return
+    if( app.watchedInAlltime.includes(id)) return
+
+    app.watchedInSession.push(id)
+
 
     fetch(`https://www.googleapis.com/youtube/v3/videos?part=${parts}&id=${id}&key=${key}`)
     .then(response => response.json())
     .then(youtubeVideo => {
-
 
         console.log('youtube api v3 response',youtubeVideo)
         
@@ -130,14 +170,21 @@ function addVideo(id, username){
             channel: youtubeVideo.items[0].snippet.channelTitle,
             title: youtubeVideo.items[0].snippet.localized.title,
             publishedAt: youtubeVideo.items[0].snippet.publishedAt.split('T')[0],
+            channel: youtubeVideo.items[0].snippet.channelTitle,
             views: youtubeVideo.items[0].statistics.viewCount,
             durationSecounds: durationSecounds,
             durationFormated: formattedDuration,
             url: 'https://youtu.be/'+id,
             id: id,
-            likeratio:  likeratio
+            likeratio:  likeratio,
+            platform: platform,
+            watchlater: false,
+            watched: false
         }
     
+        // if video is added, store in "all time watched" array
+        ipcRenderer.send('storeVideo', id)
+
         app.videos.push(video)
     });
 }
@@ -153,17 +200,11 @@ client.connect();
 client.on('message', (channel, tags, message, self) => {
 	console.log(channel,message,tags,self);
 
-
 	if(message.match(youtubeRegex) !== null){
 		message.match(youtubeRegex).forEach((youtubeURL) => {
-			addVideo(youtubeURL.slice(-11), tags['display-name'])
+			addVideo(youtubeURL.slice(-11), tags['display-name'], 'twitch')
 		});
 	}
-
-
-
-
-
 
 });
 		

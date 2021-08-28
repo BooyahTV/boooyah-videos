@@ -2,7 +2,10 @@
   "dependencies": {
     "cheerio": "*",
     "cherio": "*",
+    "electron-json-storage": "^4.5.0",
     "electron-log": "^4.4.1",
+    "electron-settings": "^4.0.2",
+    "electron-store": "^8.0.0",
     "puppeteer": "^10.2.0",
     "puppeteer-core": "^10.2.0",
     "puppeteer-in-electron": "^3.0.5",
@@ -21,7 +24,7 @@
     }
   },
   "name": "Booyahvideos",
-  "version": "0.3.2",
+  "version": "0.4.3",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
