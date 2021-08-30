@@ -1,10 +1,11 @@
 // Modules to control application life and create native browser window
 const { Menu, app, BrowserWindow,ipcMain } = require("electron");
-const puppeteer = require("puppeteer");
+const puppeteer = require('puppeteer-core')
 const cheerio = require("cherio");
 const settings = require('electron-settings');
 
-const chatroomID = 79543340 // 70910636
+
+const streamID = 'cristianghost' // 70910636
 
 // this should be placed at top of main.js to handle setup events quickly
 if (handleSquirrelEvent()) {
@@ -190,18 +191,23 @@ async function createWindow() {
 
   });
 
-  var executablePath = puppeteer
+ /* var executablePath = puppeteer
     .executablePath()
-    .replace("app.asar", "app.asar.unpacked");
+    .replace("app.asar", "app.asar.unpacked");*/
+
+  var locateChrome = require('locate-chrome');
+
+  const executablePath = await new Promise(resolve => locateChrome(arg => resolve(arg)));
 
   const browser = await puppeteer.launch({
     args: [`--no-sandbox`],
+    headless: false,
     executablePath: executablePath,
   });
   const page = await browser.newPage();
 
-  const chatroomURL = "https://booyah.live/standalone/chatroom/"+chatroomID
-  
+  const chatroomURL = "https://booyah.live/"+streamID
+
   console.log("Loading Chatroom Page..",chatroomURL);
   await page.goto(chatroomURL);
 
@@ -217,13 +223,14 @@ async function createWindow() {
     const username = $(".username").text();
     const message = $(".message-text").text();
     
+    console.log(username +': '+ message);
 
     let youtubePrefixRegex = /yt=(.){11}/g;
 
     if (message.match(youtubePrefixRegex) !== null) {
       message.match(youtubePrefixRegex).forEach((youtubeID) => {
 
-        console.log(username +': '+ message);
+        console.log('yt video: ',youtubeID)
 
         mainWindow.webContents.send("message", {
           username: username,
@@ -244,9 +251,6 @@ async function createWindow() {
     });
     observer.observe(target, { childList: true });
   });
-
-  // Open the DevTools.
-  // mainWindow.webContents.openDevTools()
 }
 
 // This method will be called when Electron has finished
