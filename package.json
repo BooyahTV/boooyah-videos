@@ -1,16 +1,23 @@
 {
   "dependencies": {
+    "async-request": "^1.2.0",
     "cheerio": "*",
     "cherio": "*",
+    "currency-converter": "^0.1.12",
     "electron-json-storage": "^4.5.0",
     "electron-log": "^4.4.1",
     "electron-settings": "^4.0.2",
     "electron-store": "^8.0.0",
     "locate-chrome": "^0.1.1",
+    "nodejs-currency-converter": "^1.0.2",
+    "open-graph": "^0.2.6",
+    "open-graph-scraper": "^4.9.1",
     "pkg": "^4.2.5",
+    "price-finder": "^5.0.2",
     "puppeteer": "^10.2.0",
     "puppeteer-core": "^10.2.0",
     "puppeteer-in-electron": "^3.0.5",
+    "request": "^2.81.0",
     "session": "^0.1.0"
   },
   "devDependencies": {
@@ -26,7 +33,7 @@
     }
   },
   "name": "Booyahvideos",
-  "version": "0.5.4",
+  "version": "0.5.8",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",

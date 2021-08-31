@@ -1,11 +1,20 @@
 // Modules to control application life and create native browser window
-const { Menu, app, BrowserWindow,ipcMain } = require("electron");
-const puppeteer = require('puppeteer-core')
+const { Menu, app, BrowserWindow, ipcMain } = require("electron");
+const puppeteer = require("puppeteer-core");
 const cheerio = require("cherio");
-const settings = require('electron-settings');
+const settings = require("electron-settings");
 
+const og = require("open-graph");
 
-const streamID = 'cristianghost' // 70910636
+const PriceFinder = require("price-finder");
+const priceFinder = new PriceFinder();
+const streamID = "77452717"; // 70910636
+
+const currencyRegex = /[$]\s+([^\s]+)/g;
+
+const { autoUpdater } = require('electron-updater');
+
+var mainWindow;
 
 // this should be placed at top of main.js to handle setup events quickly
 if (handleSquirrelEvent()) {
@@ -77,7 +86,7 @@ function handleSquirrelEvent() {
 
 async function createWindow() {
   // Create the browser window.
-  const mainWindow = new BrowserWindow({
+  mainWindow = new BrowserWindow({
     minWidth: 356,
     width: 356,
     height: 600,
@@ -98,6 +107,25 @@ async function createWindow() {
       label: "Ver",
       submenu: [
         {
+          id: "showWatchedInSession",
+          type: "checkbox",
+          label: "Mostrar links Vistos",
+          checked: true,
+          click: function (item, browser) {
+            var state = item.checked;
+
+            mainWindow.webContents.send("showWatchedInSession", {
+              state: state,
+            });
+          },
+        },
+      ],
+    },
+
+    {
+      label: "Youtube",
+      submenu: [
+        {
           id: "shortvideos",
           type: "checkbox",
           label: "Mostrar videos cortos",
@@ -110,20 +138,81 @@ async function createWindow() {
             });
           },
         },
+      ],
+    },
+    {
+      label: "Productos",
+      submenu: [
+       /* {
+          id: 'sortLess',
+          label: 'Menor a mayor',
+          type:'radio',
+          click: (item) => {
+            var state = item.enabled;
+            mainWindow.webContents.send("sort", false);
+
+          }
+        },
         {
-          id: "showWatchedInSession",
+          id: 'sortHigher',
+          label: 'Mayor a menor',
+          type:'radio',
+          click: (item) => {
+            var state = item.enabled;
+            mainWindow.webContents.send("sort", true);
+          }
+        },
+        { type: 'separator'},*/
+        {
+          id: "mercadolibre",
           type: "checkbox",
-          label: "Mostrar Videos Vistos",
+          label: "Mercado Libre",
           checked: true,
           click: function (item, browser) {
             var state = item.checked;
 
-            mainWindow.webContents.send("showWatchedInSession", {
-              state: state,
-            });
+            mainWindow.webContents.send("toggleStore", {store: 'mercadolibre', status: state});
           },
         },
-        {type:'separator'},
+        {
+          id: "aliexpress",
+          type: "checkbox",
+          label: "Aliexpress",
+          checked: true,
+          click: function (item, browser) {
+            var state = item.checked;
+
+            mainWindow.webContents.send("toggleStore", {store: 'aliexpress', status: state});
+          },
+        },
+        {
+          id: "amazon",
+          type: "checkbox",
+          label: "Amazon",
+          checked: true,
+          click: function (item, browser) {
+            var state = item.checked;
+
+            mainWindow.webContents.send("toggleStore", {store: 'amazon', status: state});
+          },
+        },
+        ,
+        {
+          id: "steam",
+          type: "checkbox",
+          label: "Steam",
+          checked: true,
+          click: function (item, browser) {
+            var state = item.checked;
+
+            mainWindow.webContents.send("toggleStore", {store: 'steam', status: state});
+          },
+        },
+      ],
+    },
+    {
+      label: "Configuración",
+      submenu: [
         {
           label: "Ventana Flotante",
           type: "checkbox",
@@ -148,19 +237,18 @@ async function createWindow() {
   //load the app page
   mainWindow.loadFile("index.html");
 
-   mainWindow.webContents.once('dom-ready', () => {
+  mainWindow.webContents.once("dom-ready", () => {
     // send test video for debug
-   /* mainWindow.webContents.send('message', {
-      username: 'elmarceloc',
-      id: 'Zvv_0cO-k7M'
+   /* mainWindow.webContents.send("video", {
+      username: "elmarceloc",
+      id: "Zvv_0cO-k7M",
     });*/
 
     // send all time watched videos
-    settings.get('videos.watched').then(videos => {
-      mainWindow.webContents.send('getAlltimeWatchedVideos', videos);
-      console.log('all time watched',videos)
-    })
-
+    settings.get("videos.watched").then((videos) => {
+      mainWindow.webContents.send("getAlltimeWatchedVideos", videos);
+      console.log("all time watched", videos);
+    });
   });
 
   mainWindow.webContents.on("new-window", function (e, url) {
@@ -169,46 +257,54 @@ async function createWindow() {
   });
 
   ipcMain.on("storeVideo", function (e, videoId) {
-
-    settings.get('videos.watched').then(videos => {
-
+    settings.get("videos.watched").then((videos) => {
       if (videos == null) {
-        videos = []
+        videos = [];
       }
 
-      if(videos.includes(videoId)) return
+      if (videos.includes(videoId)) return;
 
       const newWatchedVideos = [...(videos || []), videoId];
-      
-      console.log('new watched videos: ',newWatchedVideos)
 
-      settings.set('videos', {
-        watched: newWatchedVideos
+      console.log("new watched videos: ", newWatchedVideos);
+
+      settings.set("videos", {
+        watched: newWatchedVideos,
       });
+    });
+  });
 
-    })
+  ipcMain.on("sendLink", function (e, username, message, platform) {
+    console.log('message sent from',platform)
 
+    youtube(username, message, platform)
+    mercadolibre(username, message, platform)
+    aliexpress(username, message, platform)
+    amazon(username, message, platform)
+    steam(username, message, platform)
 
   });
 
- /* var executablePath = puppeteer
+  /* var executablePath = puppeteer
     .executablePath()
     .replace("app.asar", "app.asar.unpacked");*/
 
-  var locateChrome = require('locate-chrome');
+  var locateChrome = require("locate-chrome");
 
-  const executablePath = await new Promise(resolve => locateChrome(arg => resolve(arg)));
+  const executablePath = await new Promise((resolve) =>
+    locateChrome((arg) => resolve(arg))
+  );
 
   const browser = await puppeteer.launch({
     args: [`--no-sandbox`],
-    headless: false,
+    //headless: false,
     executablePath: executablePath,
   });
   const page = await browser.newPage();
 
-  const chatroomURL = "https://booyah.live/"+streamID
+  const chatroomURL = "https://booyah.live/" + streamID;
 
-  console.log("Loading Chatroom Page..",chatroomURL);
+  console.log("Loading Chatroom Page..", chatroomURL);
   await page.goto(chatroomURL);
 
   console.log("Loading Chat..");
@@ -217,30 +313,10 @@ async function createWindow() {
   await page.waitForSelector(".scroll-container");
   console.log("Chat Loaded, waiting for messages..");
 
-  await page.exposeFunction("onNewMessage", (newMessage) => {
-    const $ = cheerio.load(newMessage);
+  await page.exposeFunction("onNewMessage", readMessage);
 
-    const username = $(".username").text();
-    const message = $(".message-text").text();
-    
-    console.log(username +': '+ message);
-
-    let youtubePrefixRegex = /yt=(.){11}/g;
-
-    if (message.match(youtubePrefixRegex) !== null) {
-      message.match(youtubePrefixRegex).forEach((youtubeID) => {
-
-        console.log('yt video: ',youtubeID)
-
-        mainWindow.webContents.send("message", {
-          username: username,
-          id: youtubeID.substring(3),
-        });
-      });
-    }
-  });
   await page.evaluate(() => {
-    console.log('mutation observer inserted')
+    console.log("mutation observer inserted");
     const target = document.querySelector(".scroll-container");
     const observer = new MutationObserver((mutations) => {
       for (const mutation of mutations) {
@@ -251,6 +327,13 @@ async function createWindow() {
     });
     observer.observe(target, { childList: true });
   });
+
+
+
+  mainWindow.once('ready-to-show', () => {
+    autoUpdater.checkForUpdatesAndNotify();
+  });
+
 }
 
 // This method will be called when Electron has finished
@@ -271,4 +354,214 @@ app.whenReady().then(() => {
 // explicitly with Cmd + Q.
 app.on("window-all-closed", function () {
   if (process.platform !== "darwin") app.quit();
+});
+
+function readMessage(newMessage) {
+  const $ = cheerio.load(newMessage);
+
+  const username = $(".username").text();
+  const message = $(".message-text").text();
+
+  console.log(username + ": " + message);
+
+  youtube(username, message, 'booyah')
+
+  mercadolibre(username, message, 'booyah')
+
+  aliexpress(username, message, 'booyah')
+
+  amazon(username, message, 'booyah')
+
+  steam(username, message, 'booyah')
+}
+
+
+function youtube(username, message, platform) {
+  
+  const prefix = /yt=([^\s]+)/g;
+  const full =  /http(?:s?):\/\/(?:www\.)?youtu(?:be\.com\/watch\?v=|\.be\/)([\w\-\_]*)(&(amp;)?‌​[\w\?‌​=]*)?/g
+
+  urlRegex([prefix, full], message, function(id, index){
+
+    // if is the prefixed regex, cuts the prefix,
+    // otherwise, cut the id part
+    id = index == 0 ? id.substring(3) : id.slice(-11)
+    console.log(id)
+    mainWindow.webContents.send("video", {
+      username: username,
+      id: id,
+      platform: platform
+    });
+  })
+}
+
+function mercadolibre(username, message,platform) {
+  const prefix = /ml=(.)([^\s]+)/g
+  const full = /(http|https):\/\/?(.)(?:www\.)?articulo.mercadolibre.cl(.)([^\s]+)/g;
+  const baseUrl = 'https://articulo.mercadolibre.cl/'
+
+  urlRegex([prefix, full], message, function(id, index){
+    
+    let url = ''
+
+    if(index == 1){
+      url = encodeURI(id);
+    }else{
+      url = encodeURI(baseUrl + id.slice(3));
+    }    
+
+    og(url, function (err, meta) {
+      if(err) return
+
+      let title = meta.title.split("$");
+      title.splice(-1); // remove the price in the title
+
+      title = title.join("").slice(0, -2);
+
+      // formats the price
+      let priceCLP = Number(
+        meta.title
+          .match(currencyRegex)[0]
+          .replace("$", "")
+          .replace(/\./g, "")
+          .trim()
+      );
+      
+      let img = meta["image"] !== undefined ? meta.image.url : null;
+
+      sendProduct(username,url,title,priceCLP,null,null,img,"mercadolibre", "Mercado Libre",platform)
+    })
+  })
+
+}
+
+function aliexpress(username, message, platform) {
+  const prefix = /ae=(.)([^\s]+)/g
+  const full = /(?:https:\/\/)?(es|cl)\.aliexpress\.com\/(\S+)/g;
+  const baseUrl = 'https://es.aliexpress.com/'
+
+  urlRegex([prefix, full], message,function(id, index){
+
+    let url = ''
+
+    if(index == 1){
+      url = encodeURI(id);
+    }else{
+      url = encodeURI(baseUrl + id.slice(3)+ ".html");
+    }    
+    console.log(index)
+    og(url, function (err, meta) {
+      if(err) return
+      title = meta.title.split("|")[1];
+      img = meta["image"] !== undefined ? meta.image.url : null;
+      priceCLP = Number(meta.title.split("CLP")[0].trim());
+
+      sendProduct(username,url,title,priceCLP,null,null,img,"aliexpress", "Aliexpress", platform)
+
+    });
+  })
+}
+
+function amazon(username, message,platform){
+  const prefix =  /az=(.)([^\s]+)/g
+  const full =  /(http|https):\/\/?(.)www.amazon.com(.)([^\s]+)/g;
+  const baseUrl = 'https://www.amazon.com/'
+
+  urlRegex([prefix, full], message, function(id, index){
+    let url = ''
+
+    if(index == 1){
+      url = encodeURI(id.replace('-/es/','').split('/ref=')[0]);
+    }else{
+      url = encodeURI(baseUrl + id.slice(3));
+    }    
+    console.log(url)
+    priceFinder.findItemDetails(url, function (err, item) {
+      if(err) return
+      console.log(item)
+
+      sendProduct(username,url,item.name,null, item.price, item.category,null,"amazon", "Amazon", platform)
+
+    });
+  })    
+}
+
+function steam(username, message, platform) {
+  const prefix = /ae=(.)([^\s]+)/g
+  const full = /(?:https:\/\/)?store\.steampowered\.com\/(\S+)/g;
+  const baseUrl = 'https://store.steampowered.com/'
+
+  urlRegex([prefix, full], message,function(id, index){
+    let url = ''
+
+    if(index == 1){
+      url = encodeURI(id);
+    }else{
+      url = encodeURI(baseUrl + id.slice(3)+ ".html");
+    }    
+
+    og(url, function (err, meta) {
+      if(err) return
+      img = meta["image"] !== undefined ? meta.image.url : null;
+
+      priceFinder.findItemDetails(url, function(err, item) {
+        if(err) return
+        var price = item.price.toString().replace(/\./g,'')
+
+        sendProduct(username,url,item.name,price,null,item.category,img,"steam", "Steam", platform)
+
+      });
+
+
+    });
+  })
+}
+
+
+function urlRegex(regexs, message, callback){
+
+  regexs.forEach((regex,index) => {
+    if (message.match(regex) !== null) {
+  
+      message.match(regex).forEach((id) => {
+        console.log("id: ", id);
+        callback(id,index)
+      });
+    }
+  })
+
+  
+}
+
+
+function sendProduct(username, url, title, clp, usd, category,img, store, storeReadeable, platform) {
+  let product = {
+    username: username,
+    url: url,
+    title: title,
+    priceCLP: clp,
+    priceUSD: usd,
+    category: category,
+    img: img,
+    watched: false,
+    store: store,
+    storeReadeable: storeReadeable,
+    platform: platform
+  }
+  console.log(product)
+  mainWindow.webContents.send("product",product );
+}
+
+
+
+autoUpdater.on('update-available', () => {
+  mainWindow.webContents.send('update_available');
+});
+autoUpdater.on('update-downloaded', () => {
+  mainWindow.webContents.send('update_downloaded');
+});
+
+
+ipcMain.on('restart_app', () => {
+  autoUpdater.quitAndInstall();
 });

@@ -10,12 +10,7 @@
     transition: background-color 0.18s!important;
     height: 30px !important;
     background-color: #252525!important;
-}
-/* [+] button */
-.item:last-child{
-    border: none!important;
-    background-color: #1b1c1d!important;
-
+    
 }
 .ui.tabular.menu .item.active {
     border-radius: 0px!important;

@@ -136,6 +136,17 @@ i{
 .youtube{
   color: #ff0303;
 }
+
+.price i{
+  color: #2185d0;
+}
+.store i {
+  color: #ffb102;
+}
+.store,.price{
+  font-size:13px
+}
+
 .watchlater{
   z-index: 6;
   position: absolute;
@@ -152,4 +163,26 @@ i{
   -webkit-transition: color 100ms linear;
   -ms-transition: color 100ms linear;
   transition: color 100ms linear;
+}
+
+
+
+
+
+
+
+
+
+#notification {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  width: 200px;
+  padding: 20px;
+  border-radius: 5px;
+  background-color: white;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
+.hidden {
+  display: none;
 }

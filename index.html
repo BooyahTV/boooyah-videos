@@ -48,7 +48,15 @@
   </head>
   <body>
     <div id="app">
-
+      <div id="notification" class="hidden">
+        <p id="message"></p>
+        <button id="close-button" onClick="closeNotification()">
+          Close
+        </button>
+        <button id="restart-button" onClick="restartApp()" class="hidden">
+          Restart
+        </button>
+      </div>
 
       <div class="ui inverted top attached tabular menu">
         <div
@@ -76,17 +84,17 @@
           <i v-if="currentTab=='Videos' && !video.watched" @click="addToWatchlater(video.id)" content="Ver más tarde" v-tippy class="watchlater fas fa-stopwatch"></i>
           <i v-if="currentTab=='Ver más tarde' && !video.watched" @click="removeFromWatchlater(video.id)" content="Quitar de ver mas tarde" v-tippy class="watchlater fas fa-times"></i>
           
-          <a @click="markAsWatched(video.id)" :href="video.url" target="_blank">
+          <a @click="markVideoAsWatched(video.id)" :href="video.url" target="_blank">
             <img :src="video.thumbnail_url" />
           </a>
         </div>
         <div class="content">
-          <a @click="markAsWatched(video.id)" :href="video.url" target="_blank" class="header"
+          <a @click="markVideoAsWatched(video.id)" :href="video.url" target="_blank" class="header"
             >{{video.title}}</a
           >
           <p class="info-row">
 
-            <span content="Visitas" v-tippy :class="{ 'warning-color': video.views < 100}" class="info views">
+            <span v-if="video.views" content="Visitas" v-tippy :class="{ 'warning-color': video.views < 100}" class="info views">
               <i v-if="video.views >= 100" class="fas fa-eye"></i>
               <i
                 v-if="video.views < 100"
@@ -96,10 +104,10 @@
               {{ new Intl.NumberFormat("es-CL").format(video.views) }}
             </span>
 
-            <span content="Duracion" v-tippy class="info duration"
+            <span v-if="video.durationFormated" content="Duracion" v-tippy class="info duration"
               ><i class="far fa-clock"></i>{{ video.durationFormated }} {{video.durationFormated.length < 3 ? 's':''}}</span
             >
-            <span content="Fecha de creacion" v-tippy class="info date"
+            <span v-if="video.publishedAt" content="Fecha de creacion" v-tippy class="info date"
               ><i class="fas fa-calendar-alt"></i>{{ video.publishedAt }}</span
             >
             <span content="Canal" v-tippy class="info channel"
@@ -113,7 +121,7 @@
 
               {{video.author }}</span
             >
-            <span content="Likes" v-tippy class="info likeratio"
+            <span v-if="video.likeratio" content="Likes" v-tippy class="info likeratio"
               ><i v-if="video.likeratio > 85" class="good fas fa-thumbs-up"></i>
                <i v-if="video.likeratio <= 85" class="bad fas fa-thumbs-down"></i>{{video.likeratio}}%</span
             >
@@ -121,6 +129,45 @@
           </p>
         </div>
       </div>
+
+
+
+      <div 
+      v-if=" currentTab=='Productos' && stores.includes(product.store) &&
+            (showWatchedInSession==true || (showWatchedInSession==false && !product.watched))
+             "
+
+              class="ui card" :class="{ watched: product.watched }" v-for="(product,index) in reverseproducts">
+      <div class="image">
+       
+        <a @click="markProductAsWatched(product.title)" :href="product.url" target="_blank">
+          <img :src="product.img" />
+        </a>
+      </div>
+      <div class="content">
+        <a @click="markProductAsWatched(product.title)" :href="product.url" target="_blank" class="header"
+          >{{product.title}}</a
+        >
+        <p class="info-row">
+          <span v-if="product.priceCLP" content="Precio en CLP" v-tippy class="info price">
+            <i class="fas fa-tag"></i>{{ new Intl.NumberFormat('es-CL', {style: 'currency',currency: 'CLP'}).format(product.priceCLP)}} pesos
+          </span>
+
+          <span v-if="product.priceUSD" content="Precio en Dolares Estadounidences" v-tippy class="info price">
+            <i class="fas fa-tag"></i>{{ new Intl.NumberFormat('en-US', {style: 'currency',currency: 'USD'}).format(product.priceUSD)}} dolares
+          </span>
+          
+          <span v-if="product.category" content="Categoria" v-tippy class="info price">
+            <i class="fas fa-tag"></i>{{ product.category }}
+          </span>
+        
+
+            <span content="Tienda" v-tippy class="info store">
+              <i class="fas fa-store-alt"></i>{{ product.storeReadeable }}
+            </span>
+         </p>
+      </div>
+    </div>
 
     </div>
 
