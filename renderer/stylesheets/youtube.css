@@ -1,0 +1,63 @@
+.youtube {
+  color: #ff0303;
+}
+.views i {
+  padding-right: 8px;
+  color: #ffb102;
+}
+.duration i ,.watchlaterDuration i{
+  color: #b5cc18;
+}
+.date i {
+  color: #2185d0;
+}
+.category i{
+    color:#f2711c;
+}
+.videodescription{
+    -webkit-line-clamp: 4;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+}
+.warning-color {
+  color: #db2828 !important;
+}
+.ban {
+  width: 22px !important;
+  right: 22px !important;
+}
+.ban:hover {
+  filter: brightness(1.2);
+}
+.platform {
+  height: 20px;
+}
+.good {
+  color: #21ba45;
+}
+.bad {
+  color: #db2828;
+}
+.watched {
+  filter: brightness(0.6);
+}
+.watchlater {
+  z-index: 6;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: #1e1e1e;
+  padding: 8px;
+  font-size: 15px;
+  border-radius: 5px;
+  color: #ececec;
+}
+
+.watchlater:hover {
+  color: white;
+  -webkit-transition: color 100ms linear;
+  -ms-transition: color 100ms linear;
+  transition: color 100ms linear;
+}

@@ -4,13 +4,26 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <link rel="stylesheet" href="./stylesheets/libs/semantic.min.css" />
 
-    <link rel="stylesheet" href="semantic.min.css" />
-    <link rel="stylesheet" href="style.css" />
-    <link rel="stylesheet" href="tab.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+      integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
 
-    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
-    <script src="tmi.min.js"></script>
+    <link rel="stylesheet" href="./stylesheets/main.css" />
+    <link rel="stylesheet" href="./stylesheets/tabs.css" />
+    <link rel="stylesheet" href="./stylesheets/youtube.css" />
+    <link rel="stylesheet" href="./stylesheets/products.css" />
+    <link rel="stylesheet" href="./stylesheets/notification.css" />
+    
+    <script src="./javascript/libs/tmi.min.js"></script>
+    <script src="./javascript/libs/moment.js"></script>
+    <script src="./javascript/libs/moment-duration-format.js"></script>
 
     <!-- Insert this line above script imports  -->
     <script>
@@ -30,31 +43,25 @@
     <script>
       if (window.module) module = window.module;
     </script>
-
+    
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
     <script src="https://unpkg.com/vue-tippy/dist/vue-tippy.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue-tippy/dist/vue-tippy.min.js"></script>
 
-    <script src="moment.js"></script>
-    <script src="moment-duration-format.js"></script>
-
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
-      integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    />
     <title>Booyah! videos</title>
   </head>
   <body>
     <div id="app">
-      <div id="notification" class="hidden">
+      
+
+      <div id="notification" class="ui message hidden">
+        <i class="fas fa-times"  id="close-button" onClick="closeNotification()"></i>
+        <div id="message_title" class="header">
+          
+        </div>
         <p id="message"></p>
-        <button id="close-button" onClick="closeNotification()">
-          Close
-        </button>
-        <button id="restart-button" onClick="restartApp()" class="hidden">
-          Restart
+        <button id="restart-button" class="ui button primary hidden" onClick="restartApp()">
+          Reiniciar Ahora
         </button>
       </div>
 
@@ -62,27 +69,48 @@
         <div
           @click="setTab(tab) "
           v-for="(tab,index) in tabs"
-          :class="{ active: currentTab==tab }"
+          :class="{ active: currentTab==tab.id }"
           class="item"
+          v-if="tab.enabled"
         >
 
-          {{tab}} 
-
+          {{tab.name}} 
         </div>
     </div>
     </br></br>
+
+      <div class="watchlaterDuration" v-if="currentTab=='watchlater'">
+        <i class="far fa-clock"></i> Duración total: {{watchlaterDuration()}}
+      </div>
+
       <div 
-        v-if=" ( (currentTab=='Videos' && video.watchlater == false && ( shortvideos == true || shortvideos == false && video.durationSecounds > 60) ) ||
-               (currentTab=='Ver más tarde' && video.watchlater == true) ) &&
+         v-if=" 
+                /* TABS */
                 
-                (showWatchedInSession==true || (showWatchedInSession==false && !video.watched))
+                ( 
+                  ( currentTab == 'videos' && video.watchlater == false)  ||
+                  ( currentTab == 'watchlater' && video.watchlater == true ) 
+                )
+
+                /* Video Filters */
+
+                && (
+
+                  ( videofilters.shortvideos == true || video.durationSecounds > 60) &&
+                  ( videofilters.musicalvideos == true || video.category != '10' )
+
+                )
+
+                /* Watched in session */
+
+                && ( showWatchedInSession == true || (showWatchedInSession==false && !video.watched))
                "
 
                 class="ui card" :class="{ watched: video.watched }" v-for="(video,index) in reversevideos">
         <div class="image">
          
-          <i v-if="currentTab=='Videos' && !video.watched" @click="addToWatchlater(video.id)" content="Ver más tarde" v-tippy class="watchlater fas fa-stopwatch"></i>
-          <i v-if="currentTab=='Ver más tarde' && !video.watched" @click="removeFromWatchlater(video.id)" content="Quitar de ver mas tarde" v-tippy class="watchlater fas fa-times"></i>
+          <i v-if="currentTab=='videos' && !video.watched" @click="addToWatchlater(video.id)" content="Ver más tarde" v-tippy class="watchlater fas fa-stopwatch"></i>
+          <i v-if="currentTab=='watchlater' && !video.watched" @click="removeFromWatchlater(video.id)" content="Quitar de ver mas tarde" v-tippy class="watchlater fas fa-times"></i>
           
           <a @click="markVideoAsWatched(video.id)" :href="video.url" target="_blank">
             <img :src="video.thumbnail_url" />
@@ -94,7 +122,9 @@
           >
           <p class="info-row">
 
-            <span v-if="video.views" content="Visitas" v-tippy :class="{ 'warning-color': video.views < 100}" class="info views">
+            
+            
+            <span v-if="video.views && videofilters.views" content="Visitas" v-tippy :class="{ 'warning-color': video.views < 100}" class="info views">
               <i v-if="video.views >= 100" class="fas fa-eye"></i>
               <i
                 v-if="video.views < 100"
@@ -104,27 +134,32 @@
               {{ new Intl.NumberFormat("es-CL").format(video.views) }}
             </span>
 
-            <span v-if="video.durationFormated" content="Duracion" v-tippy class="info duration"
-              ><i class="far fa-clock"></i>{{ video.durationFormated }} {{video.durationFormated.length < 3 ? 's':''}}</span
+            <span v-if="video.durationFormated && videofilters.durationFormated" content="Duracion" v-tippy class="info duration"
+              ><i class="far fa-clock"></i>{{ video.durationFormated }}</span
             >
-            <span v-if="video.publishedAt" content="Fecha de creacion" v-tippy class="info date"
+            <span v-if="video.publishedAt && videofilters.publishedAt" content="Fecha de creacion" v-tippy class="info date"
               ><i class="fas fa-calendar-alt"></i>{{ video.publishedAt }}</span
             >
-            <span content="Canal" v-tippy class="info channel"
+            <span v-if="videofilters.channel" content="Canal" v-tippy class="info channel"
               ><i class="youtube fab fa-youtube"></i>{{ video.channel }}</span
             >
-            <span :content="'Enviado desde '+video.platform" v-tippy class="info author"
+            <span v-if="videofilters.author" :content="'Enviado desde '+video.platform" v-tippy class="info author"
               >
               
-              <img v-if="video.platform == 'twitch'" class="platform" src="twitch-icon.png"></img>
-              <img v-if="video.platform == 'booyah'" class="platform" src="booyah-icon.png"></img>
+              <img v-if="video.platform == 'twitch'" class="platform" src="./images/twitch-icon.png"></img>
+              <img v-if="video.platform == 'booyah'" class="platform" src="./images/booyah-icon.png"></img>
 
               {{video.author }}</span
-            >
-            <span v-if="video.likeratio" content="Likes" v-tippy class="info likeratio"
+              >
+              <span v-if="videofilters.category" content="Categoria" v-tippy class="info category"
+              ><i class="youtube fas fa-list"></i>{{ readeableCategory( video.category ) }}</span
+              >
+              
+              <span v-if="video.likeratio  && videofilters.likeratio" content="Likes" v-tippy class="info likeratio"
               ><i v-if="video.likeratio > 85" class="good fas fa-thumbs-up"></i>
-               <i v-if="video.likeratio <= 85" class="bad fas fa-thumbs-down"></i>{{video.likeratio}}%</span
-            >
+              <i v-if="video.likeratio <= 85" class="bad fas fa-thumbs-down"></i>{{video.likeratio}}%</span
+              >
+              <p v-if="videofilters.description" class="info videodescription">{{video.description}}</p>
             <!-- <img @click="banvideo(video.id)" class="ban" src="ban.png"> </img> -->
           </p>
         </div>
@@ -133,7 +168,7 @@
 
 
       <div 
-      v-if=" currentTab=='Productos' && stores.includes(product.store) &&
+      v-if=" currentTab=='products' && stores.includes(product.store) &&
             (showWatchedInSession==true || (showWatchedInSession==false && !product.watched))
              "
 
@@ -171,6 +206,6 @@
 
     </div>
 
-    <script src="./render.js"></script>
+    <script src="./javascript/main.js"></script>
   </body>
 </html>

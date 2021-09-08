@@ -1,0 +1,33 @@
+#notification {
+    z-index:1000;
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    width: 300px;
+    padding: 20px;
+    border-radius: 5px;
+    background-color: #171717;
+    color:white;
+  }
+  .hidden {
+    display: none!important;
+  }
+  #restart-button{
+    padding: 10px!important;
+    background: #793bd5!important;
+    font-size: 12px!important;
+  }
+  
+  #message_title{
+    font-size: 14px!important;
+  }
+  
+  #close-button{
+    position:absolute;
+    right: 10px;
+    top: 10px;
+  }
+  
+  .header:hover{
+    color:#a0a0a0!important;
+  }

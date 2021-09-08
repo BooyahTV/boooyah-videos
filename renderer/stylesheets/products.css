@@ -1,0 +1,9 @@
+.price i{
+    color: #2185d0;
+  }
+  .store i {
+    color: #ffb102;
+  }
+  .store,.price{
+    font-size:13px
+  }
