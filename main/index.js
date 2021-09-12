@@ -138,6 +138,12 @@ async function createWindow() {
       mainWindow.webContents.send("getAlltimeWatchedVideos", videos);
       //console.log("all time watched", videos);
     });
+
+    // send all channels
+    settings.get("channels.bookmark").then((channels) => {
+      mainWindow.webContents.send("getAllChannels", channels);
+      //console.log("all time watched", videos);
+    });
   });
 
   // opens external links in default browser
@@ -155,13 +161,56 @@ async function createWindow() {
 
       const newWatchedVideos = [...(videos || []), videoId];
 
-      console.log("new watched videos: ", newWatchedVideos);
+      console.log("new watched videos: ", newWatchedVideos.length);
 
       settings.set("videos", {
         watched: newWatchedVideos,
       });
     });
   });
+
+  // saves a channel
+  ipcMain.on("storeChannel", function (e, channel) {
+    settings.get("channels.bookmark").then((channels) => {
+      
+      if (channels == null) channels = [];
+
+      console.log('current channels',channels.length)
+
+      if (channels.includes(channel.id)) return;
+
+      const newChannels = [...(channels || []), channel];
+
+      console.log("new channels: ", newChannels);
+
+      settings.set("channels", {
+        bookmark: newChannels,
+      });
+    });
+  });
+
+  // delete a channel
+  ipcMain.on("deleteChannel", function (e, id) {
+    settings.get("channels.bookmark").then((channels) => {
+      
+      if (channels == null) channels = [];
+      
+      console.log('current channels',channels.length,id)
+      
+      channels = channels.filter(function(channel) {
+          return channel.id !== id
+      })
+
+      console.log("new channels with removed channel: ", channels.length);
+
+      settings.set("channels", {
+        bookmark: channels,
+      });
+    });
+  });
+
+
+  
 
   ipcMain.on("sendLink", function (e, username, message, platform) {
     links.youtube(username, message, platform);

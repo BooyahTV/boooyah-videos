@@ -54,7 +54,7 @@ function readMessage(newMessage) {
 
   console.log('[Booyah]',username + ": " + message);
 
-  links.youtube(username, message, "booyah");
+ /* links.youtube(username, message, "booyah");
 
   links.mercadolibre(username, message, "booyah");
 
@@ -63,4 +63,5 @@ function readMessage(newMessage) {
   links.amazon(username, message, "booyah");
 
   links.steam(username, message, "booyah");
+  */
 }

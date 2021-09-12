@@ -10,6 +10,7 @@ var stores = [
 var tabs = [
     { id: "videos", label: "Videos" },
     { id: "watchlater", label: "Ver más tarde" },
+    { id: "channels", label: "Canales" },
     { id: "products", label: "Tiendas" },
 ];
 

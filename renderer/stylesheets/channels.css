@@ -1,0 +1,18 @@
+.channelIcon{
+    width: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+    box-shadow: #00000059 1px 1px 6px;
+}
+.channelCard{
+    text-shadow: 3px 2px 7px #00000085;
+}
+.channelCard .header:hover{
+    color:white!important
+}
+.subs i{
+    color:red;
+}
+.videos i{
+    color: #2185d0;
+}

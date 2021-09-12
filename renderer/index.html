@@ -17,8 +17,11 @@
 
     <link rel="stylesheet" href="./stylesheets/main.css" />
     <link rel="stylesheet" href="./stylesheets/tabs.css" />
+
     <link rel="stylesheet" href="./stylesheets/youtube.css" />
     <link rel="stylesheet" href="./stylesheets/products.css" />
+    <link rel="stylesheet" href="./stylesheets/channels.css" />
+    
     <link rel="stylesheet" href="./stylesheets/notification.css" />
     
     <script src="./javascript/libs/tmi.min.js"></script>
@@ -64,6 +67,8 @@
           Reiniciar Ahora
         </button>
       </div>
+
+
 
       <div class="ui inverted top attached tabular menu">
         <div
@@ -140,7 +145,7 @@
             <span v-if="video.publishedAt && videofilters.publishedAt" content="Fecha de creacion" v-tippy class="info date"
               ><i class="fas fa-calendar-alt"></i>{{ video.publishedAt }}</span
             >
-            <span v-if="videofilters.channel" content="Canal" v-tippy class="info channel"
+            <span v-if="videofilters.channel" content="Canal" v-tippy :id="video.channelId" class="info channel"
               ><i class="youtube fab fa-youtube"></i>{{ video.channel }}</span
             >
             <span v-if="videofilters.author" :content="'Enviado desde '+video.platform" v-tippy class="info author"
@@ -203,6 +208,38 @@
          </p>
       </div>
     </div>
+
+
+
+    
+
+    <div :style="{ backgroundImage: 'linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url('+channel.items[0].brandingSettings.image.bannerExternalUrl+')' }" v-if=" currentTab=='channels'" class="ui card channelCard" v-for="(channel, index) in reversechannels">
+
+    <div class="content">
+      <i class="fas fa-times" id="close-button" @click="deleteChannel(channel.items[0].id)"></i>
+
+      <a :href="'https://www.youtube.com/channel/'+channel.items[0].id+'/videos'" target="_blank" class="header"
+        > <img class="channelIcon" :src="channel.items[0].snippet.thumbnails.default.url"></img> {{channel.items[0].snippet.title}}</a
+      >
+      <p class="info-row">
+       
+        <span content="Subscriptores" v-tippy class="info subs">
+          <i class="fas fa-user"></i>{{new Intl.NumberFormat("es-CL").format( channel.items[0].statistics.subscriberCount) }}
+        </span>
+        
+        <span content="Visitas totales del canal" v-tippy class="info views">
+          <i class="fas fa-eye"></i>{{new Intl.NumberFormat("es-CL").format( channel.items[0].statistics.viewCount) }}
+        </span>
+
+        <span content="Videos" v-tippy class="info videos">
+          <i class="fas fa-play"></i>{{new Intl.NumberFormat("es-CL").format( channel.items[0].statistics.videoCount) }}
+        </span>
+       </p>
+    </div>
+  </div>
+
+
+
 
     </div>
 
