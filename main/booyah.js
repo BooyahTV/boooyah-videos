@@ -5,9 +5,12 @@ const locateChrome = require("locate-chrome");
 const links = require("./links");
 
 const chatroomID = "79543340";
-const chatroomURL = "https://booyah.live/standalone/chatroom/" + chatroomID;
+const settings = require("electron-settings");
 
 exports.scrapChatLinks = async function() {
+  // gets the channel's chatroom ID via settings
+  const chatroomURL = await settings.get('booyah.name') || "https://booyah.live/standalone/chatroom/79543340"; // by default, the chatroom URL is from cristianghost's channel
+
   // finds the chrome .exe
   const executablePath = await new Promise((resolve) =>
     locateChrome((arg) => resolve(arg))
@@ -54,14 +57,12 @@ function readMessage(newMessage) {
 
   console.log('[Booyah]',username + ": " + message);
 
- /* links.youtube(username, message, "booyah");
-
+  links.youtube(username, message, "booyah");
+  links.youtubeMusicVideo(username, message, "booyah");
   links.mercadolibre(username, message, "booyah");
-
   links.aliexpress(username, message, "booyah");
-
   links.amazon(username, message, "booyah");
-
   links.steam(username, message, "booyah");
-  */
+  links.clips(username, message, "booyah");
+  
 }

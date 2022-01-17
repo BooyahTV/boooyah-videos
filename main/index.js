@@ -3,6 +3,11 @@ const { Menu, app, BrowserWindow, ipcMain } = require("electron");
 
 const pjson = require('../package.json');
 
+const http = require('http');
+const fs = require('fs');
+
+const path = require('path');
+
 const settings = require("electron-settings");
 
 const { autoUpdater } = require("electron-updater");
@@ -17,6 +22,19 @@ const booyah = require("./booyah");
 const { openReleaseNotes } = require("./release_notes");
 
 var mainWindow;
+
+const testVideos = ['WCi2DLYE82A', 'Zvv_0cO-k7M']
+
+//at start
+let server;
+server = http.createServer((req, res) => {
+const filePath = path.join(app.getAppPath(), 'renderer', req.url);
+const file = fs.readFileSync(filePath);
+res.end(file.toString());
+if (req.url.includes('index.js'))
+    server.close();
+}).listen(8080);
+  
 
 try {
   if (isDev) {
@@ -99,50 +117,62 @@ async function createWindow() {
     width: isDev ? 835 : 356,
     height: isDev ? 885 : 600,
     webPreferences: {
-      nodeIntegration: true,
+     nodeIntegration: true,
       nodeIntegrationInWorker: true,
-      contextIsolation: false,
       enableRemoteModule: true,
+      contextIsolation: false
     },
     icon: __dirname + "/icon.ico",
   });
 
+  // https://www.npmjs.com/package/@electron/remote
+  require('@electron/remote/main').initialize()
+  require("@electron/remote/main").enable(mainWindow.webContents) 
 
-  if (isDev) {
-    mainWindow.webContents.toggleDevTools();
 
-    //openReleaseNotes(mainWindow)
+  if (isDev) mainWindow.webContents.toggleDevTools();
 
-  }
-
-  mainWindow.setAlwaysOnTop(true, "floating");
+  if (!isDev) mainWindow.setAlwaysOnTop(true, "floating");
+  
 
   Menu.setApplicationMenu(menu);
 
+
   //load the app page
-  mainWindow.loadFile("renderer/index.html");
+  mainWindow.loadURL('http://localhost:8080/index.html');
+
+ // mainWindow.loadFile("renderer/index.html");
 
   // loads the videos when the app is loaded
   mainWindow.webContents.once("dom-ready", () => {
     if (isDev) {
       // send test video for debug
-      mainWindow.webContents.send("video", {
-        username: "elmarceloc",
-        id: "Zvv_0cO-k7M",
-        platform: "twitch",
-      });
+      testVideos.forEach(function(video) {
+        mainWindow.webContents.send("video", {
+          username: "elmarceloc",
+          id: video,
+          platform: "twitch",
+        })
+      })
     }
 
     // send all time watched videos
     settings.get("videos.watched").then((videos) => {
       mainWindow.webContents.send("getAlltimeWatchedVideos", videos);
-      //console.log("all time watched", videos);
+    });
+
+    // send watchlater videos
+    settings.get("videos.watchlater").then((videos) => {
+      mainWindow.webContents.send("getWatchlaterVideos", videos);
     });
 
     // send all channels
     settings.get("channels.bookmark").then((channels) => {
       mainWindow.webContents.send("getAllChannels", channels);
-      //console.log("all time watched", videos);
+    });
+
+    settings.get("twitch.name").then((twitchChannel) => {
+      mainWindow.webContents.send("twitchChannel", twitchChannel || 'cristianghost');
     });
   });
 
@@ -166,20 +196,65 @@ async function createWindow() {
       settings.set("videos", {
         watched: newWatchedVideos,
       });
+
+      // remove the video from watchlater list
+            
+      videos = videos.filter(function(video) {
+          return video.id !== videoId
+      })
+
+      console.log("new videos with removed video: ", videos.length);
+
+      settings.set("videos", {
+        watchlater: videos,
+      });
+      
     });
   });
 
+  // saves a watch later video
+  ipcMain.on("addWatchLaterVideo", function (e, newVideo) {
+    settings.get("videos.watchlater").then((videos) => {
+      console.log("Try to add video to watchlater");
+
+      if (videos == null) videos = [];
+
+      var hasVideo = false
+
+      videos.forEach(video => {
+        if(video.id == newVideo.id) hasVideo = true
+      })
+
+      if (hasVideo) return;
+
+      const newWatchLaterVideos = [...(videos || []), newVideo];
+
+      console.log("new Watch Later Videos videos: ", newWatchLaterVideos.length);
+
+      settings.set("videos", {
+        watchlater: newWatchLaterVideos,
+      });
+    });
+  });
+  
+
   // saves a channel
-  ipcMain.on("storeChannel", function (e, channel) {
+  ipcMain.on("storeChannel", function (e, newChannel) {
     settings.get("channels.bookmark").then((channels) => {
       
       if (channels == null) channels = [];
 
       console.log('current channels',channels.length)
 
-      if (channels.includes(channel.id)) return;
+      var hasChannel = false
 
-      const newChannels = [...(channels || []), channel];
+      channels.forEach(channel => {
+        if(channel.id == newChannel.id) hasChannel = true
+      })
+
+      if (hasChannel) return;
+
+      const newChannels = [...(channels || []), newChannel];
 
       console.log("new channels: ", newChannels);
 
@@ -212,12 +287,14 @@ async function createWindow() {
 
   
 
-  ipcMain.on("sendLink", function (e, username, message, platform) {
+  ipcMain.on("sendLink", function (e, username, message, platform) {      
     links.youtube(username, message, platform);
+    links.youtubeMusicVideo(username, message, platform);
     links.mercadolibre(username, message, platform);
     links.aliexpress(username, message, platform);
     links.amazon(username, message, platform);
     links.steam(username, message, platform);
+    links.clips(username, message, platform);
   });
 
   mainWindow.once("ready-to-show", () => {

@@ -1,12 +1,8 @@
 * {
-  overflow-anchor: none !important;
-  scroll-snap-stop: normal !important;
-  overscroll-behavior: unset !important;
-  scroll-behavior: unset !important;
+  overflow-anchor: auto !important;
 }
 body{
   background-color: #1e1e1e;
-  overflow-anchor: none;
 }
 
 iframe, object, embed {
@@ -46,6 +42,18 @@ iframe, object, embed {
 
 .ui.card>.image, .ui.cards>.card>.image{
   border-radius: 0px!important;
+}
+.image video {
+  max-width: 100%!important;
+}
+.content .channelImage{
+  width: 48px;
+  border-radius: 50%;
+}
+
+.card .content .aside {
+  display: contents;
+  padding-left: 10px;
 }
 
 .ui.card,
@@ -111,4 +119,16 @@ i{
   padding-top: 10px;
   padding-bottom: 10px;
   padding-left: 14px;
+}
+.tab-amount{
+  padding-left: 6px;
+}
+.tab-amount span{
+  background-color: #1e1e1e;
+  border-radius: 50%;
+  width: 18px;
+  height: 18px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

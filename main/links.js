@@ -1,22 +1,49 @@
 const { BrowserWindow } = require("electron");
+const colors = require('colors');
 
 const og = require("open-graph");
 
 const PriceFinder = require("price-finder");
 const priceFinder = new PriceFinder();
 
+const utf8 = require('utf8');
+
+const request = require("request");
+const cheerio = require('cherio')
+
 const currencyRegex = /[$]\s+([^\s]+)/g;
 
 exports.youtube = function(username, message, platform) {
   const prefix = /yt=([^\s]+)/g;
-  const full =
-    /http(?:s?):\/\/(?:www\.)?youtu(?:be\.com\/watch\?v=|\.be\/)([\w\-\_]*)(&(amp;)?‌​[\w\?‌​=]*)?/g;
+  const full = /http(?:s?):\/\/(?:www\.)?youtu(?:be\.com\/watch\?v=|\.be\/)([\w\-\_]*)(&(amp;)?‌​[\w\?‌​=]*)?/g;
 
   urlRegex([prefix, full], message, function (id, index) {
     // if is the prefixed regex, cuts the prefix,
     // otherwise, cut the id part
     id = index == 0 ? id.substring(3) : id.slice(-11);
+
+    console.log('video sent'.blue)
+
     BrowserWindow.getAllWindows()[0].webContents.send("video", {
+      username: username,
+      id: id,
+      platform: platform,
+    });
+  });
+}
+
+exports.youtubeMusicVideo = function(username, message, platform) {
+  const prefix = /yt=([^\s]+)/g;
+  const full = /http(?:s?):\/\/(?:www\.)?youtu(?:be\.com\/watch\?v=|\.be\/)([\w\-\_]*)(&(amp;)?‌​[\w\?‌​=]*)?/g;
+
+  urlRegex([prefix, full], message, function (id, index) {
+    // if is the prefixed regex, cuts the prefix,
+    // otherwise, cut the id part
+    id = index == 0 ? id.substring(3) : id.slice(-11);
+
+    console.log('video sent'.blue)
+
+    BrowserWindow.getAllWindows()[0].webContents.send("musicVideo", {
       username: username,
       id: id,
       platform: platform,
@@ -198,11 +225,70 @@ exports.steam = function (username, message, platform) {
   });
 }
 
+// TODO: clips de twitch
+
+exports.clips = function (username, message, platform) {
+  const prefix = /sv=(.)([^\s]+)/g;
+  const full = /(?:https:\/\/)?streamvip\.app\/clips\/(\S+)/g;
+  const baseUrl = "https://streamvip.app/clips/";
+
+  urlRegex([prefix, full], message, function (id, index) {
+    let url = "";
+
+    if (index == 1) {
+      url = encodeURI(id);
+    } else {
+      url = encodeURI(baseUrl + id.slice(3));
+    }
+
+    console.log(url)
+
+    request({ encoding: null, method: "GET", uri: url }, function (error, response, body) {
+      try {
+        
+
+        const $ = cheerio.load(body)
+        
+        const title = $('.title').text().replace('Clips','')
+        const video = $('video').attr('src')
+        const channelImage = $('.info img').attr('src')
+        const details = $('.created small').text().trim().replace('h├í').split('Criado por')
+        
+        const createdAt = details[0].replace('há ','').trim()
+        const author = details[1].trim()
+      
+
+      const clip = {
+        username: username,
+        title: title,
+        createdAt: createdAt,
+        author: author,
+        url: url,
+        video: video,
+        channelImage: channelImage,
+        platform: platform,
+        watched: false
+      }
+      
+      BrowserWindow.getAllWindows()[0].webContents.send("clip", clip);
+
+
+      console.log(title)
+      console.log(createdAt)
+      console.log(author)
+    } catch (error) {
+        
+    }
+    });
+
+  });
+}
+
 function urlRegex(regexs, message, callback) {
+
   regexs.forEach((regex, index) => {
     if (message.match(regex) !== null) {
       message.match(regex).forEach((id) => {
-        console.log("id: ", id);
         callback(id, index);
       });
     }

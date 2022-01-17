@@ -2,15 +2,18 @@ const key = "AIzaSyAv2ie_VWHHlbjLyF7xh7aJYdj4lIqsk_c";
 const videoParts = "snippet,statistics,contentDetails";
 const channelParts = "snippet,statistics,contentDetails,brandingSettings";
 
+var youtube = require('youtube-iframe-player');
+
 const ipcRenderer = require("electron").ipcRenderer;
-const dialog = require("electron").remote.dialog;
+//const dialog = require("electron").remote.dialog;
 
 const { remote } = require("electron");
-const { Menu, MenuItem } = remote;
+
+//const { Menu, MenuItem } = remote;
 
 var bannedVideos = [];
 
-// TODO: chage to api basedhttps://developers.google.com/youtube/v3/docs/videoCategories/list
+// TODO: change to api based https://developers.google.com/youtube/v3/docs/videoCategories/list
 
 var categories = [
   { id: 1, name: "Cine y Animación" },
@@ -46,32 +49,6 @@ var categories = [
   { id: 43, name: "Shows" },
   { id: 44, name: "Trailer" },
 ];
-
-function showBanVideoPrompt(id) {
-  let index = app.videos.findIndex((x) => x.id === id);
-
-  dialog
-    .showMessageBox({
-      type: "warning",
-      message:
-        '¿Estas seguro que deseas banear "' + app.videos[index].title + '" ?',
-      buttons: ["yes", "no"],
-      defaultId: 0, // bound to buttons array
-      cancelId: 1, // bound to buttons array
-    })
-    .then((result) => {
-      if (result.response === 0) {
-        // lo agregamos a la banlist
-        bannedVideos.push(app.videos[index].id);
-
-        // borramos el video de la lista actual
-        if (index > -1) {
-          app.videos.splice(index, 1);
-        }
-      } else if (result.response === 1) {
-      }
-    });
-}
 
 function formatISOtime(duration) {
   var a = duration.match(/\d+/g);
@@ -129,8 +106,10 @@ var app = new Vue({
   data: {
     videos: [],
     products: [],
-    watchedInSession: [],
-    watchedInAlltime: [],
+    clips: [],
+    sentInSession: [],
+    sentInSessionMusic: [],
+    sentInAlltime: [],
 
     videofilters: {
       shortvideos: true,
@@ -145,18 +124,190 @@ var app = new Vue({
       likeratio: true,
       description: false,
     },
+    songrequstison: false,
+    currentSong: 0,
+    paused: false,
+    songslist: [
+      {
+        id: 'DHcG1v74MY8',
+        title: 'Esta temblando 2.0 | CristianGhost Clips',
+        artist: 'Tiago_facha'
+      },
+      {
+        id: 'mBjpVJKqOlI',
+        title: 'Baile de pana con la Cynthia y casi se lekea | CristianGhost Clips',
+        artist: 'Tiago_facha'
+      },
+      {
+        id: 'sv0DkJR5HCU',
+        title: 'CristianGhost Reacciona a su Abecedario',
+        artist: 'MacFlai'
+      },
+      {
+        id: 'vs1e3cprNYE',
+        title: 'Que Minion es Cristian? | CristianGhost Clips',
+        artist: 'Tiago_facha'
+      },
+      {
+        id: 'vs1e3cprNYE',
+        title: 'Que Minion es Cristian? | CristianGhost Clips',
+        artist: 'Tiago_facha'
+      },
+      {
+        id: 'vs1e3cprNYE',
+        title: 'Que Minion es Cristian? | CristianGhost Clips',
+        artist: 'Tiago_facha'
+      },
+      {
+        id: 'vs1e3cprNYE',
+        title: 'Que Minion es Cristian? | CristianGhost Clips',
+        artist: 'Tiago_facha'
+      },
+      {
+        id: 'vs1e3cprNYE',
+        title: 'Que Minion es Cristian? | CristianGhost Clips',
+        artist: 'Tiago_facha'
+      },
+      {
+        id: 'vs1e3cprNYE',
+        title: 'Que Minion es Cristian? | CristianGhost Clips',
+        artist: 'Tiago_facha'
+      },
+      {
+        id: 'vs1e3cprNYE',
+        title: 'Que Minion es Cristian? | CristianGhost Clips',
+        artist: 'Tiago_facha'
+      },
+      {
+        id: 'vs1e3cprNYE',
+        title: 'Que Minion es Cristian? | CristianGhost Clips',
+        artist: 'Tiago_facha'
+      },
+      {
+        id: 'vs1e3cprNYE',
+        title: 'Que Minion es Cristian? | CristianGhost Clips',
+        artist: 'Tiago_facha'
+      },
+      {
+        id: 'vs1e3cprNYE',
+        title: 'Que Minion es Cristian? | CristianGhost Clips',
+        artist: 'Tiago_facha'
+      },
+      {
+        id: 'vs1e3cprNYE',
+        title: 'Que Minion es Cristian? | CristianGhost Clips',
+        artist: 'Tiago_facha'
+      },
+      {
+        id: 'vs1e3cprNYE',
+        title: 'Que Minion es Cristian? | CristianGhost Clips',
+        artist: 'Tiago_facha'
+      },
+      {
+        id: 'vs1e3cprNYE',
+        title: 'Que Minion es Cristian? | CristianGhost Clips',
+        artist: 'Tiago_facha'
+      },
+      {
+        id: 'vs1e3cprNYE',
+        title: 'Que Minion es Cristian? | CristianGhost Clips',
+        artist: 'Tiago_facha'
+      },
+      {
+        id: 'vs1e3cprNYE',
+        title: 'Que Minion es Cristian? | CristianGhost Clips',
+        artist: 'Tiago_facha'
+      },
+      {
+        id: 'vs1e3cprNYE',
+        title: 'Que Minion es Cristian? | CristianGhost Clips',
+        artist: 'Tiago_facha'
+      },
+      {
+        id: 'vs1e3cprNYE',
+        title: 'Que Minion es Cristian? | CristianGhost Clips',
+        artist: 'Tiago_facha'
+      },
+      {
+        id: 'vs1e3cprNYE',
+        title: 'Que Minion es Cristian? | CristianGhost Clips',
+        artist: 'Tiago_facha'
+      },
+      {
+        id: 'vs1e3cprNYE',
+        title: 'Que Minion es Cristian? | CristianGhost Clips',
+        artist: 'Tiago_facha'
+      },
+      {
+        id: 'vs1e3cprNYE',
+        title: 'Que Minion es Cristian? | CristianGhost Clips',
+        artist: 'Tiago_facha'
+      },
+      {
+        id: 'vs1e3cprNYE',
+        title: 'Que Minion es Cristian? | CristianGhost Clips',
+        artist: 'Tiago_facha'
+      },
+      {
+        id: 'vs1e3cprNYE',
+        title: 'Que Minion es Cristian? | CristianGhost Clips',
+        artist: 'Tiago_facha'
+      },
+      {
+        id: 'vs1e3cprNYE',
+        title: 'Que Minion es Cristian? | CristianGhost Clips',
+        artist: 'Tiago_facha'
+      },
+      {
+        id: 'vs1e3cprNYE',
+        title: 'Que Minion es Cristian? | CristianGhost Clips',
+        artist: 'Tiago_facha'
+      },
+      {
+        id: 'vs1e3cprNYE',
+        title: 'Que Minion es Cristian? | CristianGhost Clips',
+        artist: 'Tiago_facha'
+      },
+      {
+        id: 'vs1e3cprNYE',
+        title: 'Que Minion es Cristian? | CristianGhost Clips',
+        artist: 'Tiago_facha'
+      },
+      {
+        id: 'vs1e3cprNYE',
+        title: 'Que Minion es Cristian? | CristianGhost Clips',
+        artist: 'Tiago_facha'
+      },
+      {
+        id: 'vs1e3cprNYE',
+        title: 'Que Minion es Cristian? | CristianGhost Clips',
+        artist: 'Tiago_facha'
+      },
+      {
+        id: 'vs1e3cprNYE',
+        title: 'Que Minion es Cristian? | CristianGhost Clips',
+        artist: 'Tiago_facha'
+      },
+      {
+        id: 'vs1e3cprNYE',
+        title: 'Que Minion es Cristian? | CristianGhost Clips',
+        artist: 'Tiago_facha'
+      }
+    ],
 
     channels: [],
 
-    showWatchedInSession: true,
+    showSentInSession: true,
 
     stores: ["mercadolibre", "amazon", "aliexpress", "steam"],
 
     tabs: [
       { id: "videos", name: "Videos", enabled: true },
       { id: "watchlater", name: "Ver más tarde", enabled: true },
-      { id: "channels", name: "Canales", enabled: true },
-      { id: "products", name: "Tiendas", enabled: true },
+      { id: "songrequest", name: "Song Request", enabled: true }, // debug
+      { id: "clips", name: "Clips", enabled: true },
+      { id: "channels", name: "Canales", enabled: false },
+      { id: "products", name: "Tiendas", enabled: false },
     ],
     currentTab: "videos",
   },
@@ -166,28 +317,31 @@ var app = new Vue({
       console.log("tab '" + tab.id + "' selected");
     },
     addToBanVideos: function (id) {
-      showBanVideoPrompt(id);
+      let index = this.videos.findIndex((x) => x.id === id);
+
+      this.videos[index].watched = true;
+
+      ipcRenderer.send("storeVideo", id);
     },
     addToWatchlater: function (id) {
       let index = this.videos.findIndex((x) => x.id === id);
 
       this.videos[index].watchlater = true;
+      ipcRenderer.send("addWatchLaterVideo", this.videos[index]);
     },
     removeFromWatchlater: function (id) {
       let index = this.videos.findIndex((x) => x.id === id);
 
       this.videos[index].watchlater = false;
     },
-    markVideoAsWatched: function (id) {
-      let index = this.videos.findIndex((x) => x.id === id);
+    markAsWatched: function (arr, id) {
+      let index = arr.findIndex((x) => x.id === id);
 
-      this.videos[index].watched = true;
-    },
-    markProductAsWatched: function (title) {
-      let index = this.products.findIndex((x) => x.title === title);
+      arr[index].watched = true;
 
-      this.products[index].watched = true;
+      ipcRenderer.send("storeVideo", id);
     },
+    
     readeableCategory: function (id) {
       var categoryName = "";
       categories.forEach((category) => {
@@ -196,6 +350,15 @@ var app = new Vue({
         }
       });
       return categoryName;
+    },
+    totalItemsInWatchLater: function () {
+      return this.videos.filter(video => {
+        return video.watchlater && !video.watched
+      }).length
+
+    },
+    totalItems: function (arr) {
+      return arr.length
     },
     watchlaterDuration: function () {
       var durationInSecounds = 0;
@@ -213,12 +376,104 @@ var app = new Vue({
             return channel.id !== id
         })
 
-        app.watchedInSession = app.watchedInSession.filter(function(storedId) {
+        app.sentInSession = app.sentInSession.filter(function(storedId) {
             return storedId !== id
         })    
 
         console.log('delete ',id,' sent')
         ipcRenderer.send("deleteChannel",id);
+    },
+
+    startSongRequest(){
+      var self = this;
+
+      this.songrequstison = true
+      this.paused = false
+
+      youtube.init(function() {
+        
+      console.log('API Loaded');
+
+      // si existe un reproductor
+      if (typeof youtubePlayer !== "undefined") {
+        youtubePlayer.playVideo();
+        return
+      }
+      youtubePlayer = youtube.createPlayer('player', {
+            width: '720',
+            height: '405',
+            videoId: 'g8K21P8CoeI',
+            playerVars: { 'autoplay': 1, 'controls': 1 },
+            events: {
+                'onReady': playerReady,
+                'onStateChange': onPlayerStateChange
+            }
+        });
+    
+        function playerReady(event) {
+          //youtubePlayer.playVideo();
+          if (self.songslist.length > 0){
+            self.playNext()
+          }else{
+            youtube.stop()
+          }
+          
+
+        }
+    
+        function onPlayerStateChange(event) {
+            console.log('Player State Changed: ', event);
+            // si el video termina
+            if(event.data == 0){
+              self.playNext()
+            }
+        }  
+      });
+    },
+
+    playNext(){
+
+      this.paused = false
+
+      // borramos el video de la lista por id                       
+      if(app.currentSong > 0) app.songslist.shift()
+      
+      // si hay una siguiente cancion
+      if (app.songslist.length > 0){
+        
+        // la reproducimos
+        youtube.loadVideo(app.songslist[0].id)
+        
+        // y aumentamos el contador
+        app.currentSong++
+        
+      // si no hay una siguiente cancion, pondremos el video default
+      }else{
+        youtube.loadVideo('g8K21P8CoeI')
+        app.currentSong = 0
+        youtube.stop()
+
+      }
+    },
+
+    stopSongRequest(){
+      this.songrequstison = false
+      this.paused = false
+
+      youtube.stop()
+
+    },
+    pauseSongRequest(){
+      this.paused = true
+
+      youtube.pause()
+
+    },
+    resumeSongRequest(){
+      this.paused = false
+
+      youtube.play()
+
     }
   },
   computed: {
@@ -228,9 +483,12 @@ var app = new Vue({
     reverseproducts() {
       return this.products.slice().reverse();
     },
+    reverseclips() {
+      return this.clips.slice().reverse();
+    },
     reversechannels() {
         return this.channels.slice().reverse();
-    },
+    }
   },
 });
 
@@ -238,7 +496,13 @@ ipcRenderer.on("video", function (event, msg) {
   addVideo(msg.id, msg.platform, msg.username);
 });
 
+ipcRenderer.on("musicVideo", function (event, msg) {
+  addMusicVideo(msg.id, msg.platform, msg.username);
+});
+
 ipcRenderer.on("product", addProduct);
+
+ipcRenderer.on("clip", addClip);
 
 ipcRenderer.on("toggleStore", function (event, data) {
   const store = app.stores.find((store) => store == data.store);
@@ -277,9 +541,9 @@ ipcRenderer.on("filtervideos", function (event, filter) {
   app.videofilters[filter.type] = filter.state;
 });
 
-ipcRenderer.on("showWatchedInSession", function (event, data) {
+ipcRenderer.on("showSentInSession", function (event, data) {
   console.log("show watched videos during session (stream) status", data);
-  app.showWatchedInSession = data.state;
+  app.showSentInSession = data.state;
 });
 
 // Gets all videos watched in other streams
@@ -287,9 +551,20 @@ ipcRenderer.on("getAlltimeWatchedVideos", function (event, videos) {
   console.log("watched in all time videos", videos);
 
   if (videos != null) {
-    app.watchedInAlltime = videos;
+    app.sentInAlltime = videos;
   }
 });
+
+// Gets all videos watched in other streams
+ipcRenderer.on("getWatchlaterVideos", function (event, videos) {
+  console.log("Watch later videos", videos);
+
+  if (videos != null) {
+    app.videos = app.videos.concat(videos);
+  }
+});
+
+
 
 // Gets all channels stored in the system
 ipcRenderer.on("getAllChannels", function (event, channels) {
@@ -299,15 +574,56 @@ ipcRenderer.on("getAllChannels", function (event, channels) {
       app.channels = channels;
       
     }
+});
+
+var client;
+
+ipcRenderer.on("twitchChannel", function (event, channelName) {
+  console.log("channelName: ", channelName);
+
+  let channels = [];
+
+  channels.push(channelName)
+
+  if (channelName == 'cristianghost' || channelName == 'cynthiayaya') {
+    channels.push("notfijxu")
+  }
+
+  client = new tmi.Client({
+    identity: {
+      username: "NotFijxu",
+      password: "oauth:itwzbxxoe87ltpzoxkxew7e625mxcu",
+    },
+    channels: channels
   });
   
+  client.connect();
+
+    
+  client.on("message", (channel, tags, message, self) => {
+
+    if (channel == "#notfijxu") {
+      let username = message.split(" ")[1].replace(":", "");
+      ipcRenderer.send("sendLink", username, message, "booyah");
+    } else {
+      ipcRenderer.send("sendLink", tags["display-name"], message, "twitch");
+    }
+});
+
+});
+ 
+
+
 
 
 function addVideo(id, platform, username) {
   // avoid video repetition
-  if (app.watchedInSession.includes(id)) return; // refactor to sentInSession
-  if (app.watchedInAlltime.includes(id)) return;
+  if (app.sentInSession.includes(id)) return; // refactor to sentInSession
+  if (app.sentInAlltime.includes(id)) return;
 
+  app.sentInSession.push(id);
+
+  console.log(platform,id)
   
   fetch(`https://www.googleapis.com/youtube/v3/videos?part=${videoParts}&id=${id}&key=${key}`)
   .then((response) => response.json())
@@ -350,17 +666,56 @@ function addVideo(id, platform, username) {
         watched: false,
       };
 
-      // if video is added, store in "all time watched" array
-      ipcRenderer.send("storeVideo", id);
-
-      app.watchedInSession.push(id);
       app.videos.push(video); 
     });
 }
 
+function addMusicVideo(id, platform, username) {
+
+  if (app.sentInSessionMusic.includes(id) || !app.songrequstison) return;
+
+  app.sentInSessionMusic.push(id);
+
+
+
+
+  fetch(`https://www.googleapis.com/youtube/v3/videos?part=${videoParts}&id=${id}&key=${key}`)
+  .then((response) => response.json())
+  .then((youtubeVideo) => {
+    console.log(youtubeVideo)
+
+    let durationSecounds = formatISOtime(
+      youtubeVideo.items[0].contentDetails.duration
+    );
+
+    if (durationSecounds > 500) return
+
+    // si el video es musical
+    if(youtubeVideo.items[0].snippet.categoryId == "10"){
+      const video = {
+        id: id,
+        title: youtubeVideo.items[0].snippet.title,
+        artist: youtubeVideo.items[0].snippet.channelTitle,
+        thumbnail: youtubeVideo.items[0].snippet.thumbnails.medium.url
+      }
+
+      console.log(video)
+      // agregamos el video a la lista
+      app.songslist.push(video)
+
+      // si no hay videos aparte de ese, lo reproducimos
+      if (app.songslist.length == 1) {
+        app.playNext()
+      }
+
+
+    }
+  })
+}
+
 
 function addChannel(channelID){
-    if (app.watchedInSession.includes(channelID)) return; // refactor to sentInSession
+    if (app.sentInSession.includes(channelID)) return; // refactor to sentInSession
     
     fetch(`https://www.googleapis.com/youtube/v3/channels?part=${channelParts}&id=${channelID}&key=${key}`)
     .then((response) => response.json())
@@ -371,38 +726,34 @@ function addChannel(channelID){
         
         ipcRenderer.send("storeChannel",youtubeChannel);
 
-        app.watchedInSession.push(channelID);      
+        app.sentInSession.push(channelID);      
         app.channels.push(youtubeChannel)
     })
 }
 
 function addProduct(event, product) {
-  if (app.watchedInSession.includes(product.title)) return;
+  if (app.sentInSession.includes(product.title)) return;
   
-  app.watchedInSession.push(product.title);
+  app.sentInSession.push(product.title);
 
   app.products.push(product);
 }
 
-const client = new tmi.Client({
-  identity: {
-    username: "elmarceloc",
-    password: "oauth:jnrg7yz2gr4fasktakkpswbngt63tc",
-  },
-  channels: ["cristianghost", "notfijxu"],
-});
+function addClip(event, clip) {
 
-client.connect();
+  console.log(clip)
 
-client.on("message", (channel, tags, message, self) => {
-  console.log(channel, message);
-  if (channel == "#notfijxu") {
-    let username = message.split(" ")[1].replace(":", "");
-    ipcRenderer.send("sendLink", username, message, "booyah");
-  } else {
-    ipcRenderer.send("sendLink", tags["display-name"], message, "twitch");
-  }
-});
+  if (app.sentInSession.includes(clip.title)) return;
+  
+  app.sentInSession.push(clip.title);
+
+  app.clips.push(clip);
+}
+
+
+function addTestVideo() {
+  addVideo('DyET9VQZA3E')
+}
 
 const notification = document.getElementById("notification");
 const message_title = document.getElementById("message_title");
@@ -432,6 +783,8 @@ function restartApp() {
   ipcRenderer.send("restart_app");
 }
 
+const {  Menu , MenuItem } = require('@electron/remote')
+
 window.addEventListener("contextmenu", (e) => {
   e.preventDefault();
   
@@ -447,7 +800,7 @@ window.addEventListener("contextmenu", (e) => {
           },
         })
       );
-      menu.popup({ window: remote.getCurrentWindow() });
+      menu.popup({ window: require('@electron/remote').getCurrentWindow() });
   }
 
 

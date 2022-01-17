@@ -21,6 +21,8 @@
     <link rel="stylesheet" href="./stylesheets/youtube.css" />
     <link rel="stylesheet" href="./stylesheets/products.css" />
     <link rel="stylesheet" href="./stylesheets/channels.css" />
+
+    <link rel="stylesheet" href="./stylesheets/songrequest.css" />
     
     <link rel="stylesheet" href="./stylesheets/notification.css" />
     
@@ -51,7 +53,7 @@
     <script src="https://unpkg.com/vue-tippy/dist/vue-tippy.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue-tippy/dist/vue-tippy.min.js"></script>
 
-    <title>Booyah! videos</title>
+    <title>Stream Videos</title>
   </head>
   <body>
     <div id="app">
@@ -75,13 +77,18 @@
           @click="setTab(tab) "
           v-for="(tab,index) in tabs"
           :class="{ active: currentTab==tab.id }"
-          class="item"
+          class="item "
           v-if="tab.enabled"
         >
-
-          {{tab.name}} 
+        {{tab.name}}
+        <div class="tab-amount" v-if="tab.id == 'watchlater' && totalItemsInWatchLater() > 0">
+          <span>{{totalItemsInWatchLater()}}</span>
         </div>
-    </div>
+        <div class="tab-amount" v-if="tab.id == 'clips' && totalItems(clips) > 0">
+          <span>{{totalItems(clips)}}</span>
+        </div>
+        </div>
+      </div>
     </br></br>
 
       <div class="watchlaterDuration" v-if="currentTab=='watchlater'">
@@ -108,21 +115,23 @@
 
                 /* Watched in session */
 
-                && ( showWatchedInSession == true || (showWatchedInSession==false && !video.watched))
+                && ( showSentInSession == true || (showSentInSession==false && !video.watched))
                "
 
                 class="ui card" :class="{ watched: video.watched }" v-for="(video,index) in reversevideos">
         <div class="image">
          
-          <i v-if="currentTab=='videos' && !video.watched" @click="addToWatchlater(video.id)" content="Ver más tarde" v-tippy class="watchlater fas fa-stopwatch"></i>
-          <i v-if="currentTab=='watchlater' && !video.watched" @click="removeFromWatchlater(video.id)" content="Quitar de ver mas tarde" v-tippy class="watchlater fas fa-times"></i>
+          <i v-if="(currentTab=='videos' || currentTab=='watchlater') && !video.watched" @click="addToBanVideos(video.id)" content="Banear" v-tippy class="videobutton banvideo fas fa-ban"></i>
+
+          <i v-if="currentTab=='videos' && !video.watched" @click="addToWatchlater(video.id)" content="Ver más tarde" v-tippy class="videobutton watchlater fas fa-stopwatch"></i>
+          <i v-if="currentTab=='watchlater' && !video.watched" @click="removeFromWatchlater(video.id)" content="Quitar de ver mas tarde" v-tippy class="videobutton watchlater fas fa-times"></i>
           
-          <a @click="markVideoAsWatched(video.id)" :href="video.url" target="_blank">
+          <a @click="markAsWatched(videos,video.id)" :href="video.url" target="_blank">
             <img :src="video.thumbnail_url" />
           </a>
         </div>
         <div class="content">
-          <a @click="markVideoAsWatched(video.id)" :href="video.url" target="_blank" class="header"
+          <a @click="markAsWatched(videos,video.id)" :href="video.url" target="_blank" class="header"
             >{{video.title}}</a
           >
           <p class="info-row">
@@ -145,8 +154,8 @@
             <span v-if="video.publishedAt && videofilters.publishedAt" content="Fecha de creacion" v-tippy class="info date"
               ><i class="fas fa-calendar-alt"></i>{{ video.publishedAt }}</span
             >
-            <span v-if="videofilters.channel" content="Canal" v-tippy :id="video.channelId" class="info channel"
-              ><i class="youtube fab fa-youtube"></i>{{ video.channel }}</span
+            <a target="__blank" :href="'https://www.youtube.com/channel/'+video.channelId+'/videos'" v-if="videofilters.channel" content="Canal" v-tippy :id="video.channelId" class="info channel"
+              ><i class="youtube fab fa-youtube"></i>{{ video.channel }}</a
             >
             <span v-if="videofilters.author" :content="'Enviado desde '+video.platform" v-tippy class="info author"
               >
@@ -164,6 +173,10 @@
               ><i v-if="video.likeratio > 85" class="good fas fa-thumbs-up"></i>
               <i v-if="video.likeratio <= 85" class="bad fas fa-thumbs-down"></i>{{video.likeratio}}%</span
               >
+              <a target="__blank" :href="'https://www.youtube.com/results?search_query='+video.title" content="Buscar videos similares en Youtube" v-tippy class="info "
+              ><i class="youtube fas fa-search"></i>Ver Similares</span
+              ></a
+              >
               <p v-if="videofilters.description" class="info videodescription">{{video.description}}</p>
             <!-- <img @click="banvideo(video.id)" class="ban" src="ban.png"> </img> -->
           </p>
@@ -174,18 +187,18 @@
 
       <div 
       v-if=" currentTab=='products' && stores.includes(product.store) &&
-            (showWatchedInSession==true || (showWatchedInSession==false && !product.watched))
+            (showSentInSession==true || (showSentInSession==false && !product.watched))
              "
 
               class="ui card" :class="{ watched: product.watched }" v-for="(product,index) in reverseproducts">
       <div class="image">
        
-        <a @click="markProductAsWatched(product.title)" :href="product.url" target="_blank">
+        <a @click="markAsWatched(products, product.title)" :href="product.url" target="_blank">
           <img :src="product.img" />
         </a>
       </div>
       <div class="content">
-        <a @click="markProductAsWatched(product.title)" :href="product.url" target="_blank" class="header"
+        <a @click="markAsWatched(products, product.title)" :href="product.url" target="_blank" class="header"
           >{{product.title}}</a
         >
         <p class="info-row">
@@ -206,6 +219,52 @@
               <i class="fas fa-store-alt"></i>{{ product.storeReadeable }}
             </span>
          </p>
+      </div>
+    </div>
+
+
+
+
+
+    <div 
+      v-if=" currentTab=='clips' &&
+            (showSentInSession==true || (showSentInSession==false && !clip.watched))
+             "
+
+              class="ui card" :class="{ watched: clip.watched }" v-for="(clip,index) in reverseclips">
+      <div class="image">
+        <a @click="markAsWatched(clips, product.title)" :href="clip.url" target="_blank">
+          <video :src="clip.video"></video>
+        </a>
+      </div>
+      <div class="content">
+
+        <img class="channelImage" :src="clip.channelImage">
+        <div class="aside">
+
+
+        <a @click="markAsWatched(clips, clip.title)" :href="clip.url" target="_blank" class="header"
+          >{{clip.title}}</a
+        >
+        <p class="info-row">
+          <span v-if="videofilters.author" :content="'Enviado desde '+clip.platform" v-tippy class="info author"
+          >
+          
+          <img v-if="clip.platform == 'twitch'" class="platform" src="./images/twitch-icon.png"></img>
+          <img v-if="clip.platform == 'booyah'" class="platform" src="./images/booyah-icon.png"></img>
+
+          {{clip.platform }}</span>
+
+          <span v-if="clip.author" content="Autor del clip" v-tippy class="info price">
+            <i class="fas fa-user"></i>{{ clip.author }}
+          </span>
+          
+          <span v-if="clip.createdAt" content="Fecha de creacion" v-tippy class="info date"
+          ><i class="fas fa-calendar-alt"></i>{{ clip.createdAt }}</span>
+
+         </p>
+
+        </div>
       </div>
     </div>
 
@@ -238,11 +297,58 @@
     </div>
   </div>
 
+  <div 
+  v-if=" currentTab=='songrequest' ">
 
 
+  <button @click="startSongRequest()" v-if="!songrequstison" class="ui small green button">
+    <i class="fas fa-play"></i> Iniciar
+  </button>
+
+  <button @click="stopSongRequest()" v-if="songrequstison" class="ui small red button">
+    <i class="fas fa-stop"></i> Detener
+  </button>
+
+  <button @click="pauseSongRequest()" v-if="!paused" class="ui small yellow button">
+    <i class="fas fa-pause"></i> Pausar
+  </button>
+
+  <button @click="resumeSongRequest()" v-if="paused" class="ui small orange button">
+    <i class="fas fa-play"></i> Despausar
+  </button>
+   
+  <button @click="playNext()" class="ui small blue button">
+    <i class="fas fa-forward"></i> Saltar
+  </button>
+
+    <table v-if="songslist.length > 0" class="ui selectable unstackable  inverted table songslist">
+      <thead>
+        <tr>
+          <th></th>
+          <th>Nombre</th>
+          <th>Artista</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-bind:class="(index == 0) ? 'current' : ''" v-for="(song, index) in songslist">
+          <td>#{{index+1}}</td>
+          <td>{{song.title}}</td>
+          <td>{{song.artist}}</td>
+          <td class="close">x</td>
+        </tr>
+      </tbody>
+    </table>
+
+
+
+
+  </div>
+
+  <div id="player"></div>
 
     </div>
-
+    <script src="./javascript/scroll.js"></script>
     <script src="./javascript/main.js"></script>
   </body>
 </html>

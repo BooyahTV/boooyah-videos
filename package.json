@@ -1,12 +1,16 @@
 {
   "dependencies": {
+    "@electron/remote": "^2.0.1",
     "async-request": "^1.2.0",
     "cheerio": "*",
-    "cherio": "*",
+    "cherio": "^1.0.0-rc.2",
+    "colors": "^1.4.0",
     "currency-converter": "^0.1.12",
+    "dialogs": "^2.0.1",
     "electron-is-dev": "^2.0.0",
     "electron-json-storage": "^4.5.0",
     "electron-log": "^4.4.1",
+    "electron-prompt": "^1.7.0",
     "electron-settings": "^4.0.2",
     "electron-store": "^8.0.0",
     "electron-updater": "^4.3.9",
@@ -21,7 +25,9 @@
     "puppeteer-core": "^10.2.0",
     "puppeteer-in-electron": "^3.0.5",
     "request": "^2.81.0",
-    "session": "^0.1.0"
+    "session": "^0.1.0",
+    "utf8": "^3.0.0",
+    "youtube-iframe-player": "https://github.com/elmarceloc/youtube-iframe-player/tarball/master"
   },
   "devDependencies": {
     "electron": "^13.2.2",
@@ -29,7 +35,7 @@
     "electron-reloader": "^1.2.1"
   },
   "build": {
-    "productName": "Booyah! Videos",
+    "productName": "Stream Videos",
     "appId": "com.elmarceloc.booyahvideos",
     "win": {
       "target": "nsis",
@@ -37,8 +43,8 @@
       "verifyUpdateCodeSignature": false
     }
   },
-  "name": "Booyahvideos",
-  "version": "0.7.22",
+  "name": "BooyahVideos",
+  "version": "0.8.7",
   "main": "main/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",

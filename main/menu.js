@@ -1,4 +1,6 @@
 const { Menu, BrowserWindow } = require("electron");
+const prompt = require('electron-prompt');
+const settings = require("electron-settings");
 
 var stores = [
   { id: "mercadolibre", label: "Mercado Libre" },
@@ -10,6 +12,8 @@ var stores = [
 var tabs = [
     { id: "videos", label: "Videos" },
     { id: "watchlater", label: "Ver más tarde" },
+    { id: "songrequest", label: "Song Request" },
+    { id: "clips", label: "Clips" },
     { id: "channels", label: "Canales" },
     { id: "products", label: "Tiendas" },
 ];
@@ -39,8 +43,8 @@ stores.forEach(store => {
         checked: true,
         click: function (item, browser) {
             BrowserWindow.getAllWindows()[0].webContents.send("toggleStore", {
-            store: store.id,
-            status: item.checked,
+              store: store.id,
+              status: item.checked,
             });
         },
     });
@@ -48,12 +52,12 @@ stores.forEach(store => {
 
 // populates tab items
 
-tabs.forEach(tab => {
+tabs.forEach((tab,index) => {
     tabsItems.push({
         id: tab.id,
         type: "checkbox",
         label: tab.label,
-        checked: true,
+        checked: index < 3,
         click: function (item, browser) {
             BrowserWindow.getAllWindows()[0].webContents.send("toggleTab", {
                 id: tab.id,
@@ -86,13 +90,13 @@ var menu = Menu.buildFromTemplate([
     label: "Ver",
     submenu: [
       {
-        id: "showWatchedInSession",
+        id: "showSentInSession",
         type: "checkbox",
         label: "Mostrar links Vistos",
         checked: true,
         click: function (item, browser) {
           BrowserWindow.getAllWindows()[0].webContents.send(
-            "showWatchedInSession",
+            "showSentInSession",
             {
               state: item.checked,
             }
@@ -161,6 +165,60 @@ var menu = Menu.buildFromTemplate([
           }
         },
       },
+      {
+        label: "Canal de Twitch.tv",
+        click: function (item, browser) {
+          settings.get("twitch.name").then((channelName) => {
+
+            prompt({
+              title: 'Canal de Twitch',
+              label: 'Canal de Twitch:',
+              value: channelName || 'cristianghost',
+              type: 'input',
+              alwaysOnTop: true,
+            })
+            .then((newChannelName) => {
+                if(newChannelName === null) {
+                    
+                } else {
+                  settings.set("twitch", {
+                    name: newChannelName,
+                  });
+                }
+            })
+            .catch(console.error);
+          });
+        },
+      },
+      {
+        label: "Canal de Booyah.live",
+        click: function (item, browser) {
+          settings.get("booyah.name").then((channelURL) => {
+
+            prompt({
+              title: 'Canal de Booyah!',
+              label: 'Link del Popup del Chat:',
+              value: channelURL || 'https://booyah.live/standalone/chatroom/79543340',
+              type: 'input',
+              alwaysOnTop: true,
+            })
+            .then((newChannelURL) => {
+                if(newChannelURL === null) {
+                    
+                } else {
+
+                  settings.set("booyah", {
+                    name: newChannelURL,
+                  });
+                }
+            })
+            .catch(console.error);
+          });
+        },
+      }
+
+
+
     ],
   },
 ]);

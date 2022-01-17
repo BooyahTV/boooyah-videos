@@ -1,0 +1,20 @@
+.songslist .header, .songslist .description {
+    color:white!important;
+}
+
+.songslist img{
+    width:30px;
+}
+
+.songslist .current{
+    background: #943636!important;
+}
+.songslist .current:hover{
+    background: #7c2323!important;
+}
+#player{
+    display: none;
+}
+.close{
+    cursor: pointer;
+}

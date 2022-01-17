@@ -8,7 +8,7 @@
     margin-top: 0px;
 }
   
-.item {
+.tabular .item {
   border-radius: 0px !important;
   font-size: 12px;
   transition: background-color 0.18s !important;
@@ -24,13 +24,13 @@
   border-radius: 0px !important;
 }
 
-.item:hover {
+.tabular .item:hover {
   background-color: #3c3c3c !important;
   color: white !important;
   border-radius: 0px !important;
 }
 
-.item.active {
+.tabular .item.active {
   background-color: #1e1e1e !important;
   font-weight: 400!important;
 }
