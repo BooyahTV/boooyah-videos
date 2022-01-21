@@ -127,7 +127,7 @@ var app = new Vue({
       description: false,
     },
     jam: '',
-    volume: "",
+    volume: 100,
     songrequstison: false,
     currentSong: 0,
     paused: false,
@@ -287,6 +287,30 @@ var app = new Vue({
         }  
       });
     },
+    selectSong(index){
+      this.paused = false
+
+      const song = this.songslist[index]
+      const firstSong = this.songslist[0]
+
+      this.songslist[index] = firstSong
+      this.songslist[0] = song
+
+      // si hay una siguiente cancion
+      if (app.songslist.length > 0){
+
+        // la reproducimos
+        youtube.loadVideo(app.songslist[0].id)
+
+        // y aumentamos el contador
+        app.currentSong++
+
+        //setMediaPlayer()
+
+
+        this.randomJam()
+      }
+    },
     playNext(){
 
       this.paused = false
@@ -304,6 +328,10 @@ var app = new Vue({
         app.currentSong++
 
         this.randomJam()
+
+        // seteamos la info de la musica
+
+        //setMediaPlayer()
 
       // si no hay una siguiente cancion, pondremos el video default
       }else{
@@ -339,6 +367,8 @@ var app = new Vue({
         
         this.songslist.splice(index, 1);
 
+        console.log(index, 'skiped')
+
       }
     },
     changeVolume(){
@@ -355,7 +385,9 @@ var app = new Vue({
         'https://cdn.betterttv.net/emote/5c3a9d8bbaa7ba09c9cfca37/3x',
         'https://cdn.betterttv.net/emote/5b9011eea2c5266ff2b8fde5/3x',
         'https://cdn.betterttv.net/emote/60d950bb8ed8b373e421a9d6/3x',
-        'https://cdn.betterttv.net/emote/600df0934e3ab965ef759f55/3x'
+        'https://cdn.betterttv.net/emote/600df0934e3ab965ef759f55/3x',
+        'https://cdn.betterttv.net/emote/60fb5ff62d1eba5400d1397b/3x',
+        'https://cdn.betterttv.net/emote/5e2cef19bca2995f13fc226b/3x'
       ]
       // guardamos el emote en jam
       this.jam = urls[Math.floor(Math.random() * urls.length)];
@@ -563,7 +595,7 @@ function addVideo(id, platform, username) {
   // avoid video repetition
   if (app.sentInSession.includes(id)) return; // refactor to sentInSession
   if (app.sentInAlltime.includes(id)) return;
-
+  
   app.sentInSession.push(id);
 
   console.log(platform,id)
@@ -609,6 +641,12 @@ function addVideo(id, platform, username) {
         watched: false,
       };
 
+      if (app.songrequstison && video.category == '10'){
+        console.log('skiped video because it is a song and song request is on')
+        return
+      }
+
+
       app.videos.push(video); 
     });
 }
@@ -641,12 +679,18 @@ function addMusicVideo(id, platform, username) {
         .then((youtubeChannel) => {
           console.log(youtubeChannel)
 
+          const badges = getBadges(username)
+
           const video = {
             id: id,
             title: youtubeVideo.items[0].snippet.title,
             artist: youtubeVideo.items[0].snippet.channelTitle,
             thumbnail: youtubeVideo.items[0].snippet.thumbnails.medium.url,
-            channelThumbnail: youtubeChannel.items[0].brandingSettings.image.bannerExternalUrl
+            channelThumbnail: youtubeChannel.items[0].brandingSettings.image.bannerExternalUrl,
+            submiter: username,
+            submiterColor: getUsernameColor(username),
+            platform: platform,
+            badges: badges
           }
     
           console.log(video)
@@ -756,3 +800,153 @@ window.addEventListener("contextmenu", (e) => {
 
 
 });
+
+
+var donators;
+
+fetch('https://bapi.zzls.xyz/api/badges/cristianghost')
+  .then(response => response.json())
+  .then(data => donators = data );
+
+
+function getUsernameColor(username){
+  const colors = [
+    "#002FA7",
+    "#8a2be2",
+    "#5f9ea0",
+    "#E4717A",
+    "#1e90ff",
+    "#b22222",
+    "#00FF00",
+    "#ff69b4",
+    "#ff4500",
+    "#ff0000",
+  ];
+
+  var hash = username.charCodeAt(0);
+
+	var color = "#6525a1";
+	
+	for (let i = 0; i < colors.length; i++) {
+		if (hash % i === 0) {
+			color = colors[i];
+		}
+	}
+
+  if( donators ) {
+    let booyahtvUser = donators[username]
+
+    if (booyahtvUser != null) {
+      // if the user has multiple badges (array)
+      if(Array.isArray(booyahtvUser)){
+        booyahtvUser.forEach(user => {
+          if (user.color) {
+            color = user.color
+          }
+        })
+      }else{
+        if (booyahtvUser.color) {
+          console.log('color found',booyahtvUser.color)
+          color = booyahtvUser.color
+        }
+      }
+    }	
+  }
+
+  return color;
+
+}
+
+function getBadges(username) {
+  if (!donators) return
+
+  const booyahtvUser = donators[username]
+
+	// adds the badge
+	if (booyahtvUser != null) {
+		// if the user has multiple badges (array)
+		if(Array.isArray(booyahtvUser)){
+      badges = []
+			booyahtvUser.forEach(user => {
+        if (user.badge) badges.push(getBadgeLink(user))
+			  
+			})
+      return badges;
+		}else{
+			return getBadgeLink(booyahtvUser)
+		}
+	}	
+}
+
+function getBadgeLink(user){
+  if(user.badge_source == 'bttv'){
+    return `https://cdn.betterttv.net/emote/${user.badge}/1x`
+  
+  }else if(user.badge_source == 'ffz'){
+    return `https://cdn.frankerfacez.com/emoticon/${user.badge}/1`
+  }
+  
+}
+
+function setMediaPlayer() {
+
+  console.log('media player updated')
+
+  // Make sure browser has Media Session API available
+  if ('mediaSession' in navigator) {
+
+  // Access to Media Session API
+  var ms = navigator.mediaSession;
+
+  // Create track info JSON variable
+  var trackInfo = {};
+
+  // Set track title
+  trackInfo.title = "Polaris";
+
+  // Set artist name
+  trackInfo.artist = "Downtown Binary & The Present Sound";
+
+  // Set album name
+  trackInfo.album = "Umbra";
+  
+  // Set album art (NOTE: image files must be hosted in "http" or "https" protocol to be shown)
+  trackInfo.artwork = [
+      { src: 'https://antonyhr.neocities.org/temp/polaris/polaris_album_art_96.jpg', sizes: '96x96', type: 'image/jpg' },
+      { src: 'https://antonyhr.neocities.org/temp/polaris/polaris_album_art_128.jpg', sizes: '128x128', type: 'image/jpg' },
+      { src: 'https://antonyhr.neocities.org/temp/polaris/polaris_album_art_192.jpg', sizes: '192x192', type: 'image/jpg' },
+      { src: 'https://antonyhr.neocities.org/temp/polaris/polaris_album_art_256.jpg', sizes: '256x256', type: 'image/jpg' },
+      { src: 'https://antonyhr.neocities.org/temp/polaris/polaris_album_art_384.jpg', sizes: '384x384', type: 'image/jpg' },
+      { src: 'https://antonyhr.neocities.org/temp/polaris/polaris_album_art_512.jpg', sizes: '512x512', type: 'image/jpg' }
+    ];
+
+    // Then, we create a new MediaMetadata and pass our trackInfo JSON variable
+    var mediaMD = new MediaMetadata(trackInfo);
+
+    // We assign our mediaMD to MediaSession.metadata property
+    ms.metadata = mediaMD
+
+    // And that will be all for show our custom track info in Windows (or any supported) Media Player Pop-Up
+    
+    // If we need to customize Media controls, we must set action handlers (NOTE: It's not necessary to add all action handlers).
+    ms.setActionHandler('play', function() {
+        
+        /*trackElement.play();
+        var trackInfoEl = document.getElementById("track_info_el");
+        trackInfoEl.textContent = "Track is playing.";*/
+    });
+    ms.setActionHandler('pause', function() {
+     /* trackElement.pause();
+      var trackInfoEl = document.getElementById("track_info_el");
+      trackInfoEl.textContent = "Track is paused.";*/
+    });
+    ms.setActionHandler('stop', function() { /* Code excerpted. */ });
+    ms.setActionHandler('seekbackward', function() { /* Code excerpted. */ });
+    ms.setActionHandler('seekforward', function() { /* Code excerpted. */ });
+    ms.setActionHandler('seekto', function() { /* Code excerpted. */ });
+    ms.setActionHandler('previoustrack', function() { /* Code excerpted. */ });
+    ms.setActionHandler('nexttrack', function() { /* Code excerpted. */ });
+} else {
+  console.warn("Your browser doesn't have Media Session API");
+}
+}

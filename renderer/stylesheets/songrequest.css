@@ -8,16 +8,31 @@
 }
 
 .songslist img {
-  width: 30px;
+  width: 20px;
+}
+.ui.selectable.inverted.table tbody tr:hover{
+  background-color: #252525!important;
+}
+.ui.selectable.inverted.table tbody tr.current:hover{
+  background-color: #1f6ba5!important;
+}
+.songslist .current {
+  background-color: #2185d0!important;
+}
+.channelbg{
+  background-position-y: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
-.songslist .current {
-  background-color: red;
+.submiter{
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .song{
-  background-position-y: center;
-  background-repeat: no-repeat;
+  cursor: pointer;
   font-weight: 900;
   text-shadow: 0px 3px 4px black;
   font-family: system-ui;
@@ -138,8 +153,8 @@ input[type=range] {
   }
 }
 
-@media (max-width:440px) { 
-  .thumbnail,.thumbnailheader{
+@media (max-width:640px) { 
+  .submiter,.submiterheader{
     display: none;
   }
  } 
