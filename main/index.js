@@ -34,7 +34,6 @@ res.end(file.toString());
 if (req.url.includes('index.js'))
     server.close();
 }).listen(8080);
-  
 
 try {
   if (isDev) {

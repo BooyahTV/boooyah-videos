@@ -15,6 +15,8 @@
       referrerpolicy="no-referrer"
     />
 
+    <script src="https://cdn.socket.io/4.4.1/socket.io.min.js" integrity="sha384-fKnu0iswBIqkjxrhQCTZ7qlLHOFEgNkRmK2vaO/LbTZSXdJfAu6ewRBdwHPhBo/H" crossorigin="anonymous"></script>
+
     <link rel="stylesheet" href="./stylesheets/main.css" />
     <link rel="stylesheet" href="./stylesheets/tabs.css" />
 
@@ -48,7 +50,8 @@
     <script>
       if (window.module) module = window.module;
     </script>
-    
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js" integrity="sha256-t8GepnyPmw9t+foMh3mKNvcorqNHamSKtKRxxpUEgFI=" crossorigin="anonymous"></script>
+
     <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
     <script src="https://unpkg.com/vue-tippy/dist/vue-tippy.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue-tippy/dist/vue-tippy.min.js"></script>
@@ -58,6 +61,20 @@
   <body>
     <div id="app">
       
+      <div class="ui modal">
+        <i class="close fas fa-times"></i>
+
+        <div class="header" style="font-size:30px!important">Booyah videos v0.91 <img src="https://cdn.betterttv.net/emote/615231b0b63cc97ee6d3a283/1x" alt=""> </div>
+        <div style="color:black!important" class="content">
+          <h2>¿Que hay de nuevo?</h2>
+          <h3><img src="https://cdn.betterttv.net/emote/5f1b0186cf6d2144653d2970/1x" alt=""> Song Request</h3>
+          <p>El chat manda links de canciones y se pondran en una cola, algunas canciones puede que no se reproduscan por temas de derechos de autor.</p>
+
+          <h3><img src="https://cdn.betterttv.net/emote/5b490e73cf46791f8491f6f4/1x" alt=""> Encuestas</h3>
+          <p>Sistema de encuestas con overlay para OBS.</p>
+          <p style="text-align:right">~elmarceloc</p>
+        </div>
+      </div>
 
       <div id="notification" class="ui message hidden">
         <i class="fas fa-times"  id="close-button" onClick="closeNotification()"></i>
@@ -87,6 +104,21 @@
         <div class="tab-amount" v-if="tab.id == 'clips' && totalItems(clips) > 0">
           <span>{{totalItems(clips)}}</span>
         </div>
+
+        <div class="tab-amount" v-if="tab.id == 'clips' && totalItems(clips) > 0">
+          <span>{{totalItems(clips)}}</span>
+        </div>
+        <span  v-if="tab.id == 'songrequest' && songrequstison && !paused && songslist.length > 0" style="
+            width: 5px;
+        "></span>
+        <div id='audiowave' v-if="tab.id == 'songrequest' && songrequstison && !paused && songslist.length > 0">
+          <span></span>  
+          <span></span>  
+          <span></span>  
+          <span></span>  
+          <span></span>  
+        </div>
+
         </div>
       </div>
     </br></br>
@@ -160,8 +192,8 @@
             <span v-if="videofilters.author" :content="'Enviado desde '+video.platform" v-tippy class="info author"
               >
               
-              <img v-if="video.platform == 'twitch'" class="platform" src="./images/twitch-icon.png"></img>
-              <img v-if="video.platform == 'booyah'" class="platform" src="./images/booyah-icon.png"></img>
+              <img v-if="video.platform == 'twitch'" class="platform" src="http://pngimg.com/uploads/twitch/twitch_PNG18.png"></img>
+              <img v-if="video.platform == 'booyah'" class="platform" src="https://i.imgur.com/cYGCwGB.png"></img>
 
               {{video.author }}</span
               >
@@ -297,10 +329,10 @@
     </div>
   </div>
 
-  <div 
-  v-if=" currentTab=='songrequest' ">
+  <div v-if=" currentTab=='songrequest' ">
 
-
+  <br>
+  <div style="margin-left: 10px;">
   <button @click="startSongRequest()" v-if="!songrequstison" class="ui small green button">
     <i class="fas fa-play"></i> Iniciar
   </button>
@@ -320,34 +352,128 @@
   <button @click="playNext()" class="ui small blue button">
     <i class="fas fa-forward"></i> Saltar
   </button>
+  </br>
 
+
+  <label v-if="songrequstison && !paused && songslist.length > 0" style="color:white">Volumen </label>
+
+  <input id="volume" v-if="songrequstison && !paused && songslist.length > 0" v-model="volume" type="range" min="1" max="100" step="0" default="100" @change="changeVolume">
+</div>
     <table v-if="songslist.length > 0" class="ui selectable unstackable  inverted table songslist">
       <thead>
         <tr>
-          <th></th>
+          <!--<th class="thumbnailheader"></th>-->
           <th>Nombre</th>
           <th>Artista</th>
           <th></th>
         </tr>
       </thead>
+
       <tbody>
-        <tr v-bind:class="(index == 0) ? 'current' : ''" v-for="(song, index) in songslist">
-          <td>#{{index+1}}</td>
+        <div v-if="songrequstison && !paused && songslist.length > 0" :style="{ backgroundImage: 'url(' + jam + ')!important' }" class="musicicon" ></div>
+        <tr class="song" :style="{ backgroundImage: 'linear-gradient( rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2) ), url('+song.channelThumbnail+')' }"  v-bind:class="(songrequstison && !paused && songslist.length > 0 && index == 0) ? 'current' : ''" v-for="(song, index) in songslist">
+          <!--<td class="thumbnail" :style="{ backgroundImage: 'url(' + song.thumbnail + ')' }">
+          </td>-->
           <td>{{song.title}}</td>
           <td>{{song.artist}}</td>
-          <td class="close">x</td>
+          <td @click="removeSong(index)" class="close">x</td>
         </tr>
       </tbody>
     </table>
 
-
-
+    <div v-if="songrequstison && songslist.length == 0"  class="ui black message">
+     
+      <div class="header">
+        <img style="display:inline" src="https://cdn.betterttv.net/emote/5fb6d395c242076f1a04d83e/2x" width="26px"></img> Manden canciones chiaaat!!
+      </div>
+      <p>Simplemente manden el link. se requiere tener booyah tv</p>
+    </div>
 
   </div>
+
+
+
+
+  <div v-if=" currentTab=='poll' ">
+
+    <div class="ui four column container">
+        <br>
+        <h1 style="color:white"><i style="color:#b5cc18" class="fas fa-poll"></i> Crear encuesta</h1>
+
+            <label style="color:white"><i class="far fa-question-circle"></i> Pregunta</label>
+            <br>
+            <br>
+            <div class="ui form">
+              <div class="field">
+
+              <textarea rows="2" v-model="question " class=" question" type="text" placeholder="Pregunta"></textarea>
+            </div>
+
+          </div>
+
+        <br>
+        <label style="color:white">Opciónes (Enter para agregar una opción)</label>
+        <br>
+        <br>
+          <div style="display:block" v-for="(alternative, index) in alternatives " :key="index " >
+          
+            <div class="ui big labeled input" style="margin:5px">
+              <div class="ui label">
+                {{index+1}}
+              </div>
+              <input :disabled="stateBtn != 'Iniciar'" @keyup.enter="addAlternative " :ref=" 'alternatives' " v-model="alternatives[index]" class="alternative" v-bind:class="{ filled: alternatives[index] }" type="text" :placeholder="'Opción #'+(index+1)">
+            </div>
+          </div>
+
+        <br>
+        <br>
+
+        <div class="ui input">
+            <button :disabled="question == '' || alternatives.length < 2" class="large green button ui" v-if="stateBtn" @click="changeState ">{{stateBtn}}</button>
+        </div>
+        <div style="position:absolute;bottom:0px;margin:10px auto;">
+          <div class="column twelve wide">
+
+          <div class="ui action input">
+            <button @click="copyobs" class="ui black right labeled icon button" style="border: solid rgb(255 255 255 / 10%) 1px;">
+              <img width="20px" style="padding-right:3px" src="https://i.imgur.com/fzv8jwE.png"> 
+              Copiar link de overlay para OBS
+            </button>
+        </div>
+      </div>
+    </div>
+    </div>
+  </div>
+
+</div>
+
 
   <div id="player"></div>
 
     </div>
+
+
+    <script>
+
+        var currentDate = new Date();
+        
+        var minDate = new Date('01/17/2022');
+        var maxDate =  new Date('01/18/2022');
+
+        if (currentDate > minDate && currentDate < maxDate ){
+                
+            $('.modal').modal('show')
+
+            $('.close').click(function(){
+              $('.modal').modal('hide')
+            })
+
+        }
+
+
+
+      
+    </script>
     <script src="./javascript/scroll.js"></script>
     <script src="./javascript/main.js"></script>
   </body>

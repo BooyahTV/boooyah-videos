@@ -13,6 +13,7 @@ var tabs = [
     { id: "videos", label: "Videos" },
     { id: "watchlater", label: "Ver más tarde" },
     { id: "songrequest", label: "Song Request" },
+    { id: "poll", label: "Encuestas" },
     { id: "clips", label: "Clips" },
     { id: "channels", label: "Canales" },
     { id: "products", label: "Tiendas" },
@@ -57,7 +58,7 @@ tabs.forEach((tab,index) => {
         id: tab.id,
         type: "checkbox",
         label: tab.label,
-        checked: index < 3,
+        checked: index < 5,
         click: function (item, browser) {
             BrowserWindow.getAllWindows()[0].webContents.send("toggleTab", {
                 id: tab.id,

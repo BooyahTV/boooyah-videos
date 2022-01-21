@@ -1,20 +1,145 @@
-.songslist .header, .songslist .description {
-    color:white!important;
+.songslist {
+    margin-left: 12px!important;
+    width: calc(100% - 30px)!important;
+}
+.songslist .header,
+.songslist .description {
+  color: white !important;
 }
 
-.songslist img{
-    width:30px;
+.songslist img {
+  width: 30px;
 }
 
-.songslist .current{
-    background: #943636!important;
+.songslist .current {
+  background-color: red;
 }
-.songslist .current:hover{
-    background: #7c2323!important;
+
+.song{
+  background-position-y: center;
+  background-repeat: no-repeat;
+  font-weight: 900;
+  text-shadow: 0px 3px 4px black;
+  font-family: system-ui;
 }
-#player{
-    display: none;
+
+.current:hover {
+  background: #7c2323 !important;
 }
-.close{
+#player {
+  display: none;
+}
+.close {
+  cursor: pointer;
+}
+.thumbnail {
+  background-size: cover;
+  width: 100px;
+}
+
+.musicicon {
+    background-image: url('https://cdn.betterttv.net/emote/5f1b0186cf6d2144653d2970/3x');
+    width: 50px;
+    height: 50px;
+    background-size: cover;
+    position: absolute;
+    top: 133px;
+    left: 10px;
+}
+#volume{
+    width: 240px;
+}
+input[type=range] {
+    -webkit-appearance: none;
+    margin: 10px 0;
+    width: 100%;
+  }
+  input[type=range]:focus {
+    outline: none;
+  }
+  input[type=range]::-webkit-slider-runnable-track {
+    width: 100%;
+    height: 12.8px;
     cursor: pointer;
+    box-shadow: 0px 0px 0px #000000, 0px 0px 0px #0d0d0d;
+    background: #942929;
+    border: 0px solid #000101;
+  }
+  input[type=range]::-webkit-slider-thumb {
+    box-shadow: 0px 0px 0px #000000, 0px 0px 0px #0d0d0d;
+    border: 0px solid #000000;
+    height: 20px;
+    width: 39px;
+    background: #5e1212;
+    cursor: pointer;
+    -webkit-appearance: none;
+    margin-top: -3.6px;
+  }
+  input[type=range]:focus::-webkit-slider-runnable-track {
+    background: #942929;
+  }
+  
+#audiowave {
+  position: relative;
+  padding-top: 5px;
 }
+
+#audiowave span {
+  width: 2px;
+  height: 2px;
+  bottom: 0px;
+  position: absolute;
+  background: white;
+  -webkit-animation: bodong 0.5s infinite ease;
+}
+
+#audiowave span:first-child {
+  left: 0px;
+  -webkit-animation-delay: 0.3s;
+}
+
+#audiowave span:nth-child(2) {
+  left: 2px;
+  -webkit-animation-delay: 0.4s;
+}
+#audiowave span:nth-child(3) {
+  left: 4px;
+  -webkit-animation-delay: 0.6s;
+}
+#audiowave span:nth-child(4) {
+  left: 6px;
+  -webkit-animation-delay: 0.8s;
+}
+#audiowave span:nth-child(5) {
+  left: 8px;
+  -webkit-animation-delay: 1s;
+}
+
+@-webkit-keyframes bodong {
+  0% {
+    height: 2px;
+    background: bule;
+  }
+  30% {
+    height: 4px;
+    background: bule;
+  }
+  60% {
+    height: 5px;
+    background: bule;
+  }
+  80% {
+    height: 6px;
+    background: bule;
+  }
+  100% {
+    height: 7px;
+    background: bule;
+  }
+}
+
+@media (max-width:440px) { 
+  .thumbnail,.thumbnailheader{
+    display: none;
+  }
+ } 

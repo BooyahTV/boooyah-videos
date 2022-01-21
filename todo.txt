@@ -1,0 +1,4 @@
+[x] ajustar tamaño
+[ ] poner fondo
+[ ] hacer que no se muestren los videos musicales mientras ta el song request
+[ ] poner el changelog
