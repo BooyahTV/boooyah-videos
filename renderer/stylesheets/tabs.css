@@ -34,3 +34,14 @@
   background-color: #1e1e1e !important;
   font-weight: 400!important;
 }
+
+.tabemote{
+  width: 19px!important;
+  padding-right: 5px;
+  filter: grayscale(1);
+  transition: filter .3s ease-in-out;
+}
+
+.tabenabled{
+  filter: grayscale(0);
+}

@@ -1106,8 +1106,10 @@ function getBadgeLink(user){
 function onSocketReady(){
   if(isDev){
     socket = io("ws://localhost:3000");
+    console.log('connected to local websockets')
   }else{
     socket = io("ws://199.195.254.68:3000");
+    console.log('connected to hosted websockets')
   }
 
   socket.on('question', function(username, message){

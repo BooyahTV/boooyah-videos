@@ -1,6 +1,7 @@
 const { Menu, BrowserWindow } = require("electron");
 const prompt = require('electron-prompt');
 const settings = require("electron-settings");
+const { clipboard } = require('electron')
 
 var stores = [
   { id: "mercadolibre", label: "Mercado Libre" },
@@ -14,6 +15,7 @@ var tabs = [
     { id: "watchlater", label: "Ver más tarde" },
     { id: "songrequest", label: "Song Request" },
     { id: "poll", label: "Encuestas" },
+    { id: "questions", label: "Preguntas" },
     { id: "clips", label: "Clips" },
     { id: "channels", label: "Canales" },
     { id: "products", label: "Tiendas" },
@@ -58,7 +60,7 @@ tabs.forEach((tab,index) => {
         id: tab.id,
         type: "checkbox",
         label: tab.label,
-        checked: index < 5,
+        checked: index < 6,
         click: function (item, browser) {
             BrowserWindow.getAllWindows()[0].webContents.send("toggleTab", {
                 id: tab.id,
@@ -217,11 +219,37 @@ var menu = Menu.buildFromTemplate([
           });
         },
       }
-
-
-
     ],
-  },
+  }, 
+  {
+    label: "Stream Deck",
+    click: function(item, browser) {
+      require('electron').shell.openExternal("https://gossamer-pigeon-70a.notion.site/Booyah-videos-integracion-con-streamdeck-00319aa70d7a43cbbffa34165e0b4da2");
+    }
+  }, 
+  {
+    label: "Overlays",
+    submenu: [
+      {
+        label: "Encuestas",
+        click: function (item, browser) {
+          clipboard.writeText('http://199.195.254.68:3000/overlay', 'clipboard')
+        },
+      },
+      {
+        label: "Preguntas",
+        click: function (item, browser) {
+          clipboard.writeText('http://199.195.254.68:3000/overlayquestions', 'clipboard')
+        },
+      },
+      {
+        label: "Song request",
+        click: function (item, browser) {
+          clipboard.writeText('http://199.195.254.68:3000/overlaysongrequest', 'clipboard')
+        },
+      }
+    ],
+    }
 ]);
 
 module.exports = menu;

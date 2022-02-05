@@ -47,6 +47,7 @@ exports.youtubeMusicVideo = function(username, message, platform) {
       username: username,
       id: id,
       platform: platform,
+      message: message
     });
   });
 }

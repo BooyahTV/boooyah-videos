@@ -1,7 +1,9 @@
 // Modules to control application life and create native browser window
-const { Menu, app, BrowserWindow, ipcMain } = require("electron");
+const { Menu, app, BrowserWindow, ipcMain, globalShortcut } = require("electron");
 
 const pjson = require('../package.json');
+
+const windowStateKeeper = require('electron-window-state');
 
 const http = require('http');
 const fs = require('fs');
@@ -17,27 +19,15 @@ const isDev = require("electron-is-dev");
 const menu = require("./menu");
 const links = require("./links");
 
-const booyah = require("./booyah");
-
-const { openReleaseNotes } = require("./release_notes");
-
 var mainWindow;
 
 const testVideos = ['WCi2DLYE82A', 'Zvv_0cO-k7M']
 
-//at start
-let server;
-server = http.createServer((req, res) => {
-const filePath = path.join(app.getAppPath(), 'renderer', req.url);
-const file = fs.readFileSync(filePath);
-res.end(file.toString());
-if (req.url.includes('index.js'))
-    server.close();
-}).listen(8080);
+const server = require("./server");
 
 try {
   if (isDev) {
-    require("electron-reloader")(module);
+    //require("electron-reloader")(module);
   }
 } catch (_) {}
 
@@ -109,20 +99,34 @@ function handleSquirrelEvent() {
   }
 }
 
+var mainWindow;
+
 async function createWindow() {
+
+  // Load the previous state with fallback to defaults
+  let mainWindowState = windowStateKeeper({
+    defaultWidth: isDev ? 835 : 356,
+    defaultHeight: isDev ? 885 : 600
+  });
+
   // Create the browser window.
   mainWindow = new BrowserWindow({
     minWidth: 356,
-    width: isDev ? 835 : 356,
-    height: isDev ? 885 : 600,
+    x: mainWindowState.x,
+    y: mainWindowState.y,
+    width: mainWindowState.width,
+    height: mainWindowState.height,
     webPreferences: {
      nodeIntegration: true,
       nodeIntegrationInWorker: true,
       enableRemoteModule: true,
-      contextIsolation: false
+      contextIsolation: false,
+      nativeWindowOpen: true
     },
     icon: __dirname + "/icon.ico",
   });
+
+  mainWindowState.manage(mainWindow);
 
   // https://www.npmjs.com/package/@electron/remote
   require('@electron/remote/main').initialize()
@@ -138,7 +142,7 @@ async function createWindow() {
 
 
   //load the app page
-  mainWindow.loadURL('http://localhost:8080/index.html');
+  mainWindow.loadURL('http://localhost:8080');
 
  // mainWindow.loadFile("renderer/index.html");
 
@@ -154,6 +158,9 @@ async function createWindow() {
         })
       })
     }
+
+    // send dev mode
+    mainWindow.webContents.send("isDev", isDev)
 
     // send all time watched videos
     settings.get("videos.watched").then((videos) => {
@@ -173,6 +180,11 @@ async function createWindow() {
     settings.get("twitch.name").then((twitchChannel) => {
       mainWindow.webContents.send("twitchChannel", twitchChannel || 'cristianghost');
     });
+
+    // volume
+    settings.get("songrequest.volume").then((volume) => {
+      mainWindow.webContents.send("getVolume", volume || 100); // default volume of 100
+    });
   });
 
   // opens external links in default browser
@@ -180,6 +192,14 @@ async function createWindow() {
     e.preventDefault();
     require("electron").shell.openExternal(url);
   });
+
+  // saves volumen
+  
+  ipcMain.on("saveVolume", function (e, volume) {
+    settings.set("songrequest", {
+      volume: volume,
+    });
+  })
 
   // saves a video by its id in the system
   ipcMain.on("storeVideo", function (e, videoId) {
@@ -191,6 +211,8 @@ async function createWindow() {
       const newWatchedVideos = [...(videos || []), videoId];
 
       console.log("new watched videos: ", newWatchedVideos.length);
+
+      console.log(newWatchedVideos)
 
       settings.set("videos", {
         watched: newWatchedVideos,
@@ -300,10 +322,6 @@ async function createWindow() {
     console.log("checking updates...");
     autoUpdater.checkForUpdatesAndNotify();
   });
-
-  // scrap booyah chat links
-
-  booyah.scrapChatLinks();
 }
 
 // This method will be called when Electron has finished
@@ -311,6 +329,45 @@ async function createWindow() {
 // Some APIs can only be used after this event occurs.
 app.whenReady().then(() => {
   createWindow();
+
+  globalShortcut.register('Alt+CommandOrControl+I', () => {
+    mainWindow.webContents.send('toggleSongRequest')
+  })
+
+  globalShortcut.register('Alt+CommandOrControl+o', () => {
+    mainWindow.webContents.send('togglePauseSongRequest')
+  })
+
+  globalShortcut.register('Alt+CommandOrControl+p', () => {
+    mainWindow.webContents.send('skipSongRequest')
+  })
+
+  globalShortcut.register('Alt+CommandOrControl+k', () => {
+    mainWindow.webContents.send('startBasicPoll')
+  })
+
+  globalShortcut.register('Alt+CommandOrControl+l', () => {
+    mainWindow.webContents.send('changeStatePoll')
+  })
+
+  globalShortcut.register('Alt+CommandOrControl+n', () => {
+    mainWindow.webContents.send('nextQuestion')
+  })
+
+  globalShortcut.register('Alt+CommandOrControl+m', () => {
+    mainWindow.webContents.send('showQuestion')
+  })
+  
+  globalShortcut.register('Alt+CommandOrControl+j', () => {
+    mainWindow.webContents.send('addVolume')
+  })
+
+  globalShortcut.register('Alt+CommandOrControl+h', () => {
+    mainWindow.webContents.send('reduceVolume')
+  })
+  
+
+  
 
   app.on("activate", function () {
     // On macOS it's common to re-create a window in the app when the

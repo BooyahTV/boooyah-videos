@@ -14,6 +14,8 @@
     "electron-settings": "^4.0.2",
     "electron-store": "^8.0.0",
     "electron-updater": "^4.3.9",
+    "electron-window-state": "^5.0.3",
+    "express": "^4.17.2",
     "git-release-notes": "^5.0.0",
     "locate-chrome": "^0.1.1",
     "nodejs-currency-converter": "^1.0.2",

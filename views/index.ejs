@@ -25,6 +25,7 @@
     <link rel="stylesheet" href="./stylesheets/channels.css" />
 
     <link rel="stylesheet" href="./stylesheets/songrequest.css" />
+    <link rel="stylesheet" href="./stylesheets/questions.css" />
     
     <link rel="stylesheet" href="./stylesheets/notification.css" />
     
@@ -60,21 +61,18 @@
   </head>
   <body>
     <div id="app">
-      
       <div class="ui modal">
         <i class="close fas fa-times"></i>
 
-        <div class="header" style="font-size:30px!important">Booyah videos v0.94 <img src="https://cdn.betterttv.net/emote/615231b0b63cc97ee6d3a283/1x" alt=""> </div>
+        <div class="header" style="font-size:30px!important">Booyah videos v0.99 <img src="https://cdn.betterttv.net/emote/5e4e7a1f08b4447d56a92967/1x" alt=""> </div>
         <div style="color:black!important" class="content">
           <h2>¿Que hay de nuevo?</h2>
-          <h3><img src="https://cdn.betterttv.net/emote/600df0934e3ab965ef759f55/1x" alt=""> Mejoras al Song Request</h3>
-          <p> 
+          <h3><img src="https://cdn.frankerfacez.com/emoticon/218530/1" alt=""> Preguntas  </h3>
+          <p>
             <ul>
-              <li>Ahora se puede elegir una canción dándole click a ella.</li>
-              <li>Al estar activo el song request no apareceran los videos musicales en la pestaña de videos.</li>
+              <li>Las preguntas ahora se pueden elegir.</li>
             </ul>
           </p>
-
           <p style="text-align:right">~elmarceloc</p>
         </div>
       </div>
@@ -100,6 +98,7 @@
           class="item "
           v-if="tab.enabled"
         >
+        <img class="tabemote" :class="{ tabenabled: currentTab==tab.id}" v-if="tab.icon" :src="tab.icon" alt="">
         {{tab.name}}
         <div class="tab-amount" v-if="tab.id == 'watchlater' && totalItemsInWatchLater() > 0">
           <span>{{totalItemsInWatchLater()}}</span>
@@ -380,7 +379,7 @@
       <tbody>
         <div v-if="songrequstison && !paused && songslist.length > 0" :style="{ backgroundImage: 'url(' + jam + ')!important' }" class="musicicon" ></div>
         <tr class="song" v-bind:class="(songrequstison && !paused && songslist.length > 0 && index == 0) ? 'current' : ''" v-for="(song, index) in songslist">
-          <td  @click="selectSong(index)" class="channelbg" :style="{ backgroundImage: 'linear-gradient( rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2) ), url('+song.channelThumbnail+')' }">{{song.title}}</td>
+          <td @click="selectSong(index)" class="channelbg" :style="{ backgroundImage: 'linear-gradient( rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2) ), url('+song.channelThumbnail+')' }">{{song.title}}</td>
           <td>{{song.artist}}</td> 
           <td class="submiter" :style="{ color: song.submiterColor} ">
             <img v-for="(badge, index) in song.badges" :src="badge" alt="" srcset="">
@@ -404,55 +403,95 @@
 
 
 
-  <div v-if=" currentTab=='poll' ">
+  <div v-if="currentTab=='poll' ">
 
     <div class="ui four column container">
-        <br>
-        <h1 style="color:white"><i style="color:#b5cc18" class="fas fa-poll"></i> Crear encuesta</h1>
+      <br>
+      <h1 style="color:white"><i style="color:#b5cc18" class="fas fa-poll"></i> Crear encuesta</h1>
 
-            <label style="color:white"><i class="far fa-question-circle"></i> Pregunta</label>
-            <br>
-            <br>
-            <div class="ui form">
-              <div class="field">
+          <label style="color:white"><i class="far fa-question-circle"></i> Pregunta</label>
+          <br>
+          <br>
+          <div class="ui form">
+            <div class="field">
 
-              <textarea rows="2" v-model="question " class=" question" type="text" placeholder="Pregunta"></textarea>
-            </div>
-
+            <textarea :disabled="stateBtn != 'Iniciar'" rows="2" v-model="questionPoll " class=" question" type="text" placeholder="Pregunta"></textarea>
           </div>
 
-        <br>
-        <label style="color:white">Opciónes (Enter para agregar una opción)</label>
-        <br>
-        <br>
-          <div style="display:block" v-for="(alternative, index) in alternatives " :key="index " >
-          
-            <div class="ui big labeled input" style="margin:5px">
-              <div class="ui label">
-                {{index+1}}
-              </div>
-              <input :disabled="stateBtn != 'Iniciar'" @keyup.enter="addAlternative " :ref=" 'alternatives' " v-model="alternatives[index]" class="alternative" v-bind:class="{ filled: alternatives[index] }" type="text" :placeholder="'Opción #'+(index+1)">
-            </div>
-          </div>
-
-        <br>
-        <br>
-
-        <div class="ui input">
-            <button :disabled="question == '' || alternatives.length < 2" class="large green button ui" v-if="stateBtn" @click="changeState ">{{stateBtn}}</button>
         </div>
-        <div style="position:absolute;bottom:0px;margin:10px auto;">
-          <div class="column twelve wide">
 
-          <div class="ui action input">
-            <button @click="copyobs" class="ui black right labeled icon button" style="border: solid rgb(255 255 255 / 10%) 1px;">
-              <img width="20px" style="padding-right:3px" src="https://i.imgur.com/fzv8jwE.png"> 
-              Copiar link de overlay para OBS
-            </button>
+      <br>
+      <label style="color:white">Opciónes (Enter para agregar una opción)</label>
+      <br>
+      <br>
+        <div style="display:block" v-for="(alternative, index) in alternatives " :key="index " >
+        
+          <div class="ui big labeled input" style="margin:5px">
+            <div class="ui label">
+              {{index+1}}
+            </div>
+            <input :disabled="stateBtn != 'Iniciar'" @keyup.enter="addAlternative " :ref=" 'alternatives' " v-model="alternatives[index]" class="alternative" v-bind:class="{ filled: alternatives[index] }" type="text" :placeholder="'Opción #'+(index+1)">
+          </div>
+        </div>
+
+      <br>
+      <br>
+
+      <div class="ui input">
+        <button :disabled="questionPoll == '' || alternatives.length < 2" class="large green button ui" v-if="stateBtn" @click="changeState ">{{stateBtn}}</button>
+        <button :disabled="stateBtn != 'Iniciar'"  class="large orange button ui" v-if="stateBtn" @click="startBasicPoll "><i class="fas fa-bolt"></i>SI / NO</button>
+      </div>
+
+    </div>
+  </div>
+
+  <div v-if="currentTab=='questions'">
+
+    <div class="ui four column container questionContainer">
+      <div class="questionPreview">
+        <p v-if="questions.length == 0">Aún no hay preguntas, usen <span style="color:rgb(191, 127, 10)">!pregunta &lt;algo&gt;</span></p>
+        <template v-if="questions.length > 0">
+          <p>{{questions[currentQuestion].label}}</p>
+          <span class="author">{{questions[currentQuestion].author}}</span>
+        </template>
+      </div>
+
+      
+      <button :disabled="questions.length == 0" v-if="!isQuestionOnStream" class="fluid fixedbtn ui button green" @click="showQuestionOnStream"><i class="fas fa-desktop"></i> Mostrar en stream</button>
+      <button :disabled="questions.length == 0" v-if="isQuestionOnStream" class="fluid fixedbtn ui button red" @click="hideQuestionOnStream"><i class="fas fa-desktop"></i> Ocultar del stream</button>
+      
+      <br>
+      <div class="questionOverlay"></div>
+      <div class="ui input margintop" style="padding:20px 0px 20px 0px">
+
+        <div style="padding-right:20px" class="ui checkbox">
+          <input v-model="questionTts" type="checkbox" name="questionTts">
+          <label style="color:white">Leer pregunta con TTS</label>
+        </div>
+
+        <div  class="ui checkbox">
+          <input v-model="showAutoOnStream" type="checkbox" name="showAutoOnStream">
+          <label style="color:white">Mostrar al cliquear</label>
+        </div>
+        
+        <span style="color:white;font-size: 14px;padding-left:20px" v-if="questions.length > 0">
+          Total de preguntas: {{questions.length+1}}
+        </span>     
+      </div>
+
+      <div style="margin-bottom: 60px;" class="ui inverted segment" v-if="questions.length > 0">
+        <div class="ui inverted relaxed divided list">
+          <div class="item question" :class="{ selectedquestion: index==currentQuestion&&isQuestionOnStream }" v-for="(question, index) in questions" :key="index" @click="selectQuestion(index)">
+            <div class="content">
+              {{question.label}}
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-    </div>
+     
+
+  </div>
+
   </div>
 
 </div>
@@ -467,8 +506,8 @@
 
         var currentDate = new Date();
         
-        var minDate = new Date('01/19/2022');
-        var maxDate =  new Date('01/22/2022');
+        var minDate = new Date('2/2/2022');
+        var maxDate =  new Date('02/4/2022');
 
         if (currentDate > minDate && currentDate < maxDate ){
                 
@@ -485,6 +524,7 @@
       
     </script>
     <script src="./javascript/scroll.js"></script>
+    <script src="./javascript/contextMenu.js"></script>
     <script src="./javascript/main.js"></script>
   </body>
 </html>

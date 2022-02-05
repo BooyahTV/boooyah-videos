@@ -1,3 +1,5 @@
+[v-cloak] { display: none; }
+
 * {
   overflow-anchor: auto !important;
 }
