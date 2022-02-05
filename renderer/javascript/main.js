@@ -1,8 +1,10 @@
+var isDev = false;
+
+var socket;
+
 const key = "AIzaSyAv2ie_VWHHlbjLyF7xh7aJYdj4lIqsk_c";
 const videoParts = "snippet,statistics,contentDetails";
 const channelParts = "snippet,statistics,contentDetails,brandingSettings";
-
-const socket = io("ws://199.195.254.68:3000");
 
 var youtube = require('youtube-iframe-player');
 
@@ -129,8 +131,9 @@ var app = new Vue({
     jam: '',
     volume: 100,
     songrequstison: false,
-    currentSong: 0,
+    isDefaultVideo: true,
     paused: false,
+    lastSong: null,
     songslist: [
      /* {
         id: 'DHcG1v74MY8',
@@ -156,19 +159,26 @@ var app = new Vue({
     stores: ["mercadolibre", "amazon", "aliexpress", "steam"],
 
     tabs: [
-      { id: "videos", name: "Videos", enabled: true },
-      { id: "watchlater", name: "Ver más tarde", enabled: true },
-      { id: "songrequest", name: "Song Request", enabled: true }, // debug
-      { id: "poll", name: "Encuestas", enabled: true }, // debug
+      { id: "videos", name: "Videos", icon: "https://cdn.betterttv.net/emote/56cb56f5500cb4cf51e25b90/1x" , enabled: true },
+      { id: "watchlater", name: "Ver más tarde", icon: "https://cdn.betterttv.net/emote/5e0502e69e2cd00d968d5677/1x", enabled: true },
+      { id: "songrequest", name: "Song Request", icon: "https://cdn.betterttv.net/emote/5f1b0186cf6d2144653d2970/1x", enabled: true }, 
+      { id: "poll", name: "Encuestas", icon: "https://cdn.betterttv.net/emote/5aa16eb65d4a424654d7e3e5/1x", enabled: true },
+      { id: "questions", name: "Preguntas", icon: "https://cdn.betterttv.net/emote/5d63e543375afb1da9a68a5a/1x", enabled: true },
       { id: "clips", name: "Clips", enabled: true },
       { id: "channels", name: "Canales", enabled: false },
       { id: "products", name: "Tiendas", enabled: false },
     ],
     currentTab: "videos",
-    question: "",
+    questionPoll: "",
     alternatives: [""],
     stateBtn: 'Iniciar',
-    state: false // no corriendo 
+    pollState: false, // no corriendo 
+    isQuestionOnStream: false,
+    questionsState: false,
+    questions: [],
+    currentQuestion: 0,
+    questionTts: true,
+    showAutoOnStream: true,
   },
   methods: {
     setTab: function (tab) {
@@ -274,9 +284,17 @@ var app = new Vue({
           }else{
             youtube.stop()
           }
-          
-
         }
+
+        setInterval(function(){
+          currentTime = youtubePlayer.getCurrentTime()*1;
+          duration = youtubePlayer.getDuration()*1;
+
+          if (currentTime){
+            socket.emit('progress', (currentTime / duration) * 100)
+
+          }
+        },2000)
     
         function onPlayerStateChange(event) {
             console.log('Player State Changed: ', event);
@@ -302,11 +320,9 @@ var app = new Vue({
         // la reproducimos
         youtube.loadVideo(app.songslist[0].id)
 
-        // y aumentamos el contador
-        app.currentSong++
+        app.isDefaultVideo = false
 
-        //setMediaPlayer()
-
+        socket.emit('showSong', app.songslist[0])
 
         this.randomJam()
       }
@@ -315,8 +331,11 @@ var app = new Vue({
 
       this.paused = false
 
-      // borramos el video de la lista por id                       
-      if(app.currentSong > 0) app.songslist.shift()
+      // guardamos el video antes de cambiarlo
+      app.lastSong = app.songslist[0]
+      
+      // si no es el video default
+      if(!app.isDefaultVideo) app.songslist.shift()
       
       // si hay una siguiente cancion
       if (app.songslist.length > 0){
@@ -324,21 +343,42 @@ var app = new Vue({
         // la reproducimos
         youtube.loadVideo(app.songslist[0].id)
         
-        // y aumentamos el contador
-        app.currentSong++
+        app.isDefaultVideo = false
+        
+        socket.emit('showSong', app.songslist[0])
 
         this.randomJam()
-
-        // seteamos la info de la musica
-
-        //setMediaPlayer()
 
       // si no hay una siguiente cancion, pondremos el video default
       }else{
         youtube.loadVideo('g8K21P8CoeI')
-        app.currentSong = 0
+        app.isDefaultVideo = true
         youtube.stop()
 
+        socket.emit('hideSong')
+
+      }
+    },
+    playLast(){
+      this.paused = false
+
+      if(!app.isDefaultVideo) app.songslist.shift()
+
+      const targetSong = this.lastSong
+
+      this.songslist[0] = targetSong
+
+      // si hay una siguiente cancion
+      if (app.songslist.length > 0){
+
+        // la reproducimos
+        youtube.loadVideo(app.songslist[0].id)
+
+        app.isDefaultVideo = false
+
+        socket.emit('showSong', app.songslist[0])
+
+        this.randomJam()
       }
     },
     stopSongRequest(){
@@ -346,18 +386,21 @@ var app = new Vue({
       this.paused = false
 
       youtube.stop()
+      socket.emit('hideSong')
 
     },
     pauseSongRequest(){
       this.paused = true
 
       youtube.pause()
+      socket.emit('hideSong')
 
     },
     resumeSongRequest(){
       this.paused = false
 
       youtube.play()
+      socket.emit('resumeSong')
     },
     removeSong(index){
       if (index > -1) {
@@ -373,8 +416,11 @@ var app = new Vue({
     },
     changeVolume(){
       this.$emit('changeVolume', this.volume);
+      
+      this.setYoutubeVolume(this.volume)
 
-      youtube.setVolume(this.volume)
+      // save volume in pc
+      ipcRenderer.send("saveVolume", this.volume);
     },
     randomJam(){
       var urls = [
@@ -410,25 +456,26 @@ var app = new Vue({
         });
     },
     changeState: function() {
+
       if (this.stateBtn == 'Iniciar') {
 
           var filteredAlternatives = this.alternatives.filter((alternative) => {
               return alternative != "";
           });
 
-          console.log("Question: ", this.question);
+          console.log("Question: ", this.questionPoll);
           console.log("Alternatives: ", filteredAlternatives);
 
-          if (this.question && filteredAlternatives.length > 1) {
-              console.log('Data sent to server via socket.io')
+          if (this.questionPoll && filteredAlternatives.length > 1) {
+            console.log('Data sent to server via socket.io')
 
-              this.state = true
-              this.stateBtn = 'Finalizar'
+            this.pollState = true
+            this.stateBtn = 'Finalizar'
 
-              socket.emit("requestPoll", {
-                  question: this.question,
-                  alternatives: filteredAlternatives,
-              });
+            socket.emit("requestPoll", {
+                question: this.questionPoll,
+                alternatives: filteredAlternatives
+            });
           }
 
       } else if (this.stateBtn == 'Finalizar') {
@@ -437,17 +484,76 @@ var app = new Vue({
           socket.emit("endPoll");
 
       } else if (this.stateBtn == 'Ocultar') {
-            this.state = false;
-            this.question = ''
-            this.alternatives = ['']
-            this.stateBtn = 'Iniciar'
-            socket.emit("hidePoll");
+          this.pollState = false;
+          this.questionPoll = ''
+          this.alternatives = ['']
+          this.stateBtn = 'Iniciar'
+          socket.emit("hidePoll");
 
-    }
+      }
     },
-    copyobs: function(){
-       /* Copy the text inside the text field */
-      navigator.clipboard.writeText('http://199.195.254.68:3000/overlay');
+    startBasicPoll: function(){
+      if (this.stateBtn == "Iniciar") {
+
+        this.questionPoll = "monkaHmm SI O NO?"
+        this.alternatives = ['catYep si','catNope no']
+              
+        this.changeState()
+
+
+      }
+    },
+    showQuestionOnStream: function(){
+      this.isQuestionOnStream = true
+      socket.emit('showQuestionOnStream', this.questions[this.currentQuestion])
+
+      // play tts
+      if (this.questionTts) {
+
+        const message = encodeURIComponent(`${this.questions[this.currentQuestion].label}`)
+        
+        var audio = new Audio(`https://api.streamelements.com/kappa/v2/speech?voice=Mia&text=${message}`);
+        audio.play();
+      }
+
+    },
+    hideQuestionOnStream: function(){
+      this.isQuestionOnStream = false
+      socket.emit('hideQuestionOnStream')
+    },
+    nextQuestion: function(){
+      // if the next question exists
+      if (this.questions[this.currentQuestion + 1] !== undefined){
+        // show the next question
+        this.currentQuestion++
+
+        // enables the show on screen button
+
+        this.isQuestionOnStream = false
+      }
+    },
+    selectQuestion: function(index){
+      if (this.currentQuestion == index) return
+
+      this.currentQuestion = index;
+
+      if (this.showAutoOnStream){
+        this.showQuestionOnStream()
+      }else{
+        this.isQuestionOnStream = false
+      }
+    },
+    // adjust the volume based on (https://www.youtube.com/watch?v=MquQQX0Ak0k)
+    setYoutubeVolume:function(volume){
+      this.volume = volume
+
+      const newVolume = ((volume / 100)**2)*100
+
+      console.log('volume',this.volume)
+      console.log('adjusted volume', newVolume)
+
+      youtube.setVolume(newVolume)
+
     }
   },
   computed: {
@@ -471,7 +577,7 @@ ipcRenderer.on("video", function (event, msg) {
 });
 
 ipcRenderer.on("musicVideo", function (event, msg) {
-  addMusicVideo(msg.id, msg.platform, msg.username);
+  addMusicVideo(msg.id, msg.platform, msg.username, msg.message);
 });
 
 ipcRenderer.on("product", addProduct);
@@ -550,6 +656,16 @@ ipcRenderer.on("getAllChannels", function (event, channels) {
     }
 });
 
+
+ipcRenderer.on("getVolume", function (event, volume) {
+  console.log("Volume: ", volume);
+
+  if (volume != null) {
+    app.setYoutubeVolume(volume)
+  }
+});
+
+
 var client;
 
 ipcRenderer.on("twitchChannel", function (event, channelName) {
@@ -577,17 +693,135 @@ ipcRenderer.on("twitchChannel", function (event, channelName) {
   client.on("message", (channel, tags, message, self) => {
 
     if (channel == "#notfijxu") {
-      
-      let username = message.split(':')[1].slice(9);
-      ipcRenderer.send("sendLink", username, message, "booyah");
+      try {
+        let username = message.split(':')[1].slice(9);
+        ipcRenderer.send("sendLink", username, message, "booyah");
+      } catch (e) {
+      }
     } else {
       ipcRenderer.send("sendLink", tags["display-name"], message, "twitch");
     }
-});
+  });
 
 });
- 
 
+// song reuquest
+ipcRenderer.on("toggleSongRequest", function(event) {
+
+  if (app.songrequstison) {
+    app.stopSongRequest()
+  }else{
+    app.startSongRequest()
+  }
+
+})
+
+ipcRenderer.on("togglePauseSongRequest", function(event) {
+
+  if (app.paused && app.songrequstison) {
+    app.resumeSongRequest()
+  }else{
+    app.pauseSongRequest()
+  }
+})
+ipcRenderer.on("skipSongRequest", function(event) {
+  app.playNext()
+})
+
+ipcRenderer.on("addVolume", function(event) {
+  const currentVolume = parseInt(app.volume)
+
+  if(currentVolume < 100){
+    app.setYoutubeVolume(currentVolume + 5)
+  }else{
+    app.setYoutubeVolume(100)
+  }
+})
+
+ipcRenderer.on("reduceVolume", function(event) {
+  const currentVolume = parseInt(app.volume)
+
+  if(currentVolume > 0){
+    app.setYoutubeVolume(currentVolume - 5)
+  }else{
+    app.setYoutubeVolume(0)
+  }
+})
+
+
+// poll
+ipcRenderer.on("startBasicPoll", function(event) {
+  app.startBasicPoll()
+})
+
+ipcRenderer.on("changeStatePoll", function(event) {
+  if (app.stateBtn != 'Iniciar'){
+    app.changeState()
+  }
+})
+
+ipcRenderer.on("nextQuestion", function(event) {
+  app.nextQuestion()
+})
+
+ipcRenderer.on("showQuestion", function(event) {
+  if(app.isQuestionOnStream){
+    app.hideQuestionOnStream()
+  }else{
+    app.showQuestionOnStream()
+  }
+})
+
+ipcRenderer.on("isDev", function(event, bool) {
+  isDev = bool
+
+  onSocketReady()
+
+  if (isDev){
+    app.questions = [
+      {
+          "label": "a EZ",
+          "author": "elmarceloc"
+      },
+      {
+          "label": "bbb",
+          "author": "elmarceloc"
+      },
+      {
+          "label": "cc",
+          "author": "elmarceloc"
+      },
+      {
+          "label": "dddddddd",
+          "author": "elmarceloc"
+      },
+      {
+          "label": "ee",
+          "author": "elmarceloc"
+      },
+      {
+          "label": "11",
+          "author": "elmarceloc"
+      },
+      {
+          "label": "222",
+          "author": "elmarceloc"
+      },
+      {
+          "label": "333333",
+          "author": "elmarceloc"
+      },
+      {
+          "label": "444",
+          "author": "elmarceloc"
+      },
+      {
+          "label": "55555",
+          "author": "elmarceloc"
+      },
+  ]
+}
+})
 
 
 
@@ -596,6 +830,8 @@ function addVideo(id, platform, username) {
   if (app.sentInSession.includes(id)) return; // refactor to sentInSession
   if (app.sentInAlltime.includes(id)) return;
   
+  ipcRenderer.send("storeVideo", id);
+
   app.sentInSession.push(id);
 
   console.log(platform,id)
@@ -651,7 +887,9 @@ function addVideo(id, platform, username) {
     });
 }
 
-function addMusicVideo(id, platform, username) {
+function addMusicVideo(id, platform, username, message) {
+
+  console.log(message)
 
   if (app.sentInSessionMusic.includes(id) || !app.songrequstison) return;
 
@@ -690,6 +928,7 @@ function addMusicVideo(id, platform, username) {
             submiter: username,
             submiterColor: getUsernameColor(username),
             platform: platform,
+            message: message,
             badges: badges
           }
     
@@ -757,7 +996,7 @@ const restartButton = document.getElementById("restart-button");
 
 ipcRenderer.on("update_available", () => {
   ipcRenderer.removeAllListeners("update_available");
-  message_title.innerText = "¡Actualisación Disponible!";
+  message_title.innerText = "Actualización Disponible!";
   message.innerHTML = '<i class="fas fa-download"></i> Descargando...';
   notification.classList.remove("hidden");
 });
@@ -777,30 +1016,6 @@ function closeNotification() {
 function restartApp() {
   ipcRenderer.send("restart_app");
 }
-
-const {  Menu , MenuItem } = require('@electron/remote')
-
-window.addEventListener("contextmenu", (e) => {
-  e.preventDefault();
-  
-  if(e.target.className.includes('channel')){
-      const menu = new Menu();
-      menu.append(
-        new MenuItem({
-          label: "Guardar Canal",
-          click: function () {
-    
-            addChannel(e.target.id)
-    
-          },
-        })
-      );
-      menu.popup({ window: require('@electron/remote').getCurrentWindow() });
-  }
-
-
-});
-
 
 var donators;
 
@@ -888,65 +1103,23 @@ function getBadgeLink(user){
   
 }
 
-function setMediaPlayer() {
+function onSocketReady(){
+  if(isDev){
+    socket = io("ws://localhost:3000");
+  }else{
+    socket = io("ws://199.195.254.68:3000");
+  }
 
-  console.log('media player updated')
+  socket.on('question', function(username, message){
 
-  // Make sure browser has Media Session API available
-  if ('mediaSession' in navigator) {
+    parsedMessage = message.substring(10)
 
-  // Access to Media Session API
-  var ms = navigator.mediaSession;
-
-  // Create track info JSON variable
-  var trackInfo = {};
-
-  // Set track title
-  trackInfo.title = "Polaris";
-
-  // Set artist name
-  trackInfo.artist = "Downtown Binary & The Present Sound";
-
-  // Set album name
-  trackInfo.album = "Umbra";
-  
-  // Set album art (NOTE: image files must be hosted in "http" or "https" protocol to be shown)
-  trackInfo.artwork = [
-      { src: 'https://antonyhr.neocities.org/temp/polaris/polaris_album_art_96.jpg', sizes: '96x96', type: 'image/jpg' },
-      { src: 'https://antonyhr.neocities.org/temp/polaris/polaris_album_art_128.jpg', sizes: '128x128', type: 'image/jpg' },
-      { src: 'https://antonyhr.neocities.org/temp/polaris/polaris_album_art_192.jpg', sizes: '192x192', type: 'image/jpg' },
-      { src: 'https://antonyhr.neocities.org/temp/polaris/polaris_album_art_256.jpg', sizes: '256x256', type: 'image/jpg' },
-      { src: 'https://antonyhr.neocities.org/temp/polaris/polaris_album_art_384.jpg', sizes: '384x384', type: 'image/jpg' },
-      { src: 'https://antonyhr.neocities.org/temp/polaris/polaris_album_art_512.jpg', sizes: '512x512', type: 'image/jpg' }
-    ];
-
-    // Then, we create a new MediaMetadata and pass our trackInfo JSON variable
-    var mediaMD = new MediaMetadata(trackInfo);
-
-    // We assign our mediaMD to MediaSession.metadata property
-    ms.metadata = mediaMD
-
-    // And that will be all for show our custom track info in Windows (or any supported) Media Player Pop-Up
-    
-    // If we need to customize Media controls, we must set action handlers (NOTE: It's not necessary to add all action handlers).
-    ms.setActionHandler('play', function() {
-        
-        /*trackElement.play();
-        var trackInfoEl = document.getElementById("track_info_el");
-        trackInfoEl.textContent = "Track is playing.";*/
-    });
-    ms.setActionHandler('pause', function() {
-     /* trackElement.pause();
-      var trackInfoEl = document.getElementById("track_info_el");
-      trackInfoEl.textContent = "Track is paused.";*/
-    });
-    ms.setActionHandler('stop', function() { /* Code excerpted. */ });
-    ms.setActionHandler('seekbackward', function() { /* Code excerpted. */ });
-    ms.setActionHandler('seekforward', function() { /* Code excerpted. */ });
-    ms.setActionHandler('seekto', function() { /* Code excerpted. */ });
-    ms.setActionHandler('previoustrack', function() { /* Code excerpted. */ });
-    ms.setActionHandler('nexttrack', function() { /* Code excerpted. */ });
-} else {
-  console.warn("Your browser doesn't have Media Session API");
-}
+    // si el mensaje es mayor a 10 caracteres
+    if (parsedMessage.length > 12){ 
+      app.questions.push({
+        label: parsedMessage,
+        author: username
+      })
+    }
+  })
 }
