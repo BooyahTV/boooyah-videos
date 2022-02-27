@@ -11,11 +11,19 @@ var youtube = require('youtube-iframe-player');
 const ipcRenderer = require("electron").ipcRenderer;
 //const dialog = require("electron").remote.dialog;
 
-const { remote } = require("electron");
+const { remote  } = require("electron");
+const { dialog } = require('@electron/remote')
 
 //const { Menu, MenuItem } = remote;
 
 var bannedVideos = [];
+
+var voices = [
+  'Mia',
+  'Enrique',
+  'Conchita',
+  'Miguel'
+]
 
 // TODO: change to api based https://developers.google.com/youtube/v3/docs/videoCategories/list
 
@@ -163,7 +171,7 @@ var app = new Vue({
       { id: "watchlater", name: "Ver más tarde", icon: "https://cdn.betterttv.net/emote/5e0502e69e2cd00d968d5677/1x", enabled: true },
       { id: "songrequest", name: "Song Request", icon: "https://cdn.betterttv.net/emote/5f1b0186cf6d2144653d2970/1x", enabled: true }, 
       { id: "poll", name: "Encuestas", icon: "https://cdn.betterttv.net/emote/5aa16eb65d4a424654d7e3e5/1x", enabled: true },
-      { id: "questions", name: "Preguntas", icon: "https://cdn.betterttv.net/emote/5d63e543375afb1da9a68a5a/1x", enabled: true },
+      { id: "questions", name: "Mensajes", icon: "https://cdn.betterttv.net/emote/5f71b705c2f3a70b1ae58709/1x", enabled: true },
       { id: "clips", name: "Clips", enabled: true },
       { id: "channels", name: "Canales", enabled: false },
       { id: "products", name: "Tiendas", enabled: false },
@@ -179,11 +187,18 @@ var app = new Vue({
     currentQuestion: 0,
     questionTts: true,
     showAutoOnStream: true,
+    ttsLabel: 'dice',
+    ttsCommand: 'pregunta',
+    voice: 'Mia',
+    randomvoice: true,
+    emotes: []
   },
   methods: {
     setTab: function (tab) {
       this.currentTab = tab.id;
       console.log("tab '" + tab.id + "' selected");
+
+      handleJquery()
     },
     addToBanVideos: function (id) {
       let index = this.videos.findIndex((x) => x.id === id);
@@ -300,6 +315,7 @@ var app = new Vue({
             console.log('Player State Changed: ', event);
             // si el video termina
             if(event.data == 0){
+              //self.playNext()
               self.playNext()
             }
         }  
@@ -326,6 +342,12 @@ var app = new Vue({
 
         this.randomJam()
       }
+    },
+    playRandom() {
+      const randomSong = Math.floor(Math.random() * app.songslist.length);
+      console.log(randomSong)
+
+      this.selectSong(randomSong)
     },
     playNext(){
 
@@ -512,7 +534,14 @@ var app = new Vue({
 
         const message = encodeURIComponent(`${this.questions[this.currentQuestion].label}`)
         
-        var audio = new Audio(`https://api.streamelements.com/kappa/v2/speech?voice=Mia&text=${message}`);
+        var voice = this.voice
+        
+        // si esta el modo voz random
+        if (this.randomvoice){
+          voice = voices[Math.floor(Math.random()*voices.length)];
+        }
+
+        var audio = new Audio(`https://api.streamelements.com/kappa/v2/speech?voice=${voice}&text=${message}`);
         audio.play();
       }
 
@@ -554,7 +583,31 @@ var app = new Vue({
 
       youtube.setVolume(newVolume)
 
-    }
+    }, 
+    changeLabel:function() {
+      socket.emit('changeTtsLabel', this.ttsLabel)
+      new AWN().success('¡Mensaje cambiado!')
+
+    },
+    changeCommand:function() {
+      if(this.ttsCommand != ''){
+        socket.emit('changeTtsCommand', this.ttsCommand)
+        new AWN().success('¡Comando cambiado!')
+      }
+    },
+    onChangeVoice: function(event) {
+      const voice = event.target.value
+
+      if(voice == 'random'){
+        this.randomvoice = true;
+      }else{
+        this.voice = voice;
+        this.randomvoice = false;
+      }
+    }, 
+    clearTts:function() {
+       app.questions = []
+    },
   },
   computed: {
     reversevideos() {
@@ -724,6 +777,7 @@ ipcRenderer.on("togglePauseSongRequest", function(event) {
     app.pauseSongRequest()
   }
 })
+
 ipcRenderer.on("skipSongRequest", function(event) {
   app.playNext()
 })
@@ -784,7 +838,7 @@ ipcRenderer.on("isDev", function(event, bool) {
           "author": "elmarceloc"
       },
       {
-          "label": "bbb",
+          "label": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariat",
           "author": "elmarceloc"
       },
       {
@@ -1103,6 +1157,17 @@ function getBadgeLink(user){
   
 }
 
+function handleJquery() {
+  setTimeout(function() {
+    $('.ui.dropdown').dropdown({
+      onChange: function(value, text, $selectedItem) {
+        const emoteurl = $selectedItem.find('img').attr('src')
+        socket.emit('changeTtsEmote', emoteurl)
+      }
+    })
+  },100)
+}
+
 function onSocketReady(){
   if(isDev){
     socket = io("ws://localhost:3000");
@@ -1112,9 +1177,11 @@ function onSocketReady(){
     console.log('connected to hosted websockets')
   }
 
-  socket.on('question', function(username, message){
+  socket.emit('changeTtsCommand', 'pregunta')
 
-    parsedMessage = message.substring(10)
+  socket.on('question', function(username, message, command){
+
+    parsedMessage = message.substring(command.length + 2)
 
     // si el mensaje es mayor a 10 caracteres
     if (parsedMessage.length > 12){ 

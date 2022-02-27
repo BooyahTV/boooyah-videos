@@ -7,6 +7,8 @@
     
     <link rel="stylesheet" href="./stylesheets/libs/semantic.min.css" />
 
+    <link rel="stylesheet" href="./stylesheets/libs/notifications.css" />
+
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
@@ -32,6 +34,9 @@
     <script src="./javascript/libs/tmi.min.js"></script>
     <script src="./javascript/libs/moment.js"></script>
     <script src="./javascript/libs/moment-duration-format.js"></script>
+
+    <script src="./javascript/libs/notifications.js"></script>
+
 
     <!-- Insert this line above script imports  -->
     <script>
@@ -64,13 +69,26 @@
       <div class="ui modal">
         <i class="close fas fa-times"></i>
 
-        <div class="header" style="font-size:30px!important">Booyah videos v0.99 <img src="https://cdn.betterttv.net/emote/5e4e7a1f08b4447d56a92967/1x" alt=""> </div>
+        <div class="header" style="font-size:30px!important">Booyah videos v1.02 <img src="https://cdn.betterttv.net/emote/5e4e7a1f08b4447d56a92967/1x" alt=""> </div>
         <div style="color:black!important" class="content">
           <h2>¿Que hay de nuevo?</h2>
-          <h3><img src="https://cdn.frankerfacez.com/emoticon/218530/1" alt=""> Preguntas  </h3>
+          <h3><img src="https://cdn.betterttv.net/emote/5f1b0186cf6d2144653d2970/1x" alt=""> Song request  </h3>
           <p>
             <ul>
-              <li>Las preguntas ahora se pueden elegir.</li>
+              <li>Ahora las canciónes se reproducen al azar</li>
+            </ul>
+          </p>
+          <h3><img src="https://cdn.betterttv.net/emote/5f71b705c2f3a70b1ae58709/1x" alt=""> Mensajes  </h3>
+          <p>
+            <ul>
+              <li>Ahora se puede ver todo el mensaje</li>
+            </ul>
+          </p>
+          <h3><img src="https://cdn.betterttv.net/emote/616162ffb63cc97ee6d57add/1x" alt=""> Regalar emblemas  </h3>
+          <p>
+            <ul>
+              <li>Poder regalar emblemas (para dinamicas con el chat y eso)</li>
+              <img style="width: 100%;" src="https://i.imgur.com/DEPxoAt.png">
             </ul>
           </p>
           <p style="text-align:right">~elmarceloc</p>
@@ -352,7 +370,7 @@
   </button>
    
   <button @click="playNext()" class="ui small blue button">
-    <i class="fas fa-forward"></i> Saltar
+    <i class="fas fa-shuffle"></i> Al azar
   </button>
   </br>
 
@@ -448,8 +466,9 @@
   <div v-if="currentTab=='questions'">
 
     <div class="ui four column container questionContainer">
+      
       <div class="questionPreview">
-        <p v-if="questions.length == 0">Aún no hay preguntas, usen <span style="color:rgb(191, 127, 10)">!pregunta &lt;algo&gt;</span></p>
+        <p v-if="questions.length == 0">Aún no hay mensajes, usen <span style="color:rgb(191, 127, 10)">!{{ttsCommand}} &lt;algo&gt;</span></p>
         <template v-if="questions.length > 0">
           <p>{{questions[currentQuestion].label}}</p>
           <span class="author">{{questions[currentQuestion].author}}</span>
@@ -462,22 +481,78 @@
       
       <br>
       <div class="questionOverlay"></div>
-      <div class="ui input margintop" style="padding:20px 0px 20px 0px">
 
-        <div style="padding-right:20px" class="ui checkbox">
-          <input v-model="questionTts" type="checkbox" name="questionTts">
-          <label style="color:white">Leer pregunta con TTS</label>
-        </div>
-
-        <div  class="ui checkbox">
-          <input v-model="showAutoOnStream" type="checkbox" name="showAutoOnStream">
-          <label style="color:white">Mostrar al cliquear</label>
-        </div>
+      <!--<div  class="ui checkbox">
+        <input v-model="showAutoOnStream" type="checkbox" name="showAutoOnStream">
+        <label style="color:white">Mostrar al cliquear</label>
+      </div>--> 
+      <div class="ui input">
         
-        <span style="color:white;font-size: 14px;padding-left:20px" v-if="questions.length > 0">
-          Total de preguntas: {{questions.length+1}}
-        </span>     
+        <span style="color:white;font-size: 14px;padding-left:20px;position: fixed;z-index: 100; top: 53px;left: 33px;width: 201px;" v-if="questions.length > 0">
+          Total de mensajes: {{questions.length+1}}
+        </span> 
+
+        
+      <div class="field ui" style="margin-top: 100px;">
+        <select class="ui fluid dropdown voice" @change="onChangeVoice($event)">
+          <option default value="random">Al azar</option>
+          <option value="Mia">Mia</option>
+          <option value="Enrique">Enrique</option>
+          <option value="Conchita">Conchita</option>
+          <option value="Miguel">Miguel</option>          
+        </select>
+        <input v-model="questionTts" type="checkbox" name="questionTts" style="margin-bottom: 10px;">
+        <label style="color:white">TTS</label>
       </div>
+
+      </div>
+      <div class="ui inline dropdown" style="margin-left: 30px;">
+        <div class="text">
+          <img class="ui image emotedropdown" src="https://cdn.betterttv.net/emote/5f38bb593212445d6fb43d73/3x">
+          MonkaHmm
+        </div>
+        <i class="dropdown icon"></i>
+        <div class="menu">
+          <div class="item" v-for="emote in emotes">
+            <img class="ui image emotedropdown" :src="emote.url">
+            {{emote.name}}
+          </div>
+          
+        </div>
+      </div>
+
+      <button @click="clearTts" class="ui orange button" style="margin-left: 30px;">
+        Vaciar
+      </button>
+      <br>
+      <br>
+
+
+      <div class="ui grid">
+        <div class="eight wide column">
+          <div class="ui left action input mini" style="margin-bottom: 10px;">
+            <button class="ui primary icon labeled button">
+              Titulo
+            </button>
+            <input  @keyup.enter="changeLabel" v-model="ttsLabel" type="text" placeholder="Confiesa">
+          </div>
+        </div>
+        <div class="eight wide column">
+          <div class="ui left action input mini">
+            <button class="ui red icon labeled button">
+              Comando [!]
+            </button>
+            <input v-model="ttsCommand" @keyup.enter="changeCommand"  type="text" placeholder="confesion">
+          </div>
+        </div>
+      </div>
+
+      
+      
+     
+
+     
+
 
       <div style="margin-bottom: 60px;" class="ui inverted segment" v-if="questions.length > 0">
         <div class="ui inverted relaxed divided list">
@@ -506,25 +581,24 @@
 
         var currentDate = new Date();
         
-        var minDate = new Date('2/2/2022');
-        var maxDate =  new Date('02/4/2022');
+        var minDate = new Date(2022,2,14);
+        var maxDate =  new Date(2022,2,17);
 
-        if (currentDate > minDate && currentDate < maxDate ){
-                
+       // if (currentDate > minDate && currentDate < maxDate ){
+           /*     
             $('.modal').modal('show')
 
             $('.close').click(function(){
               $('.modal').modal('hide')
-            })
+            })*/
 
-        }
-
-
+      //  }
 
       
     </script>
     <script src="./javascript/scroll.js"></script>
     <script src="./javascript/contextMenu.js"></script>
     <script src="./javascript/main.js"></script>
+    <script src="./javascript/emotes.js?dsf=dsf"></script>
   </body>
 </html>

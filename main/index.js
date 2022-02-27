@@ -1,5 +1,5 @@
 // Modules to control application life and create native browser window
-const { Menu, app, BrowserWindow, ipcMain, globalShortcut } = require("electron");
+const { Menu, app, BrowserWindow, ipcMain, globalShortcut, dialog } = require("electron");
 
 const pjson = require('../package.json');
 
@@ -365,7 +365,26 @@ app.whenReady().then(() => {
   globalShortcut.register('Alt+CommandOrControl+h', () => {
     mainWindow.webContents.send('reduceVolume')
   })
-  
+
+
+  /*mainWindow.on('close', (event) => {
+    event.preventDefault(); 
+    dialog.showMessageBox(mainWindow,{
+        message: "Estas seguro que deseas cerrar el programa?",
+        type: "warning",
+        buttons: ["Cerrar" ,"Cancel"],
+        defaultId: 0,
+        title: "Confirmar cierre",
+        detail: "Se perderán los videos enviados durante la sesión"
+    }
+    ).then((res) => {
+        console.log(res);
+        if(res.response === 0){
+            mainWindow.destroy();
+        }
+    });
+  });*/
+
 
   
 

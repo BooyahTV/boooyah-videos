@@ -2,6 +2,8 @@ const { Menu, BrowserWindow } = require("electron");
 const prompt = require('electron-prompt');
 const settings = require("electron-settings");
 const { clipboard } = require('electron')
+const isDev = require("electron-is-dev");
+const request = require('request');
 
 var stores = [
   { id: "mercadolibre", label: "Mercado Libre" },
@@ -249,7 +251,28 @@ var menu = Menu.buildFromTemplate([
         },
       }
     ],
-    }
+  },
+  {
+    label: "Otorgar emblema",
+    click: function (item, browser) {
+        prompt({
+          title: 'Nombre de usuario',
+          label: 'Nombre de usuario',
+          value: '',
+          type: 'input',
+          alwaysOnTop: true,
+        })
+        .then((user) => {
+          var domain = 'https://bapi.zzls.xyz'
+          if (isDev) 'http://localhost:40030'
+
+          request.post(domain + '/dashboard/donations/remote').form({booyah: user})
+          
+        })
+        .catch(console.error);
+
+    },
+  },
 ]);
 
 module.exports = menu;
