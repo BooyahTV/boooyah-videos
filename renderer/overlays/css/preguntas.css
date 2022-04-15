@@ -1,0 +1,97 @@
+@font-face {
+    font-family: 'cristian';
+    src: url("fonts/cristian.ttf")
+}
+body {
+    margin:0px;
+}
+
+.emote {
+    position: relative;
+    max-height: 30px;
+    width: auto;
+    height: auto;
+ }
+
+.emoteAside{
+    background-repeat:no-repeat;
+    background-position: 650px 50px;
+    background-size:150px;
+    background-position-y: bottom;
+}
+
+.question-container{
+    border: black solid 2px;  
+    border-radius: 15px;  
+    max-width: 800px;
+    height:200px;
+    background-color: #000000d5;
+}
+
+.header{
+    border: black solid 2px;  
+
+    background-color: #000000a4;
+    height: 40px;
+    border-radius: 10px 10px 0px 0px;  
+}
+
+.question-container p{
+    font-family: sans-serif;
+    font-weight: bold;
+    color: white;
+   /* text-shadow: 1px 2px 5px black; */
+
+}
+
+.question-container p.question{
+    text-align: left;
+    font-size: 28px;
+    width: 599px;
+    position: absolute;
+    top: 34px;
+    left: 17px;
+}
+
+.question-container p.author{
+    text-align: center;
+    font-size: 25px;
+    position: absolute;
+    top: -19px;
+    padding-left: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.question-container .sideemote{
+    margin-left: 200px;
+    position: absolute;
+    left: 436px;
+    width: 179px;
+    top: 12px;
+}
+
+.command{
+    position: absolute;
+    left: 570px;
+    top: 20px;
+    width: 300px;
+    font-size: 12px;
+}
+
+.username{
+    padding-right: 6px;
+    padding-left: 6px;
+    text-overflow: ellipsis;
+    max-width: 482px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-align: left;
+    
+}
+
+.badge{
+    width: 25px;
+    padding-right: 3px;
+}

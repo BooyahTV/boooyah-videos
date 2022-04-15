@@ -3,3 +3,4 @@ dist/
 electron-builder.yml
 render.js
 dev-app-update.yml
+renderer/javascript/credentials.js

@@ -1,0 +1,101 @@
+body{
+    margin: 0px;
+}
+
+.coverart {
+    width: 70px;
+    height: 70px;
+    position: absolute;
+    top: 5px;
+    left: 5px;
+}
+
+.card{
+    background-color: #11120d;
+    width: 350px;
+    height: 80px;
+    color:white;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+#song{
+    position: absolute;
+    left: 90px;
+    font-size: 25px;
+    top: -15px;
+    margin-right: 33px;
+    text-overflow: ellipsis;
+    max-width: 248px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-align: left;
+
+}
+
+#artist{
+    position: absolute;
+    left: 90px;
+    top: 35px;
+    max-width: 252px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-align: left;
+    text-overflow: ellipsis;
+}
+
+.footer{
+    /*background-color: #0d0e0a;*/
+    color:rgb(220, 220, 220);
+    font-size: 10px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    margin: 0px;
+    width: 348px;
+    padding: 1px;    
+    display: flex;
+    align-items: center;
+    max-width: 348px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-align: left;
+    text-overflow: ellipsis;
+    height:16px;
+    position: absolute;
+}
+
+.coverEmote{
+    width:100px;
+    z-index: 100;
+    position: absolute;
+    width: 70px;
+    top: 5px;
+    left: 5px;
+}
+
+.badge{
+    width: 10px;
+    padding-right: 3px;
+}
+
+.highlight{
+    color: #ffffff;
+}
+
+.info{
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.progress{
+    background-color: hsl(72deg 16% 12%);
+    position: absolute;
+    height: 18px;
+    top: 80px;
+}
+
+.progressbg{
+    background-color: #0d0e0a;
+    position: absolute;
+    height: 18px;
+    top: 80px;
+    width:350px;
+}

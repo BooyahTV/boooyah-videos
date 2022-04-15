@@ -1,9 +1,11 @@
 // Modules to control application life and create native browser window
 const { Menu, app, BrowserWindow, ipcMain, globalShortcut, dialog } = require("electron");
+const AutoLaunch = require('auto-launch');
 
 const pjson = require('../package.json');
 
 const windowStateKeeper = require('electron-window-state');
+
 
 const http = require('http');
 const fs = require('fs');
@@ -25,9 +27,11 @@ const testVideos = ['WCi2DLYE82A', 'Zvv_0cO-k7M']
 
 const server = require("./server");
 
+const { getAudioUrl } = require('uberduck-api');
+
 try {
   if (isDev) {
-    //require("electron-reloader")(module);
+    require("electron-reloader")(module);
   }
 } catch (_) {}
 
@@ -185,6 +189,11 @@ async function createWindow() {
     settings.get("songrequest.volume").then((volume) => {
       mainWindow.webContents.send("getVolume", volume || 100); // default volume of 100
     });
+    // volume
+    settings.get("polls.slots").then((polls) => {
+      mainWindow.webContents.send("setPolls", polls); // default volume of 100
+    });
+
   });
 
   // opens external links in default browser
@@ -318,6 +327,85 @@ async function createWindow() {
     links.clips(username, message, platform);
   });
 
+
+  // slots
+
+
+  ipcMain.on("saveSlot", function (e, poll) {      
+    settings.get("polls.slots").then((polls) => {
+
+      // if the poll list is null, make it an empty array
+      if (polls == null) polls = [];
+
+      // removes the poll if it is in the saved polls
+      polls.forEach((testPoll, index, object) => {
+        if (poll.slot == testPoll.slot) {
+          object.splice(index, 1);
+        }
+      });
+
+      // adds the poll to the saved polls
+      const newPolls = [...(polls || []), poll];
+
+      console.log('polls', newPolls)
+
+      // save in settings
+      settings.set("polls", {
+        slots: newPolls,
+      });
+    });
+    
+  });
+
+  ipcMain.on('uberduck', function (id, message) {
+      getAudioUrl(
+        'pub_ieyjizcjizsdjdcgmn', 
+        'pk_8ae7bb6a-019f-4aa8-bf26-002f87c87041', 
+        'fernanfloo', 
+        message)
+    .then((url) => {
+        console.log('uberduck', url)
+        mainWindow.webContents.send('uberduck', {
+          url: url,
+          id: id
+        })
+
+    })
+    
+  })
+
+
+  ipcMain.on("removeSlot", function (e, slot) {    
+    settings.get("polls.slots").then((polls) => {
+
+      // if the poll list is null, make it an empty array
+      if (polls == null) polls = [];
+
+      // removes the poll if it is in the saved polls
+      polls.forEach((testPoll, index, object) => {
+        if (slot == testPoll.slot) {
+          object.splice(index, 1);
+        }
+      });
+
+      // save in settings
+      console.log('polls', polls)
+
+      settings.set("polls", {
+        slots: polls,
+      });
+    });
+  });
+
+
+  
+  
+
+
+
+
+
+
   mainWindow.once("ready-to-show", () => {
     console.log("checking updates...");
     autoUpdater.checkForUpdatesAndNotify();
@@ -329,6 +417,15 @@ async function createWindow() {
 // Some APIs can only be used after this event occurs.
 app.whenReady().then(() => {
   createWindow();
+
+  let autoLaunch = new AutoLaunch({
+    name: 'BooyahVideos',
+    path: app.getPath('exe'),
+  });
+
+  autoLaunch.isEnabled().then((isEnabled) => {
+    if (isEnabled) autoLaunch.disable();
+  });
 
   globalShortcut.register('Alt+CommandOrControl+I', () => {
     mainWindow.webContents.send('toggleSongRequest')
@@ -366,7 +463,23 @@ app.whenReady().then(() => {
     mainWindow.webContents.send('reduceVolume')
   })
 
+  globalShortcut.register('Alt+CommandOrControl+h', () => {
+    mainWindow.webContents.send('reduceVolume')
+  })
 
+  // poll slots (0 - 9)
+  for (let i = 0; i <= 9; i++) {
+
+    globalShortcut.register('Alt+CommandOrControl+'+i, () => {
+      console.log('Poll slot #'+i)
+      
+      mainWindow.webContents.send('pollSlot', i)
+
+    })
+
+  }
+
+ 
   /*mainWindow.on('close', (event) => {
     event.preventDefault(); 
     dialog.showMessageBox(mainWindow,{

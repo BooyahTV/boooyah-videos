@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<!-- saved from url=(0092)https://poll.ma.pe/overlay/b166b015e9bfa3d52d927a27f3a0c126a4ae05a4c89cead61345f9f8897ad1ef/ -->
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <!--  <link rel="shortcut icon" type="image/x-icon" href="https://poll.ma.pe/favicon.ico" />-->
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="theme-color" content="#000000" />
+    <title>Booyah Poll Overlay - Overlay</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.1.3/socket.io.min.js"
+      integrity="sha512-fB746S+jyTdN2LSWbYSGP2amFYId226wpOeV4ApumcDpIttPxvk1ZPOgnwqwQziRAtZkiFJVx9F64GLAtoIlCQ=="
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" type="text/css" href="/overlays/css/poll.css" />
+  </head>
+
+  <body>
+    <div id="app">
+      <div v-if="state">
+        <meta
+          name="viewport"
+          content="width=1920,height=1080,user-scalable=no"
+        />
+        <div id="content">
+          <div data-reactroot="" id="app" class="base page-overlay">
+            <div class="overlay">
+              <div class="stream-poll active inOverlay gungeon middleCenter">
+                <div class="border"></div>
+                <div class="inner">
+                  <ul class="options">
+                    <li class="questionPoll emotes">{{ question }}</li>
+                    <li class="help">
+                      <span>Escribe (1,2...) para votar</span>
+                    </li>
+                    <li
+                      v-for="(alternative, index) in alternatives"
+                      class="winner"
+                      v-bind:style="{background: alternative.isWinner? 'rgba(0,0,0,0.12' : 'rgba(0,0,0,0.0)'}"
+                      class="option highest"
+                    >
+                      <span class="number">{{index + 1}}</span>
+                      <span class="text emotes">{{alternative.title}}</span
+                      ><span class="procent"
+                        >{{alternative.votes | percentage(alternatives)}}%</span
+                      >
+                      <div class="bar">
+                        <div
+                          class="bar-inner"
+                          :style="{width: alternative.progress + '%'}"
+                        ></div>
+                      </div>
+                    </li>
+                  </ul>
+                  <div class="metaInfo">
+                    <div class="total">
+                      <label>Votos:</label>
+                      <strong>{{totalVotes}}</strong>
+                    </div>
+                    <div class="duration">
+                      <label>Tiempo:</label><strong>{{time}} segundos</strong>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      channel = '<%= channel %>'
+    </script>
+
+    <script src="/overlays/js/poll.js"></script>
+    <script src="/overlays/js/emotes.js"></script>
+
+  </body>
+</html>

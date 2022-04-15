@@ -1,6 +1,6 @@
 var isDev = false;
 
-var socket;
+const socket = io("ws://localhost:8080");
 
 const key = "AIzaSyAv2ie_VWHHlbjLyF7xh7aJYdj4lIqsk_c";
 const videoParts = "snippet,statistics,contentDetails";
@@ -172,15 +172,18 @@ var app = new Vue({
       { id: "songrequest", name: "Song Request", icon: "https://cdn.betterttv.net/emote/5f1b0186cf6d2144653d2970/1x", enabled: true }, 
       { id: "poll", name: "Encuestas", icon: "https://cdn.betterttv.net/emote/5aa16eb65d4a424654d7e3e5/1x", enabled: true },
       { id: "questions", name: "Mensajes", icon: "https://cdn.betterttv.net/emote/5f71b705c2f3a70b1ae58709/1x", enabled: true },
+      { id: "backgrounds", name: "Fondos", icon: "https://cdn.betterttv.net/emote/60a7489567644f1d67e8a245/1x", enabled: true },
       { id: "clips", name: "Clips", enabled: true },
       { id: "channels", name: "Canales", enabled: false },
       { id: "products", name: "Tiendas", enabled: false },
     ],
-    currentTab: "videos",
+    currentTab: "backgrounds",
     questionPoll: "",
     alternatives: [""],
     stateBtn: 'Iniciar',
-    pollState: false, // no corriendo 
+    pollState: false,
+    pollSlots: [],
+    selectedPollSlot: 0,
     isQuestionOnStream: false,
     questionsState: false,
     questions: [],
@@ -191,7 +194,10 @@ var app = new Vue({
     ttsCommand: 'pregunta',
     voice: 'Mia',
     randomvoice: true,
-    emotes: []
+    emotes: [],
+    background: '',
+    backgrounds: ['https://cdn.betterttv.net/emote/583089f4737a8e61abb0186b/3x'],
+    chatBackgrounds: []
   },
   methods: {
     setTab: function (tab) {
@@ -521,9 +527,54 @@ var app = new Vue({
         this.alternatives = ['catYep si','catNope no']
               
         this.changeState()
-
-
       }
+    },
+    selectPoll: function(slot) {
+
+      console.log(slot)
+
+      this.pollSlots.forEach((poll, index, object) => {
+        
+        if (slot == poll.slot) {
+          this.questionPoll = poll.question
+          this.alternatives = poll.alternatives
+          this.changeState()
+
+        }
+      });
+      
+    },
+    removePoll: function(slot) {
+      this.pollSlots.forEach((poll, index, object) => {
+        if (slot == poll.slot) {
+          object.splice(index, 1);
+        }
+      });
+
+      ipcRenderer.send("removeSlot",slot);
+
+
+    },
+    saveSlot: function() {
+      console.log('slots before', this.pollSlots)
+      // if the slot is not empty
+      this.pollSlots.forEach((poll, index, object) => {
+        
+        if (this.selectedPollSlot == poll.slot) {
+          object.splice(index, 1);
+        }
+      });
+
+      const poll = {
+        slot: this.selectedPollSlot,
+        question: this.questionPoll,
+        alternatives: this.alternatives
+      }
+      this.pollSlots.push(poll)
+
+      ipcRenderer.send("saveSlot",poll);
+
+      console.log('slots after', this.pollSlots)
     },
     showQuestionOnStream: function(){
       this.isQuestionOnStream = true
@@ -606,8 +657,16 @@ var app = new Vue({
       }
     }, 
     clearTts:function() {
-       app.questions = []
+       this.questions = []
     },
+    saveBackground: function() {
+      console.log(this.background)
+      this.backgrounds.push(this.background)
+      // TODO: save in settings
+    },
+    selectBackground: function(url) {
+      socket.emit('selectBackground', url)
+    }
   },
   computed: {
     reversevideos() {
@@ -724,39 +783,40 @@ var client;
 ipcRenderer.on("twitchChannel", function (event, channelName) {
   console.log("channelName: ", channelName);
 
-  let channels = [];
-
-  channels.push(channelName)
-
-  if (channelName == 'cristianghost' || channelName == 'cynthiayaya') {
-    channels.push("notfijxu")
-  }
-
   client = new tmi.Client({
-    identity: {
-      username: "NotFijxu",
-      password: "oauth:itwzbxxoe87ltpzoxkxew7e625mxcu",
-    },
-    channels: channels
+    channels: [channelName]
   });
   
   client.connect();
 
     
   client.on("message", (channel, tags, message, self) => {
-
-    if (channel == "#notfijxu") {
-      try {
-        let username = message.split(':')[1].slice(9);
-        ipcRenderer.send("sendLink", username, message, "booyah");
-      } catch (e) {
-      }
-    } else {
-      ipcRenderer.send("sendLink", tags["display-name"], message, "twitch");
+     
+    if (message.startsWith('!fondo')){
+      const url = message.replace('!fondo','')
+      app.chatBackgrounds.push(url)
     }
+
+    if (message.startsWith('!'+app.ttsCommand) || message.startsWith(app.ttsCommand)){
+
+      if (!app.questions.includes(message)){
+          cleanedQuestion = removeCommand(message)
+          
+          app.questions.push({
+            label: cleanedQuestion,
+            author: tags["display-name"],
+            tags: tags
+          })
+      }
+    }
+
+    ipcRenderer.send("sendLink", tags["display-name"], message, "twitch");
+
   });
 
 });
+
+
 
 // song reuquest
 ipcRenderer.on("toggleSongRequest", function(event) {
@@ -826,54 +886,43 @@ ipcRenderer.on("showQuestion", function(event) {
   }
 })
 
+
+
+ipcRenderer.on("setPolls", function (event, polls) {
+  app.pollSlots = polls
+  console.log(polls)
+})
+
+ipcRenderer.on("pollSlot", function (event, slot) {
+  console.log('poll slot #', slot)
+
+  app.selectPoll(slot)
+})
+
+ipcRenderer.on("background", function (event, url) {
+  app.chatBackgrounds.push(url)
+})
+
+
+
+
 ipcRenderer.on("isDev", function(event, bool) {
   isDev = bool
 
-  onSocketReady()
-
   if (isDev){
-    app.questions = [
+    /*app.pollSlots = [
       {
-          "label": "a EZ",
-          "author": "elmarceloc"
+        question: 'pregunta',
+        alternatives: ["a","b","c"],
+        slot: 1
       },
       {
-          "label": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariat",
-          "author": "elmarceloc"
-      },
-      {
-          "label": "cc",
-          "author": "elmarceloc"
-      },
-      {
-          "label": "dddddddd",
-          "author": "elmarceloc"
-      },
-      {
-          "label": "ee",
-          "author": "elmarceloc"
-      },
-      {
-          "label": "11",
-          "author": "elmarceloc"
-      },
-      {
-          "label": "222",
-          "author": "elmarceloc"
-      },
-      {
-          "label": "333333",
-          "author": "elmarceloc"
-      },
-      {
-          "label": "444",
-          "author": "elmarceloc"
-      },
-      {
-          "label": "55555",
-          "author": "elmarceloc"
-      },
-  ]
+        question: 'asdasda',
+        alternatives: ["234","2342","234"],
+        slot: 4
+      }
+    ]*/
+
 }
 })
 
@@ -971,8 +1020,6 @@ function addMusicVideo(id, platform, username, message) {
         .then((youtubeChannel) => {
           console.log(youtubeChannel)
 
-          const badges = getBadges(username)
-
           const video = {
             id: id,
             title: youtubeVideo.items[0].snippet.title,
@@ -980,10 +1027,8 @@ function addMusicVideo(id, platform, username, message) {
             thumbnail: youtubeVideo.items[0].snippet.thumbnails.medium.url,
             channelThumbnail: youtubeChannel.items[0].brandingSettings.image.bannerExternalUrl,
             submiter: username,
-            submiterColor: getUsernameColor(username),
             platform: platform,
             message: message,
-            badges: badges
           }
     
           console.log(video)
@@ -1071,124 +1116,24 @@ function restartApp() {
   ipcRenderer.send("restart_app");
 }
 
-var donators;
-
-fetch('https://bapi.zzls.xyz/api/badges/cristianghost')
-  .then(response => response.json())
-  .then(data => donators = data );
-
-
-function getUsernameColor(username){
-  const colors = [
-    "#002FA7",
-    "#8a2be2",
-    "#5f9ea0",
-    "#E4717A",
-    "#1e90ff",
-    "#b22222",
-    "#00FF00",
-    "#ff69b4",
-    "#ff4500",
-    "#ff0000",
-  ];
-
-  var hash = username.charCodeAt(0);
-
-	var color = "#6525a1";
-	
-	for (let i = 0; i < colors.length; i++) {
-		if (hash % i === 0) {
-			color = colors[i];
-		}
-	}
-
-  if( donators ) {
-    let booyahtvUser = donators[username]
-
-    if (booyahtvUser != null) {
-      // if the user has multiple badges (array)
-      if(Array.isArray(booyahtvUser)){
-        booyahtvUser.forEach(user => {
-          if (user.color) {
-            color = user.color
-          }
-        })
-      }else{
-        if (booyahtvUser.color) {
-          console.log('color found',booyahtvUser.color)
-          color = booyahtvUser.color
-        }
-      }
-    }	
-  }
-
-  return color;
-
-}
-
-function getBadges(username) {
-  if (!donators) return
-
-  const booyahtvUser = donators[username]
-
-	// adds the badge
-	if (booyahtvUser != null) {
-		// if the user has multiple badges (array)
-		if(Array.isArray(booyahtvUser)){
-      badges = []
-			booyahtvUser.forEach(user => {
-        if (user.badge) badges.push(getBadgeLink(user))
-			  
-			})
-      return badges;
-		}else{
-			return getBadgeLink(booyahtvUser)
-		}
-	}	
-}
-
-function getBadgeLink(user){
-  if(user.badge_source == 'bttv'){
-    return `https://cdn.betterttv.net/emote/${user.badge}/1x`
-  
-  }else if(user.badge_source == 'ffz'){
-    return `https://cdn.frankerfacez.com/emoticon/${user.badge}/1`
-  }
-  
-}
 
 function handleJquery() {
   setTimeout(function() {
-    $('.ui.dropdown').dropdown({
+    $('.emotedropdown').dropdown({
       onChange: function(value, text, $selectedItem) {
         const emoteurl = $selectedItem.find('img').attr('src')
         socket.emit('changeTtsEmote', emoteurl)
       }
     })
-  },100)
+  },0)
 }
 
-function onSocketReady(){
-  if(isDev){
-    socket = io("ws://localhost:3000");
-    console.log('connected to local websockets')
-  }else{
-    socket = io("ws://199.195.254.68:3000");
-    console.log('connected to hosted websockets')
+function removeCommand(str) {
+  const indexOfSpace = str.indexOf(' ');
+
+  if (indexOfSpace === -1) {
+    return '';
   }
 
-  socket.emit('changeTtsCommand', 'pregunta')
-
-  socket.on('question', function(username, message, command){
-
-    parsedMessage = message.substring(command.length + 2)
-
-    // si el mensaje es mayor a 10 caracteres
-    if (parsedMessage.length > 12){ 
-      app.questions.push({
-        label: parsedMessage,
-        author: username
-      })
-    }
-  })
+  return str.substring(indexOfSpace + 1);
 }

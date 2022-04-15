@@ -194,32 +194,6 @@ var menu = Menu.buildFromTemplate([
             .catch(console.error);
           });
         },
-      },
-      {
-        label: "Canal de Booyah.live",
-        click: function (item, browser) {
-          settings.get("booyah.name").then((channelURL) => {
-
-            prompt({
-              title: 'Canal de Booyah!',
-              label: 'Link del Popup del Chat:',
-              value: channelURL || 'https://booyah.live/standalone/chatroom/79543340',
-              type: 'input',
-              alwaysOnTop: true,
-            })
-            .then((newChannelURL) => {
-                if(newChannelURL === null) {
-                    
-                } else {
-
-                  settings.set("booyah", {
-                    name: newChannelURL,
-                  });
-                }
-            })
-            .catch(console.error);
-          });
-        },
       }
     ],
   }, 
@@ -235,44 +209,29 @@ var menu = Menu.buildFromTemplate([
       {
         label: "Encuestas",
         click: function (item, browser) {
-          clipboard.writeText('http://199.195.254.68:3000/overlay', 'clipboard')
+          clipboard.writeText('http://localhost:8080/overlay', 'clipboard')
         },
       },
       {
         label: "Preguntas",
         click: function (item, browser) {
-          clipboard.writeText('http://199.195.254.68:3000/overlayquestions', 'clipboard')
+          clipboard.writeText('http://localhost:8080/overlayquestions', 'clipboard')
         },
       },
       {
         label: "Song request",
         click: function (item, browser) {
-          clipboard.writeText('http://199.195.254.68:3000/overlaysongrequest', 'clipboard')
+          clipboard.writeText('http://localhost:8080/overlaysongrequest', 'clipboard')
+        },
+      },
+      {
+        label: "Fondo",
+        click: function (item, browser) {
+          clipboard.writeText('http://localhost:8080/overlaybackground', 'clipboard')
         },
       }
     ],
-  },
-  {
-    label: "Otorgar emblema",
-    click: function (item, browser) {
-        prompt({
-          title: 'Nombre de usuario',
-          label: 'Nombre de usuario',
-          value: '',
-          type: 'input',
-          alwaysOnTop: true,
-        })
-        .then((user) => {
-          var domain = 'https://bapi.zzls.xyz'
-          if (isDev) 'http://localhost:40030'
-
-          request.post(domain + '/dashboard/donations/remote').form({booyah: user})
-          
-        })
-        .catch(console.error);
-
-    },
-  },
+  }
 ]);
 
 module.exports = menu;

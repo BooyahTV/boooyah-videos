@@ -28,6 +28,7 @@
 
     <link rel="stylesheet" href="./stylesheets/songrequest.css" />
     <link rel="stylesheet" href="./stylesheets/questions.css" />
+    <link rel="stylesheet" href="./stylesheets/character.css" />
     
     <link rel="stylesheet" href="./stylesheets/notification.css" />
     
@@ -69,26 +70,13 @@
       <div class="ui modal">
         <i class="close fas fa-times"></i>
 
-        <div class="header" style="font-size:30px!important">Booyah videos v1.02 <img src="https://cdn.betterttv.net/emote/5e4e7a1f08b4447d56a92967/1x" alt=""> </div>
+        <div class="header" style="font-size:30px!important">Booyah videos v1.16 <img src="https://cdn.betterttv.net/emote/5e4e7a1f08b4447d56a92967/1x" alt=""> </div>
         <div style="color:black!important" class="content">
           <h2>¿Que hay de nuevo?</h2>
-          <h3><img src="https://cdn.betterttv.net/emote/5f1b0186cf6d2144653d2970/1x" alt=""> Song request  </h3>
+          <h3><img src="https://cdn.betterttv.net/emote/5aa16eb65d4a424654d7e3e5/1x" alt=""> Encuestas  </h3>
           <p>
             <ul>
-              <li>Ahora las canciónes se reproducen al azar</li>
-            </ul>
-          </p>
-          <h3><img src="https://cdn.betterttv.net/emote/5f71b705c2f3a70b1ae58709/1x" alt=""> Mensajes  </h3>
-          <p>
-            <ul>
-              <li>Ahora se puede ver todo el mensaje</li>
-            </ul>
-          </p>
-          <h3><img src="https://cdn.betterttv.net/emote/616162ffb63cc97ee6d57add/1x" alt=""> Regalar emblemas  </h3>
-          <p>
-            <ul>
-              <li>Poder regalar emblemas (para dinamicas con el chat y eso)</li>
-              <img style="width: 100%;" src="https://i.imgur.com/DEPxoAt.png">
+              <li>Poder guardar encuestas</li>
             </ul>
           </p>
           <p style="text-align:right">~elmarceloc</p>
@@ -383,7 +371,7 @@
   </template>
 
 </div>
-    <table v-if="songslist.length > 0" class="ui selectable unstackable  inverted table songslist">
+    <table v-if="songslist.length > 0" class="ui selectable unstackable inverted table songslist">
       <thead>
         <tr>
           <!--<th class="thumbnailheader"></th>-->
@@ -399,8 +387,7 @@
         <tr class="song" v-bind:class="(songrequstison && !paused && songslist.length > 0 && index == 0) ? 'current' : ''" v-for="(song, index) in songslist">
           <td @click="selectSong(index)" class="channelbg" :style="{ backgroundImage: 'linear-gradient( rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2) ), url('+song.channelThumbnail+')' }">{{song.title}}</td>
           <td>{{song.artist}}</td> 
-          <td class="submiter" :style="{ color: song.submiterColor} ">
-            <img v-for="(badge, index) in song.badges" :src="badge" alt="" srcset="">
+          <td class="submiter">
              <span style="padding-left:5px">{{song.submiter}}</span>
           </td>
           <td @click="removeSong(index)" class="close">x</td>
@@ -459,6 +446,48 @@
         <button :disabled="questionPoll == '' || alternatives.length < 2" class="large green button ui" v-if="stateBtn" @click="changeState ">{{stateBtn}}</button>
         <button :disabled="stateBtn != 'Iniciar'"  class="large orange button ui" v-if="stateBtn" @click="startBasicPoll "><i class="fas fa-bolt"></i>SI / NO</button>
       </div>
+      <br>
+      <br>
+
+      <div class="ui input">
+
+        <select v-model="selectedPollSlot" class="ui fluid dropdown">
+          <option value="0">Slot 0</option>
+          <option value="1">Slot 1</option>
+          <option value="2">Slot 2</option>
+          <option value="3">Slot 3</option>
+          <option value="4">Slot 4</option>
+          <option value="5">Slot 5</option>          
+          <option value="6">Slot 6</option>          
+          <option value="7">Slot 7</option>          
+          <option value="8">Slot 8</option>          
+          <option value="9">Slot 9</option>          
+        </select>
+
+      </div>
+      <button :disabled="questionPoll == '' || alternatives.length < 2" class="large red button ui" @click="saveSlot">Guardar</button>
+
+
+
+
+      <table v-if="pollSlots.length > 0" class="ui celled table unstackable inverted">
+        <thead>
+          <tr>
+            <th>Hotkey</th>
+            <th>Pregunta</th>
+            <th>Alternativas</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="pollSlot" v-for="(poll, index) in pollSlots">
+            <td @click="selectPoll(poll.slot)" ><span class="keyboard">Ctrl + Alt + {{ poll.slot }}</span></td>
+            <td @click="selectPoll(poll.slot)" >{{ poll.question }}</td>
+            <td @click="selectPoll(poll.slot)" >{{ poll.alternatives.join(', ') }}</td>
+            <td class="close" @click="removePoll(poll.slot)">x</td>
+          </tr>
+        </tbody>
+      </table>
 
     </div>
   </div>
@@ -506,7 +535,7 @@
       </div>
 
       </div>
-      <div class="ui inline dropdown" style="margin-left: 30px;">
+      <div class="ui inline dropdown emotedropdown" style="margin-left: 30px;">
         <div class="text">
           <img class="ui image emotedropdown" src="https://cdn.betterttv.net/emote/5f38bb593212445d6fb43d73/3x">
           MonkaHmm
@@ -569,6 +598,48 @@
 
   </div>
 
+
+  <div v-if="currentTab=='backgrounds'">
+
+      <div class="ui input" bis_skin_checked="1">
+        <input v-model="background" type="text" placeholder="URL">
+      </div>
+      <button @click="saveBackground" class="ui primary button">
+        Guardar
+      </button>
+      <br>
+
+      <div class="ui grid">
+        <div @click="selectBackground(url)" class="four wide column" v-for="(url,index) in backgrounds">
+          <div class="ui card background-card" bis_skin_checked="1">
+            <div class="image" bis_skin_checked="1">
+              <img :src="url">
+            </div>
+            <div v-if="index < 9" class="content" bis_skin_checked="1">
+              <a class="header">ALT + {{index +1}}</a>
+            </div>
+          </div>
+        </div>
+       
+      </div>
+
+      <h3>Chat</h3>
+
+      <div class="ui grid">
+        <div @click="selectBackground(url)" class="four wide column" v-for="(url,index) in chatBackgrounds">
+          <div class="ui card character-card" bis_skin_checked="1">
+            <div class="image" bis_skin_checked="1">
+              <img :src="url">
+            </div>
+          </div>
+        </div>
+       
+      </div>
+      
+
+  </div>
+
+
 </div>
 
 
@@ -579,26 +650,23 @@
 
     <script>
 
-        var currentDate = new Date();
-        
-        var minDate = new Date(2022,2,14);
-        var maxDate =  new Date(2022,2,17);
-
-       // if (currentDate > minDate && currentDate < maxDate ){
-           /*     
+        var currentDate = new Date().getDay();
+        console.log(currentDate)
+        if (currentDate ==  3){
+              
             $('.modal').modal('show')
 
             $('.close').click(function(){
               $('.modal').modal('hide')
-            })*/
+            })
 
-      //  }
+       }
 
       
     </script>
     <script src="./javascript/scroll.js"></script>
     <script src="./javascript/contextMenu.js"></script>
+    <script src="./javascript/uberduck.js"></script>
     <script src="./javascript/main.js"></script>
-    <script src="./javascript/emotes.js?dsf=dsf"></script>
   </body>
 </html>

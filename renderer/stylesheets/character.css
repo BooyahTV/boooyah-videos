@@ -1,0 +1,7 @@
+.background-card{
+    background:#444444;
+}
+.background-card img{
+    max-height:100%;
+    max-width:100%;
+}

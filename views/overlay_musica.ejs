@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<!-- saved from url=(0092)https://poll.ma.pe/overlay/b166b015e9bfa3d52d927a27f3a0c126a4ae05a4c89cead61345f9f8897ad1ef/ -->
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <!--  <link rel="shortcut icon" type="image/x-icon" href="https://poll.ma.pe/favicon.ico" />-->
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="theme-color" content="#000000" />
+    <title>Booyah Poll Overlay - Overlay</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.1.3/socket.io.min.js"
+      integrity="sha512-fB746S+jyTdN2LSWbYSGP2amFYId226wpOeV4ApumcDpIttPxvk1ZPOgnwqwQziRAtZkiFJVx9F64GLAtoIlCQ=="
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" type="text/css" href="/overlays/css/songrequest.css" />
+
+    <script src="/overlays/js/libs/moment.js"></script>
+    <script src="/overlays/js/libs/moment-duration-format.js"></script>
+  </head>
+
+  <body>
+    <div id="app">
+      <div v-show="visible">
+        <div class="card">
+          <template v-if="!loading">
+            <img v-if="emote == ''" class="coverEmote" src="https://cdn.betterttv.net/emote/5fb972c7e2900c6f07df3adb/3x" alt="">
+            <img v-if="emote != ''" class="coverEmote" :src="emote" alt="">
+
+            <img :src="coverart" class="coverart" alt="" srcset="">
+            <p id="song">{{ song }}</p>
+            <p id="artist">{{ artist }}</p>
+          </template>
+            
+          <template v-if="loading">
+            <img src="https://cdn.betterttv.net/emote/5e0502e69e2cd00d968d5677/3x" class="coverart" alt="" srcset="">
+            <p id="song">Cargando...</p>
+            <p id="artist">Buscando la canción en spotify</p>
+          </template>
+
+        </div>
+        <div class="progressbg"></div>
+        <template v-if="!loading">
+          <div class="progress":style="{width: progress + 'px'}"></div>
+          <marquee v-if="!youtube" scrollamount="2" class="footer" direction="right" width="350">
+            Enviado por:
+            <span class="highlight">{{author}}</span>
+            <span v-if="releasedate"> <span class="info">-</span>  Fecha: <span class="highlight">{{ releasedate }}</span></span>
+            <span v-if="releasedate"> <span class="info">-</span>  Álbum: <span class="highlight">{{ albumName }}</span></span>
+            <span v-if="releasedate"> <span class="info">-</span>  Duración: <span class="highlight">{{ duration }}</span></span>
+            <span v-if="releasedate"> <span class="info">-</span>  Géneros: <span class="highlight">{{ genres }}</span></span>
+          </marquee>
+
+          <p v-if="youtube" class="footer">
+             Enviado por: <span class="highlight">{{author}}</span></span>
+          </p>
+        </template>
+
+        <template v-if="loading">
+          <p scrollamount="2" class="footer">
+             Creado con <img src="https://static-cdn.jtvnw.net/emoticons/v1/555555584/1.0" height="12px"> por elmarceloc
+          </p>
+        </template>
+
+      </div>
+    </div>
+
+    <script src="/overlays/js/genres.js"></script>
+    <script src="/overlays/js/songrequest.js"></script>
+
+  </body>
+</html>

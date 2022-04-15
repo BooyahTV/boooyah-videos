@@ -1,11 +1,14 @@
 {
   "dependencies": {
     "@electron/remote": "^2.0.1",
+    "7tv": "^0.0.4",
     "accounting": "^0.4.1",
     "async-request": "^1.2.0",
+    "auto-launch": "^5.0.5",
     "cheerio": "*",
     "cherio": "^1.0.0-rc.2",
     "colors": "^1.4.0",
+    "comfy.js": "^1.1.13",
     "currency-converter": "^0.1.12",
     "dialogs": "^2.0.1",
     "ejs": "^3.1.6",
@@ -18,6 +21,7 @@
     "electron-updater": "^4.3.9",
     "electron-window-state": "^5.0.3",
     "express": "^4.17.2",
+    "genius-lyrics-api": "^3.2.0",
     "git-release-notes": "^5.0.0",
     "locate-chrome": "^0.1.1",
     "nodejs-currency-converter": "^1.0.2",
@@ -31,6 +35,8 @@
     "request": "^2.81.0",
     "session": "^0.1.0",
     "socket.io": "^4.4.1",
+    "tmi.js": "^1.8.5",
+    "uberduck-api": "^1.2.2",
     "utf8": "^3.0.0",
     "youtube-iframe-player": "https://github.com/elmarceloc/youtube-iframe-player/tarball/master"
   },
@@ -49,7 +55,7 @@
     }
   },
   "name": "BooyahVideos",
-  "version": "1.1.5",
+  "version": "1.2.2",
   "main": "main/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",

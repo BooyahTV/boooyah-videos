@@ -1,0 +1,7624 @@
+a,
+abbr,
+acronym,
+address,
+applet,
+article,
+aside,
+audio,
+b,
+big,
+blockquote,
+body,
+canvas,
+caption,
+center,
+cite,
+code,
+dd,
+del,
+details,
+dfn,
+div,
+dl,
+dt,
+em,
+embed,
+fieldset,
+figcaption,
+figure,
+footer,
+form,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+header,
+hgroup,
+html,
+i,
+iframe,
+img,
+ins,
+kbd,
+label,
+legend,
+li,
+mark,
+menu,
+nav,
+object,
+ol,
+output,
+p,
+pre,
+q,
+ruby,
+s,
+samp,
+section,
+small,
+span,
+strike,
+strong,
+sub,
+summary,
+sup,
+table,
+tbody,
+td,
+tfoot,
+th,
+thead,
+time,
+tr,
+tt,
+u,
+ul,
+var,
+video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    vertical-align: baseline;
+}
+
+body {
+    line-height: 1;
+}
+
+ol,
+ul {
+    list-style: none;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+a,
+div,
+input,
+span,
+textarea {
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    outline: 0;
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-button:vertical:end:decrement,
+::-webkit-scrollbar-button:vertical:start:increment {
+    display: none;
+}
+
+::-webkit-scrollbar-track-piece:vertical:start {
+    background: #22211f;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.6) inset;
+}
+
+::-webkit-scrollbar-track-piece:vertical:end {
+    background: #22211f;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.6) inset;
+}
+
+::-webkit-scrollbar-thumb:vertical {
+    border: #444 2px solid;
+    border-radius: 5px;
+    box-shadow: 0 0 4px #444 inset;
+    background: #feffff;
+    background: -webkit-gradient( left, color-stop(0, #333), color-stop(100%, #444));
+    background: -webkit-linear-gradient(left, #333 0, #444 100%);
+    background: -ms-linear-gradient(left, #333, #444);
+    background: -moz-linear-gradient(left, #333 0, #444 100%);
+}
+
+::-webkit-scrollbar-button:horizontal:end:decrement,
+::-webkit-scrollbar-button:horizontal:start:increment {
+    display: none;
+}
+
+::-webkit-scrollbar-track-piece:horizontal:start {
+    background: #22211f;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.6) inset;
+}
+
+::-webkit-scrollbar-track-piece:horizontal:end {
+    background: #22211f;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.6) inset;
+}
+
+::-webkit-scrollbar-thumb:horizontal {
+    border: #444 2px solid;
+    border-radius: 5px;
+    box-shadow: 0 0 4px #444 inset;
+    background: #feffff;
+    background: -webkit-gradient( left, color-stop(0, #333), color-stop(100%, #444));
+    background: -webkit-linear-gradient(left, #333 0, #444 100%);
+    background: -ms-linear-gradient(left, #333, #444);
+    background: -moz-linear-gradient(left, #333 0, #444 100%);
+}
+
+@font-face {
+    font-family: Abel;
+    font-style: normal;
+    font-weight: 400;
+    src: local("Abel Regular"), local("Abel-Regular"), url(https://fonts.gstatic.com/s/abel/v10/MwQ5bhbm2POE2V9BOA.ttf) format("truetype");
+}
+
+body,
+html {
+    background: 0 0;
+    min-height: 100%;
+}
+
+html {
+    font: 15px/1 Abel, verdana, arial, sans-serif;
+    color: #fff;
+}
+
+button {
+    font-family: Abel, verdana, arial, sans-serif;
+}
+
+a {
+    color: #ffc;
+    text-decoration: none;
+}
+
+#frontpage {
+    background-color: #0d0d0d;
+    background-image: url(/webp/overlays/img/noise.png), url(/overlays/img/bg.svg);
+    background-size: auto auto, 100% 100%;
+}
+
+#frontpage .wrapper {
+    border-top: 5px solid #fff;
+    margin-top: 1px;
+}
+
+#frontpage .inner {
+    max-width: 600px;
+    padding: 20px 10px 0;
+    margin: 0 auto;
+}
+
+#frontpage h1,
+#frontpage h2,
+#frontpage h3 {
+    line-height: 1em;
+    text-transform: uppercase;
+}
+
+#frontpage h1 {
+    font-size: 129px;
+    color: #111;
+    text-indent: -10000px;
+    overflow: inherit;
+    background: url(/webp/overlays/img/logo.png) center center no-repeat;
+    height: 240px;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+}
+
+#frontpage h2 {
+    font-size: 32px;
+    white-space: nowrap;
+    padding: 0 0 20px;
+    color: #ffa;
+}
+
+#frontpage h3 {
+    font-size: 22.7px;
+    white-space: nowrap;
+    padding: 0 0 20px;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+#frontpage .youtube-wrapper {
+    position: relative;
+    background-size: 100% auto;
+    background-position: center center;
+}
+
+#frontpage .youtube-wrapper.install {
+    background: url(/webp/overlays/img/youtube-thumb.jpg);
+    margin-bottom: 100px;
+}
+
+#frontpage .youtube-wrapper .aspect {
+    padding-top: 56.25%;
+}
+
+#frontpage .youtube-wrapper iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+#frontpage .youtube-wrapper svg {
+    width: 70px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#frontpage .mape {
+    margin-bottom: 100px;
+}
+
+#frontpage .caru {
+    background: url(/webp/overlays/img/screen.png);
+    height: 489px;
+    position: relative;
+    margin-bottom: 50px;
+}
+
+#frontpage .caru .poll,
+#frontpage .caru video.chat {
+    position: absolute;
+    bottom: 0;
+    transform-origin: right bottom;
+    height: 210px;
+    width: 110px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    background: #000;
+}
+
+#frontpage .caru video.chat {
+    right: 0;
+    margin: 0 -90px 80px 0;
+}
+
+#frontpage .caru .poll {
+    left: 0;
+    margin: 0 0 80px -90px;
+}
+
+#frontpage .caru .screen {
+    position: absolute;
+    top: 28px;
+    left: 60px;
+    right: 59px;
+    bottom: 195px;
+    cursor: pointer;
+}
+
+#frontpage .caru .cam,
+#frontpage .caru .image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    opacity: 0;
+    transition: opacity 0.5s, filter 0.5s, -webkit-filter 0.5s;
+    background-size: 100% 100%;
+}
+
+#frontpage .caru .cam .nr,
+#frontpage .caru .image .nr {
+    position: absolute;
+    font-size: 18px;
+    top: 10px;
+    text-align: center;
+    width: 50px;
+    left: -51px;
+    color: rgba(0, 0, 0, 0.5);
+}
+
+#frontpage .caru .cam .nr:after,
+#frontpage .caru .image .nr:after {
+    content: attr(text);
+}
+
+#frontpage .caru .cam.active,
+#frontpage .caru .image.active {
+    opacity: 1;
+}
+
+#frontpage .caru .cam {
+    background: url(/webp/overlays/img/screens/cam.png);
+    filter: blur(0);
+    opacity: 0.9;
+}
+
+.login-link {
+    display: block;
+    margin: 0 0 20px;
+    position: relative;
+    z-index: 11;
+}
+
+.login-link:hover {
+    opacity: 0.7;
+}
+
+.login-link img {
+    display: block;
+    margin: 0 auto;
+}
+
+.twitter {
+    position: fixed;
+    top: 20px;
+    right: 30px;
+    cursor: pointer;
+    transform: scale(1);
+    transition: transform 0.2s;
+}
+
+.twitter:hover {
+    transform: scale(1.1);
+}
+
+.twitter img {
+    width: 50px;
+}
+
+blockquote {
+    font-size: 50px;
+    white-space: nowrap;
+    font-style: italic;
+    width: 500px;
+    margin: 0 0 -30px;
+    padding: 0.25em 40px 1em;
+    line-height: 1.45;
+    position: relative;
+    color: #fff;
+}
+
+blockquote:before {
+    font-family: Georgia, serif;
+    display: block;
+    content: "\201C";
+    font-size: 80px;
+    position: absolute;
+    left: -20px;
+    top: -20px;
+    color: #7a7a7a;
+}
+
+blockquote:after {
+    font-family: Georgia, serif;
+    display: block;
+    content: "\201D";
+    font-size: 80px;
+    position: absolute;
+    right: -20px;
+    bottom: -20px;
+    color: #7a7a7a;
+}
+
+blockquote cite {
+    color: #999;
+    font-size: 20px;
+    display: block;
+    margin-top: 5px;
+}
+
+blockquote cite:before {
+    content: "\2014 \2009";
+}
+
+.updates {
+    max-width: 1280px;
+    margin: 0 auto 40px;
+}
+
+.updates .title {
+    clear: both;
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.1) inset, 0 0 1px rgba(0, 0, 0, 0.7);
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid #141414;
+    padding: 10px 25px;
+    margin: 20px 0;
+    font-size: 30px;
+    position: relative;
+    border-radius: 10px;
+    color: #ffc;
+    top: 10px;
+}
+
+.updates li {
+    font-size: 20px;
+    padding: 10px 15px;
+    display: flex;
+    line-height: 1.4;
+}
+
+.updates li>* {
+    flex: auto;
+}
+
+.updates li:nth-child(odd) {
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+}
+
+.updates li small {
+    display: inline-block;
+    width: 100px;
+    color: rgba(255, 255, 255, 0.5);
+    text-align: right;
+    padding: 0 10px 0 0;
+}
+
+.updates li strong {
+    display: inline-block;
+    width: 150px;
+    text-align: right;
+    padding: 0;
+    margin-right: 10px;
+}
+
+.updates li strong.feature {
+    color: rgba(100, 150, 100, 0.5);
+}
+
+.updates li strong.fix {
+    color: rgba(236, 160, 12, 0.8);
+}
+
+.updates li .text {
+    width: 800px;
+}
+
+.example {
+    display: inline-block;
+    position: relative;
+    width: 100%;
+}
+
+.example .avatar {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    width: 50px;
+    z-index: 11;
+}
+
+.example .avatar img {
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+    width: 100%;
+    border-radius: 5px;
+}
+
+@media screen and (min-width: 768px) {
+    .example {
+        width: 50%;
+    }
+}
+
+@media screen and (min-width: 1000px) {
+    .example {
+        width: 33.333%;
+    }
+}
+
+@media screen and (min-width: 1200px) {
+    .example {
+        width: 25%;
+    }
+}
+
+.poll-users {
+    max-width: 1920px;
+    margin: 0 auto 100px;
+}
+
+[title] {
+    position: relative;
+}
+
+[title]:hover:after {
+    content: attr(title);
+    color: #fff;
+    background: #333;
+    background: rgba(0, 0, 0, 0.8);
+    padding: 5px 8px;
+    font-size: 14px;
+    position: absolute;
+    bottom: 100%;
+    margin-bottom: 5px;
+    left: 50%;
+    border-radius: 3px;
+    white-space: nowrap;
+    opacity: 1;
+    transform: translate(-50%, 0);
+}
+
+.Image {
+    position: relative;
+}
+
+.Image .spinner {
+    display: none;
+}
+
+.Image.loaded img {
+    opacity: 1;
+}
+
+.Image img {
+    transition: opacity 0.5s;
+    opacity: 0;
+    position: absolute;
+    width: 100%;
+    top: 0;
+    left: 0;
+}
+
+.spinner {
+    height: 100px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
+}
+
+.spinner .spinner-aspect {
+    width: 100px;
+}
+
+.double-bounce1,
+.double-bounce2 {
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.2);
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    animation: sk-bounce 2s infinite ease-in-out;
+}
+
+.double-bounce2 {
+    animation-delay: -1s;
+}
+
+@-webkit-keyframes sk-bounce {
+    0%,
+    100% {
+        transform: scale(0);
+    }
+    50% {
+        transform: scale(1);
+    }
+}
+
+@keyframes sk-bounce {
+    0%,
+    100% {
+        transform: scale(0);
+    }
+    50% {
+        transform: scale(1);
+    }
+}
+
+.debug-menu {
+    position: fixed;
+}
+
+.debug-menu div {
+    display: inline-block;
+    padding: 5px;
+    font-size: 10px;
+    cursor: pointer;
+    font-family: arial;
+}
+
+.debug-menu div:hover {
+    background: #fff;
+    color: #000;
+}
+
+.dashboard {
+    background-color: #0d0d0d;
+    background-image: url(/webp/overlays/img/noise.png), url(/overlays/img/bg.svg);
+    background-size: auto auto, 100% 100%;
+}
+
+.dashboard .inner {
+    max-width: 600px;
+    padding: 1px 10px;
+    margin: 0 auto;
+}
+
+.dashboard .title {
+    background: #000;
+    text-align: left;
+    padding: 10px 10px 10px 45px;
+    margin: 0 -5px 10px;
+    clear: both;
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.1) inset, 0 0 1px rgba(0, 0, 0, 0.7);
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid #141414;
+    font-size: 20px;
+    position: relative;
+}
+
+.dashboard .title .svg-icon {
+    width: 26px;
+    fill: #fff;
+    position: absolute;
+    top: 8px;
+    left: 10px;
+}
+
+.dashboard .title.small {
+    font-size: 15px;
+    padding-left: 40px;
+}
+
+.dashboard .title.small .svg-icon {
+    fill: rgba(255, 255, 255, 0.6);
+    width: 20px;
+}
+
+.dashboard textarea {
+    width: 85%;
+    max-width: 86%;
+    background: #1e1e1e;
+    color: #fff;
+    font-family: abel;
+    border: 1px solid #282828;
+    border-radius: 5px;
+    font-size: 18px;
+    padding: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.4) inset;
+    min-height: 77px;
+    margin: 0 0 10px;
+}
+
+.dashboard input[type="text"] {
+    width: 100%;
+    padding: 5px;
+    background: #1e1e1e;
+    color: #fff;
+    font-family: abel;
+    border: 1px solid #282828;
+    border-radius: 5px;
+    font-size: 18px;
+    padding: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.4) inset;
+    margin: 0 0 10px;
+}
+
+.dashboard input[type="text"].copyUrl {
+    font-size: 13px;
+}
+
+.dashboard select {
+    width: 100%;
+}
+
+.dashboard hr {
+    border: 0;
+    margin: 25px 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    clear: both;
+}
+
+.dashboard .position-block {
+    width: 240px;
+    height: 135px;
+    position: relative;
+    margin: 0 auto;
+    border-radius: 5px;
+    border: 1px dashed rgba(255, 255, 255, 0.1);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5) inset;
+}
+
+.dashboard .position-block .edge {
+    width: 25px;
+    height: 25px;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-radius: 5px;
+    cursor: pointer;
+    position: absolute;
+}
+
+.dashboard .position-block .edge:hover:after {
+    position: absolute;
+    content: "";
+    display: block;
+    background: rgba(255, 255, 255, 0.2);
+    top: 3px;
+    left: 3px;
+    right: 3px;
+    bottom: 3px;
+    border-radius: 3px;
+}
+
+.dashboard .position-block .edge.active:after {
+    position: absolute;
+    content: "";
+    display: block;
+    background: #fff;
+    top: 3px;
+    left: 3px;
+    right: 3px;
+    bottom: 3px;
+    border-radius: 3px;
+}
+
+.dashboard .position-block .topLeft {
+    top: 10px;
+    left: 10px;
+}
+
+.dashboard .position-block .topCenter {
+    top: 10px;
+    left: 50%;
+    transform: translate(-50%, 0);
+}
+
+.dashboard .position-block .topRight {
+    top: 10px;
+    right: 10px;
+}
+
+.dashboard .position-block .middleLeft {
+    top: 50%;
+    transform: translate(0, -50%);
+    left: 10px;
+}
+
+.dashboard .position-block .middleCenter {
+    top: 50%;
+    transform: translate(-50%, -50%);
+    left: 50%;
+}
+
+.dashboard .position-block .middleRight {
+    top: 50%;
+    transform: translate(0, -50%);
+    right: 10px;
+}
+
+.dashboard .position-block .bottomLeft {
+    bottom: 10px;
+    left: 10px;
+}
+
+.dashboard .position-block .bottomCenter {
+    bottom: 10px;
+    left: 50%;
+    transform: translate(-50%, 0);
+}
+
+.dashboard .position-block .bottomRight {
+    bottom: 10px;
+    right: 10px;
+}
+
+.dashboard ul.presets {
+    padding: 0 0 10px;
+}
+
+.dashboard ul.presets li {
+    font-size: 15px;
+    margin: 10px 0;
+    position: relative;
+}
+
+.dashboard ul.presets li .index,
+.dashboard ul.presets li .remove,
+.dashboard ul.presets li .text {
+    display: inline-block;
+}
+
+.dashboard ul.presets li .index {
+    border-radius: 5px;
+    padding: 5px;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.dashboard ul.presets li .text {
+    color: #fff;
+    text-decoration: none;
+    margin-right: 10px;
+    outline: 0;
+    border-radius: 5px;
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.1) inset, 0 0 1px rgba(0, 0, 0, 0.7);
+    background: rgba(0, 0, 0, 0.1);
+    background: linear-gradient(bottom, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.1));
+    background: -ms-linear-gradient( bottom, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.1));
+    background: -moz-linear-gradient( center bottom, rgba(0, 0, 0, 0.5) 0, rgba(0, 0, 0, 0.1) 100%);
+    background: -webkit-gradient( linear, left bottom, left top, color-stop(0, rgba(0, 0, 0, 0.5)), color-stop(1, rgba(0, 0, 0, 0.1)));
+    border: 1px solid #141414;
+    padding: 10px 25px;
+    padding-left: 15px;
+    white-space: nowrap;
+    max-width: 80%;
+    display: inline-block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.dashboard ul.presets li .text:hover {
+    background: rgba(0, 0, 0, 0.1);
+    background: linear-gradient( bottom, rgba(20, 20, 20, 0.5), rgba(20, 20, 20, 0.1));
+    background: -ms-linear-gradient( bottom, rgba(20, 20, 20, 0.5), rgba(20, 20, 20, 0.1));
+    background: -moz-linear-gradient( center bottom, rgba(20, 20, 20, 0.5) 0, rgba(20, 20, 20, 0.1) 100%);
+    background: -webkit-gradient( linear, left bottom, left top, color-stop(0, rgba(20, 20, 20, 0.5)), color-stop(1, rgba(20, 20, 20, 0.1)));
+    color: #ffc;
+    cursor: pointer;
+}
+
+.dashboard ul.presets li .text:active {
+    transform: translate(2px, 2px);
+}
+
+.dashboard ul.presets li .remove {
+    position: absolute;
+    top: 0;
+    right: 0;
+    cursor: pointer;
+}
+
+.dashboard ul.presets li .remove .svg-icon {
+    width: 25px;
+    fill: #960000;
+}
+
+.dashboard ul.presets li .remove .svg-icon:hover {
+    fill: #fff;
+}
+
+.dashboard ul.presets li:nth-child(even) {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.dashboard ul.preview-options li {
+    font-size: 15px;
+    margin: 10px 0;
+    position: relative;
+}
+
+.dashboard ul.preview-options li .index,
+.dashboard ul.preview-options li .remove,
+.dashboard ul.preview-options li .text {
+    display: inline-block;
+}
+
+.dashboard ul.preview-options li .index {
+    border-radius: 5px;
+    padding: 5px;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.dashboard ul.preview-options li .text {
+    padding: 0 0 0 10px;
+}
+
+.dashboard ul.preview-options li .remove {
+    position: absolute;
+    top: 0;
+    right: 0;
+    cursor: pointer;
+}
+
+.dashboard ul.preview-options li .remove .svg-icon {
+    width: 25px;
+    fill: #960000;
+}
+
+.dashboard ul.preview-options li .remove .svg-icon:hover {
+    fill: #fff;
+}
+
+.dashboard ul.preview-options li:nth-child(even) {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.dashboard .voteModifiers label {
+    width: 170px;
+    text-align: right;
+    display: inline-block;
+}
+
+.dashboard .voteModifiers li {
+    font-size: 15px;
+    margin: 10px -10px;
+    padding: 0 10px;
+    position: relative;
+    border-radius: 5px;
+}
+
+.dashboard .voteModifiers li input {
+    background: #1e1e1e;
+    color: #fff;
+    font-family: abel;
+    border: 1px solid #282828;
+    border-radius: 5px;
+    padding: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.4) inset;
+    text-align: center;
+    width: 50px;
+    margin: 0 10px;
+    font-size: 15px;
+}
+
+.dashboard .voteModifiers li:nth-child(even) {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.dashboard button {
+    width: 100%;
+    color: #fff;
+    text-decoration: none;
+    margin-right: 10px;
+    outline: 0;
+    border-radius: 5px;
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.1) inset, 0 0 1px rgba(0, 0, 0, 0.7);
+    background: rgba(0, 0, 0, 0.1);
+    background: linear-gradient(bottom, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.1));
+    background: -ms-linear-gradient( bottom, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.1));
+    background: -moz-linear-gradient( center bottom, rgba(0, 0, 0, 0.5) 0, rgba(0, 0, 0, 0.1) 100%);
+    background: -webkit-gradient( linear, left bottom, left top, color-stop(0, rgba(0, 0, 0, 0.5)), color-stop(1, rgba(0, 0, 0, 0.1)));
+    border: 1px solid #141414;
+    padding: 10px 25px;
+    font-size: 19px;
+    margin-bottom: 10px;
+    clear: both;
+}
+
+.dashboard button:hover {
+    background: rgba(0, 0, 0, 0.1);
+    background: linear-gradient( bottom, rgba(20, 20, 20, 0.5), rgba(20, 20, 20, 0.1));
+    background: -ms-linear-gradient( bottom, rgba(20, 20, 20, 0.5), rgba(20, 20, 20, 0.1));
+    background: -moz-linear-gradient( center bottom, rgba(20, 20, 20, 0.5) 0, rgba(20, 20, 20, 0.1) 100%);
+    background: -webkit-gradient( linear, left bottom, left top, color-stop(0, rgba(20, 20, 20, 0.5)), color-stop(1, rgba(20, 20, 20, 0.1)));
+    color: #ffc;
+    cursor: pointer;
+}
+
+.dashboard button:active {
+    transform: translate(2px, 2px);
+}
+
+.dashboard button.disabled {
+    opacity: 0.22;
+}
+
+.dashboard button.finishPoll,
+.dashboard button.warning {
+    background: rgba(0, 0, 0, 0.1);
+    background: linear-gradient( bottom, rgba(255, 0, 0, 0.2), rgba(255, 0, 0, 0.4));
+    background: -ms-linear-gradient( bottom, rgba(255, 0, 0, 0.2), rgba(255, 0, 0, 0.4));
+    background: -moz-linear-gradient( center bottom, rgba(255, 0, 0, 0.2) 0, rgba(255, 0, 0, 0.4) 100%);
+    background: -webkit-gradient( linear, left bottom, left top, color-stop(0, rgba(255, 0, 0, 0.2)), color-stop(1, rgba(255, 0, 0, 0.4)));
+}
+
+.dashboard button.finishPoll:hover,
+.dashboard button.warning:hover {
+    background: rgba(0, 0, 0, 0.1);
+    background: linear-gradient( bottom, rgba(255, 0, 0, 0.1), rgba(255, 0, 0, 0.2));
+    background: -ms-linear-gradient( bottom, rgba(255, 0, 0, 0.1), rgba(255, 0, 0, 0.2));
+    background: -moz-linear-gradient( center bottom, rgba(255, 0, 0, 0.1) 0, rgba(255, 0, 0, 0.2) 100%);
+    background: -webkit-gradient( linear, left bottom, left top, color-stop(0, rgba(255, 0, 0, 0.1)), color-stop(1, rgba(255, 0, 0, 0.2)));
+}
+
+.dashboard button.removePoll {
+    background: rgba(0, 0, 0, 0.1);
+    background: linear-gradient( bottom, rgba(255, 165, 0, 0.7), rgba(255, 165, 0, 0.9));
+    background: -ms-linear-gradient( bottom, rgba(255, 165, 0, 0.7), rgba(255, 165, 0, 0.9));
+    background: -moz-linear-gradient( center bottom, rgba(255, 165, 0, 0.7) 0, rgba(255, 165, 0, 0.9) 100%);
+    background: -webkit-gradient( linear, left bottom, left top, color-stop(0, rgba(255, 165, 0, 0.7)), color-stop(1, rgba(255, 165, 0, 0.9)));
+    -webkit-animation: fade-in 0.6s linear infinite alternate;
+    -moz-animation: fade-in 0.6s linear infinite alternate;
+    animation: fade-in 0.6s linear infinite alternate;
+    text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.5);
+}
+
+@-moz-keyframes fade-in {
+    0% {
+        opacity: 0.6;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+@-webkit-keyframes fade-in {
+    0% {
+        opacity: 0.6;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes fade-in {
+    0% {
+        opacity: 0.6;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+.dashboard button.removePoll:hover {
+    background: rgba(0, 0, 0, 0.1);
+    background: linear-gradient( bottom, rgba(255, 165, 0, 0.6), rgba(255, 165, 0, 0.8));
+    background: -ms-linear-gradient( bottom, rgba(255, 165, 0, 0.6), rgba(255, 165, 0, 0.8));
+    background: -moz-linear-gradient( center bottom, rgba(255, 165, 0, 0.6) 0, rgba(255, 165, 0, 0.8) 100%);
+    background: -webkit-gradient( linear, left bottom, left top, color-stop(0, rgba(255, 165, 0, 0.6)), color-stop(1, rgba(255, 165, 0, 0.8)));
+}
+
+.dashboard button.reuse {
+    background: rgba(0, 0, 0, 0.1);
+    background: linear-gradient(bottom, #222, #333);
+    background: -ms-linear-gradient(bottom, #222, #333);
+    background: -moz-linear-gradient(center bottom, #222 0, #333 100%);
+    background: -webkit-gradient( linear, left bottom, left top, color-stop(0, #222), color-stop(1, #333));
+    text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.5);
+    width: auto;
+    float: right;
+    padding: 0;
+    margin-top: -3px;
+    margin-right: -5px;
+    padding: 2px 5px;
+    font-size: 16px;
+}
+
+.dashboard button.reuse:hover {
+    background: rgba(0, 0, 0, 0.1);
+    background: linear-gradient(bottom, #333, #444);
+    background: -ms-linear-gradient(bottom, #333, #444);
+    background: -moz-linear-gradient(center bottom, #333 0, #444 100%);
+    background: -webkit-gradient( linear, left bottom, left top, color-stop(0, #333), color-stop(1, #444));
+}
+
+.dashboard .startPoll {
+    width: 88%;
+    margin-right: 2%;
+}
+
+.dashboard .startPoll .explain {
+    padding-left: 10px;
+    display: inline-block;
+    font-size: 80%;
+}
+
+.dashboard .startPoll .explain:before {
+    content: "(";
+}
+
+.dashboard .startPoll .explain:after {
+    content: ")";
+}
+
+.dashboard .savePoll {
+    width: 10%;
+    padding: 9px 0 10px;
+    margin-right: 0;
+}
+
+.dashboard .savePoll .icon {
+    position: relative;
+    top: 2px;
+}
+
+.dashboard .savePoll .icon {
+    width: 20px;
+    fill: #fff;
+}
+
+.dashboard .disconnected {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 10000;
+    font-size: 30px;
+    padding: 20px;
+    text-align: center;
+    background: #000;
+    background: linear-gradient(bottom, #4c1616, #741111);
+    background: -ms-linear-gradient(bottom, #4c1616, #741111);
+    background: -moz-linear-gradient(center bottom, #4c1616 0, #741111 100%);
+    background: -webkit-gradient( linear, left bottom, left top, color-stop(0, #4c1616), color-stop(1, #741111));
+    border-bottom: 1px solid #741111;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+}
+
+.dashboard .disconnectedCover {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.9);
+    z-index: 100;
+}
+
+.dashboard .clearBox {
+    text-align: right;
+    height: 20px;
+}
+
+.dashboard .removePoll.small,
+.dashboard .switchTheme {
+    display: inline-block;
+    width: auto;
+    font-size: 80%;
+}
+
+.dashboard .switchTheme {
+    position: relative;
+    padding-left: 35px;
+}
+
+.dashboard .switchTheme .gameCover {
+    position: absolute;
+    height: 36px;
+    top: 1px;
+    left: 1px;
+}
+
+.dashboard .setting {
+    color: rgba(255, 255, 255, 0.6);
+    padding: 0 10px 10px;
+}
+
+.dashboard .popupHelp p {
+    line-height: 1.4;
+    padding: 0 0 10px;
+}
+
+.themes {
+    text-align: center;
+}
+
+.theme-selector {
+    display: inline-block;
+    width: 280px;
+    position: relative;
+    cursor: pointer;
+}
+
+.theme-selector .theme-title {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: #000;
+    padding: 10px;
+    border-radius: 5px;
+    margin: 0 5px 10px;
+    clear: both;
+    color: #aaa;
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.1) inset, 0 0 1px rgba(0, 0, 0, 0.7);
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid #141414;
+    font-size: 15px;
+    position: relative;
+}
+
+.theme-selector .check {
+    fill: #fff;
+    position: absolute;
+    width: 100px;
+    bottom: 30px;
+    right: 30px;
+    filter: drop-shadow(0 0 10px #000);
+    transform: scale(0);
+    opacity: 0;
+    transition: all 0.2s cubic-bezier(0.42, 0, 0.29, 2.13);
+}
+
+.theme-selector.active .check {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.theme-selector .aspect {
+    padding-top: 100%;
+}
+
+.theme-selector:hover img {
+    opacity: 0.7;
+}
+
+.theme-selector.active img {
+    opacity: 1;
+}
+
+.theme-selector.active .theme-title {
+    color: #ffa;
+}
+
+.theme-selector img {
+    transition: transform 0.2s;
+    transform: translate(-50%, -50%);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    display: block;
+    margin: 0 auto;
+}
+
+.theme-selector .name {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #fff;
+    font-size: 30px;
+    text-align: center;
+    line-height: 0.9em;
+    text-shadow: 0 0 1px #000, 0 0 1px #000, 0 0 1px #000, 0 0 1px #000, 2px 2px 1px #000;
+}
+
+.theme-selector .name small {
+    display: block;
+    font-size: 50%;
+}
+
+.theme-selector .template {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translate(-50%, -40px);
+    color: #fff;
+    font-size: 20px;
+    white-space: nowrap;
+}
+
+.hideInfoContainer {
+    padding: 0 0 20px;
+}
+
+.hideInfoContainer label {
+    margin: 0 5px 0 0;
+}
+
+.twitchLogo {
+    width: 13%;
+    margin-bottom: 10px;
+    position: relative;
+    float: left;
+    margin-right: 2%;
+    border-radius: 5px;
+    overflow: hidden;
+    opacity: 0;
+    transition: opacity 1s;
+}
+
+.twitchLogo.loaded {
+    opacity: 1;
+}
+
+.twitchLogo .aspect {
+    padding-top: 100%;
+}
+
+.twitchLogo img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+}
+
+.chatMessages {
+    height: 125px;
+    position: relative;
+}
+
+.chatMessages .inner {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.chatMessages .entry {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 5px 5px;
+    font-size: 12px;
+    position: relative;
+    -webkit-animation: ani_1 0.25s ease;
+}
+
+@-webkit-keyframes ani_1 {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+.chatMessages .entry.totalVotes .message,
+.chatMessages .entry.totalVotes .time,
+.chatMessages .entry.totalVotes .username {
+    opacity: 0.05;
+}
+
+.chatMessages .entry .totalVotesInfo {
+    position: absolute;
+    background: rgba(0, 0, 0, 0.9);
+    border-radius: 5px;
+    padding: 5px;
+    top: 0;
+    right: 0;
+}
+
+.chatMessages .entry .newVote {
+    position: absolute;
+    background: rgba(0, 0, 0, 0.1);
+    background: linear-gradient( bottom, rgba(0, 255, 0, 0.1), rgba(0, 255, 0, 0.2));
+    background: -ms-linear-gradient( bottom, rgba(0, 255, 0, 0.1), rgba(0, 255, 0, 0.2));
+    background: -moz-linear-gradient( center bottom, rgba(0, 255, 0, 0.1) 0, rgba(0, 255, 0, 0.2) 100%);
+    background: -webkit-gradient( linear, left bottom, left top, color-stop(0, rgba(0, 255, 0, 0.1)), color-stop(1, rgba(0, 255, 0, 0.2)));
+    border-radius: 5px;
+    padding: 5px;
+    top: 0;
+    right: 0;
+}
+
+.chatMessages .entry:nth-child(odd) {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+}
+
+.chatMessages .entry .time {
+    opacity: 0.3;
+}
+
+.chatMessages .entry .username {
+    color: #ffa;
+}
+
+.chatMessages .entry .message {
+    max-width: 400px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    position: relative;
+    top: 2px;
+    display: inline-block;
+}
+
+.appUpdates {
+    margin: 0 0 20px;
+    border-bottom: 2px solid #333;
+    position: relative;
+    z-index: 11100;
+    background: rgba(0, 0, 0, 0.9);
+}
+
+.appUpdates .close {
+    position: absolute;
+    top: 0;
+    right: 0;
+    cursor: pointer;
+    background: #960000;
+    border-radius: 0 0 0 5px;
+    padding: 5px;
+}
+
+.appUpdates .close .aspect {
+    padding-left: 100%;
+}
+
+.appUpdates .close .svg-icon {
+    height: 100%;
+    width: 30px;
+    fill: #fff;
+}
+
+.appUpdates .close .svg-icon:hover {
+    fill: #fff;
+}
+
+.appUpdates .close:hover .svg-icon {
+    fill: rgba(255, 255, 255, 0.9);
+}
+
+.appUpdates li {
+    font-size: 15px;
+    padding: 5px 15px;
+    display: flex;
+    line-height: 1.4;
+}
+
+.appUpdates li.feature .type {
+    color: rgba(100, 150, 100, 0.5);
+}
+
+.appUpdates li.fix .type {
+    color: rgba(236, 160, 12, 0.8);
+}
+
+.appUpdates li span {
+    flex: auto;
+}
+
+.appUpdates li .type {
+    text-transform: uppercase;
+}
+
+.appUpdates li .version {
+    display: inline-block;
+    width: 70px;
+    color: rgba(255, 255, 255, 0.5);
+    text-align: right;
+    padding: 0 10px 0 0;
+}
+
+.appUpdates li .type {
+    display: inline-block;
+    width: 100px;
+    text-align: right;
+    padding: 0;
+    margin-right: 10px;
+}
+
+.appUpdates li .text {
+    width: 900px;
+}
+
+.appUpdates li:nth-child(odd) {
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+}
+
+.beer {
+    min-width: 70px;
+    max-width: 128px;
+    width: 15%;
+    height: 80px;
+    background: url(/webp/overlays/img/beer.png) no-repeat top center;
+    background-size: contain;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    overflow-x: hidden;
+    text-indent: -128px;
+}
+
+.chitchat {
+    position: absolute;
+    top: 100px;
+    right: 10px;
+}
+
+@media only screen and (max-width: 1200px) {
+    .chitchat {
+        display: none;
+    }
+}
+
+.overlay {
+    background: 0 0;
+}
+
+.overlay.greenscreen {
+    background: #0f0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.overlay.greenscreen * {
+    box-shadow: none !important;
+}
+
+.credits {
+    text-align: center;
+    opacity: 1;
+    transition: all 1s;
+    height: 25px;
+    clear: both;
+    overflow: hidden;
+}
+
+.active .credits,
+.removing .credits {
+    height: 0;
+    opacity: 0;
+}
+
+.inDashboard .credits {
+    display: none;
+}
+
+.stream-poll.inOverlay {
+    position: fixed;
+    backface-visibility: hidden;
+}
+
+.stream-poll.inOverlay.hideInfo .metaInfo {
+    display: none;
+}
+
+.stream-poll.inOverlay.removing .bar .bar-inner {
+    width: 0 !important;
+}
+
+.stream-poll.inOverlay.topLeft {
+    top: 0;
+    left: 0;
+}
+
+.stream-poll.inOverlay.topCenter {
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, 0);
+}
+
+.stream-poll.inOverlay.topRight {
+    top: 0;
+    right: 0;
+}
+
+.stream-poll.inOverlay.middleLeft {
+    top: 50%;
+    transform: translate(0, -50%);
+    left: 0;
+}
+
+.stream-poll.inOverlay.middleCenter {
+    top: 50%;
+    transform: translate(-50%, -50%);
+    left: 50%;
+}
+
+.stream-poll.inOverlay.middleRight {
+    top: 50%;
+    transform: translate(0, -50%);
+    right: 0;
+}
+
+.stream-poll.inOverlay.bottomLeft {
+    bottom: 0;
+    left: 0;
+}
+
+.stream-poll.inOverlay.bottomCenter {
+    bottom: 0;
+    left: 50%;
+    transform: translate(-50%, 0);
+}
+
+.stream-poll.inOverlay.bottomRight {
+    bottom: 0;
+    right: 0;
+}
+
+.dark {
+    background: rgba(0, 0, 0, 0.9);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 0 50px rgba(0, 0, 0, 0.9);
+    width: 400px;
+    opacity: 0;
+    transition: opacity 1s;
+}
+
+.dark.topLeft {
+    margin-left: 20px;
+    margin-top: 20px;
+}
+
+.dark.topCenter {
+    margin-top: 20px;
+}
+
+.dark.topRight {
+    margin-right: 30px;
+    margin-top: 20px;
+}
+
+.dark.middleLeft {
+    margin-left: 20px;
+}
+
+.dark.middleRight {
+    margin-right: 20px;
+}
+
+.dark.bottomLeft {
+    margin-left: 20px;
+    margin-bottom: 20px;
+}
+
+.dark.bottomCenter {
+    margin-bottom: 20px;
+}
+
+.dark.bottomRight {
+    margin-right: 20px;
+    margin-bottom: 20px;
+}
+
+.dark .metaInfo {
+    padding: 0 10px;
+}
+
+.dark .duration,
+.dark .total {
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    background: rgba(0, 0, 0, 0.4);
+    background: linear-gradient(bottom, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.2));
+    background: -ms-linear-gradient( bottom, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.2));
+    background: -moz-linear-gradient( center bottom, rgba(0, 0, 0, 0.1) 0, rgba(0, 0, 0, 0.2) 100%);
+    background: -webkit-gradient( linear, left bottom, left top, color-stop(0, rgba(0, 0, 0, 0.1)), color-stop(1, rgba(0, 0, 0, 0.2)));
+    float: left;
+    width: 49%;
+    text-align: center;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+}
+
+.dark .duration strong,
+.dark .total strong {
+    color: #ffa;
+    display: block;
+}
+
+.dark .total {
+    margin-right: 2%;
+}
+
+.dark.finished .options li,
+.dark.removing .options li {
+    opacity: 0.3;
+    transition: all 1s;
+}
+
+.dark.finished .options li.highest,
+.dark.removing .options li.highest {
+    color: #ffa;
+    opacity: 1;
+}
+
+.dark.finished .options li.highest .bar .bar-inner,
+.dark.removing .options li.highest .bar .bar-inner {
+    background: #ffa;
+}
+
+.dark.finished .options li.help,
+.dark.removing .options li.help {
+    height: 0;
+}
+
+.dark.finished .metaInfo,
+.dark.removing .metaInfo {
+    opacity: 0.3;
+}
+
+.dark.active .options li.help {
+    height: 35px;
+}
+
+.dark .options li {
+    position: relative;
+    border: 1px;
+    padding: 10px;
+    color: #fff;
+    text-overflow: ellipsis;
+    padding-right: 55px;
+    padding-left: 55px;
+    font-size: 15px;
+}
+
+.dark .options li.question {
+    padding: 10px 20px;
+    white-space: normal;
+    background: #000;
+    clear: both;
+    line-height: 1.3;
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.1) inset, 0 0 1px rgba(0, 0, 0, 0.7);
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid #141414;
+    font-size: 20px;
+    position: relative;
+}
+
+.dark .options li.help {
+    color: #ffa;
+    padding: 0;
+    background: 0 0;
+    text-align: center;
+    overflow: hidden;
+    height: 0;
+}
+
+.dark .options li.help span {
+    display: block;
+    padding: 10px;
+}
+
+.dark .options li .procent {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+}
+
+.dark .options li .number {
+    padding: 5px 10px;
+    border-radius: 5px;
+    background: rgba(0, 0, 0, 0.3);
+    box-shadow: 0 0 10px #000 inset;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    position: absolute;
+    top: 5px;
+    left: 10px;
+}
+
+.dark .options li .bar {
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 5px;
+    height: 5px;
+    margin-top: 5px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.dark .options li .bar .bar-inner {
+    background: #fff;
+    height: 100%;
+    width: 0;
+    transition: width 1s;
+    position: relative;
+    border-radius: 5px;
+}
+
+.dark .options li .text {
+    line-height: 1.3;
+}
+
+.dark.active,
+.dark.finished {
+    opacity: 1;
+}
+
+.dark .inner {
+    padding: 0 0 10px;
+}
+
+.dark .options li.question {
+    font-size: 27px;
+}
+
+.dark .metaInfo {
+    margin-bottom: -5px;
+    line-height: 1.5;
+}
+
+.light {
+    width: 400px;
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    box-shadow: 0 0 50px rgba(0, 0, 0, 0.9);
+    opacity: 0;
+    color: #000;
+    transition: opacity 1s;
+}
+
+.light.topLeft {
+    margin-left: 20px;
+    margin-top: 20px;
+}
+
+.light.topCenter {
+    margin-top: 20px;
+}
+
+.light.topRight {
+    margin-right: 30px;
+    margin-top: 20px;
+}
+
+.light.middleLeft {
+    margin-left: 20px;
+}
+
+.light.middleRight {
+    margin-right: 20px;
+}
+
+.light.bottomLeft {
+    margin-left: 20px;
+    margin-bottom: 20px;
+}
+
+.light.bottomCenter {
+    margin-bottom: 20px;
+}
+
+.light.bottomRight {
+    margin-right: 20px;
+    margin-bottom: 20px;
+}
+
+.light .metaInfo {
+    padding: 0 10px;
+}
+
+.light .duration,
+.light .total {
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.9);
+    background: linear-gradient(bottom, #fff, rgba(255, 255, 255, 0.5));
+    background: -ms-linear-gradient(bottom, #fff, rgba(255, 255, 255, 0.5));
+    background: -moz-linear-gradient( center bottom, #fff 0, rgba(255, 255, 255, 0.5) 100%);
+    background: -webkit-gradient( linear, left bottom, left top, color-stop(0, #fff), color-stop(1, rgba(255, 255, 255, 0.5)));
+    float: left;
+    width: 49%;
+    text-align: center;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+}
+
+.light .duration strong,
+.light .total strong {
+    color: #000;
+}
+
+.light .total {
+    margin-right: 2%;
+}
+
+.light.finished .options li,
+.light.removing .options li {
+    opacity: 0.3;
+    transition: all 1s;
+}
+
+.light.finished .options li.highest,
+.light.removing .options li.highest {
+    opacity: 1;
+}
+
+.light.finished .options li.help,
+.light.removing .options li.help {
+    height: 0;
+}
+
+.light.finished .metaInfo,
+.light.removing .metaInfo {
+    opacity: 0.3;
+}
+
+.light.active .options li.help {
+    height: 35px;
+}
+
+.light .options li {
+    position: relative;
+    border: 1px;
+    padding: 10px;
+    color: #000;
+    text-overflow: ellipsis;
+    padding-right: 55px;
+    padding-left: 55px;
+    font-size: 15px;
+    background: rgba(255, 255, 255, 0.4);
+    background: linear-gradient( bottom, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.4));
+    background: -ms-linear-gradient( bottom, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.4));
+    background: -moz-linear-gradient( center bottom, rgba(255, 255, 255, 0.2) 0, rgba(255, 255, 255, 0.4) 100%);
+    background: -webkit-gradient( linear, left bottom, left top, color-stop(0, rgba(255, 255, 255, 0.2)), color-stop(1, rgba(255, 255, 255, 0.4)));
+}
+
+.light .options li.question {
+    padding: 10px 20px;
+    white-space: normal;
+    background: #000;
+    clear: both;
+    line-height: 1.3;
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1) inset, 0 0 1px rgba(255, 255, 255, 0.7);
+    background: rgba(255, 255, 255, 0.5);
+    border: 1px solid #fff;
+    font-size: 20px;
+    position: relative;
+}
+
+.light .options li.help {
+    color: #000;
+    padding: 0;
+    background: 0 0;
+    text-align: center;
+    overflow: hidden;
+    height: 0;
+}
+
+.light .options li.help span {
+    display: block;
+    padding: 10px;
+}
+
+.light .options li .procent {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+}
+
+.light .options li .number {
+    padding: 5px 10px;
+    border-radius: 5px;
+    background: rgba(255, 255, 255, 0.3);
+    box-shadow: 0 0 10px #fff inset;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    position: absolute;
+    top: 5px;
+    left: 10px;
+}
+
+.light .options li .bar {
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 5px;
+    height: 5px;
+    margin-top: 5px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.light .options li .bar .bar-inner {
+    background: #fff;
+    height: 100%;
+    width: 0;
+    transition: width 1s;
+    position: relative;
+    border-radius: 5px;
+}
+
+.light .options li .text {
+    line-height: 1.3;
+}
+
+.light.active,
+.light.finished {
+    opacity: 1;
+}
+
+.inDashboard {
+    opacity: 0;
+    transition: opacity 1s;
+}
+
+.inDashboard .duration,
+.inDashboard .total {
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    background: rgba(0, 0, 0, 0.4);
+    background: linear-gradient(bottom, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.2));
+    background: -ms-linear-gradient( bottom, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.2));
+    background: -moz-linear-gradient( center bottom, rgba(0, 0, 0, 0.1) 0, rgba(0, 0, 0, 0.2) 100%);
+    background: -webkit-gradient( linear, left bottom, left top, color-stop(0, rgba(0, 0, 0, 0.1)), color-stop(1, rgba(0, 0, 0, 0.2)));
+    float: left;
+    width: 49%;
+    text-align: center;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+}
+
+.inDashboard .duration strong,
+.inDashboard .total strong {
+    color: #ffa;
+}
+
+.inDashboard .total {
+    margin-right: 2%;
+}
+
+.inDashboard.finished .options li,
+.inDashboard.removing .options li {
+    opacity: 0.1;
+    transition: all 1s;
+}
+
+.inDashboard.finished .options li.highest,
+.inDashboard.removing .options li.highest {
+    color: #ffa;
+    opacity: 1;
+}
+
+.inDashboard.finished .options li.highest .bar .bar-inner,
+.inDashboard.removing .options li.highest .bar .bar-inner {
+    background: #ffa;
+}
+
+.inDashboard ul.options li {
+    position: relative;
+    border: 1px;
+    padding: 10px;
+    color: #fff;
+    text-overflow: ellipsis;
+    padding-right: 55px;
+    padding-left: 55px;
+    font-size: 15px;
+    margin: 0 !important;
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.1) inset, 0 0 1px rgba(0, 0, 0, 0.7);
+}
+
+.inDashboard ul.options li .procent {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+}
+
+.inDashboard ul.options li.question {
+    padding: 20px 20px;
+    white-space: normal;
+    background: #000;
+    clear: both;
+    line-height: 1.3;
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.1) inset, 0 0 1px rgba(0, 0, 0, 0.7);
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid #141414;
+    font-size: 20px;
+    position: relative;
+}
+
+.inDashboard ul.options li .number {
+    padding: 5px 10px;
+    border-radius: 5px;
+    background: rgba(0, 0, 0, 0.3);
+    box-shadow: 0 0 10px #000 inset;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    position: absolute;
+    top: 5px;
+    left: 10px;
+}
+
+.inDashboard ul.options li .bar {
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 5px;
+    height: 5px;
+    margin-top: 5px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.inDashboard ul.options li .bar .bar-inner {
+    background: #fff;
+    height: 100%;
+    width: 0;
+    transition: width 1s;
+    position: relative;
+    border-radius: 5px;
+}
+
+.inDashboard ul.options li .text {
+    line-height: 1.3;
+}
+
+.inDashboard.active,
+.inDashboard.finished {
+    opacity: 1;
+}
+
+.inDashboard .help {
+    display: none;
+}
+
+.lol {
+    width: 350px;
+    background: 0 0;
+    box-shadow: 0 0 0 rgba(0, 0, 0, 0.9);
+    opacity: 0;
+    transition: opacity 1s;
+    border-style: solid;
+    border-width: 25px 27px 27px;
+    border-image: url(/overlays/img/themes/lol/bg.png) 25 27 27 fill repeat;
+}
+
+.lol.topLeft {
+    margin-left: -14px;
+    margin-top: -14px;
+}
+
+.lol.topCenter {
+    margin-top: -14px;
+}
+
+.lol.topRight {
+    margin-right: -14px;
+    margin-top: -14px;
+}
+
+.lol.middleLeft {
+    margin-left: -14px;
+}
+
+.lol.middleRight {
+    margin-right: -14px;
+}
+
+.lol.bottomLeft {
+    margin-left: -14px;
+    margin-bottom: -14px;
+}
+
+.lol.bottomCenter {
+    margin-bottom: 150px;
+}
+
+.lol.bottomRight {
+    margin-right: -14px;
+    margin-bottom: -14px;
+}
+
+.lol .metaInfo {
+    padding: 0 10px;
+}
+
+.lol .duration,
+.lol .total {
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    background: rgba(0, 0, 0, 0.4);
+    background: linear-gradient(bottom, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.2));
+    background: -ms-linear-gradient( bottom, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.2));
+    background: -moz-linear-gradient( center bottom, rgba(0, 0, 0, 0.1) 0, rgba(0, 0, 0, 0.2) 100%);
+    background: -webkit-gradient( linear, left bottom, left top, color-stop(0, rgba(0, 0, 0, 0.1)), color-stop(1, rgba(0, 0, 0, 0.2)));
+    float: left;
+    width: 49%;
+    text-align: center;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+}
+
+.lol .duration strong,
+.lol .total strong {
+    color: #ffa;
+}
+
+.lol .duration label,
+.lol .total label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.lol .total {
+    margin-right: 2%;
+}
+
+.lol.finished .options li,
+.lol.removing .options li {
+    opacity: 0.3;
+    transition: all 1s;
+}
+
+.lol.finished .options li.highest,
+.lol.removing .options li.highest {
+    color: #ffa;
+    opacity: 1;
+}
+
+.lol.finished .options li.highest .bar .bar-inner,
+.lol.removing .options li.highest .bar .bar-inner {
+    background: #ffa;
+}
+
+.lol.finished .options li.help,
+.lol.removing .options li.help {
+    height: 0;
+}
+
+.lol.finished .metaInfo,
+.lol.removing .metaInfo {
+    opacity: 0.3;
+}
+
+.lol.active .options li.help {
+    height: 35px;
+}
+
+.lol .options li {
+    position: relative;
+    border: 1px;
+    padding: 10px;
+    color: #fff;
+    white-space: normal;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding-right: 55px;
+    padding-left: 55px;
+    font-size: 15px;
+    background: rgba(0, 0, 0, 0.4);
+    background: linear-gradient(bottom, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.4));
+    background: -ms-linear-gradient( bottom, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.4));
+    background: -moz-linear-gradient( center bottom, rgba(0, 0, 0, 0.2) 0, rgba(0, 0, 0, 0.4) 100%);
+    background: -webkit-gradient( linear, left bottom, left top, color-stop(0, rgba(0, 0, 0, 0.2)), color-stop(1, rgba(0, 0, 0, 0.4)));
+}
+
+.lol .options li.question {
+    padding: 10px 20px;
+    white-space: normal;
+    background: #000;
+    clear: both;
+    line-height: 1.3;
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.1) inset, 0 0 1px rgba(0, 0, 0, 0.7);
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid #141414;
+    font-size: 20px;
+    position: relative;
+}
+
+.lol .options li.help {
+    color: #ffa;
+    padding: 0;
+    background: 0 0;
+    text-align: center;
+    overflow: hidden;
+    height: 0;
+}
+
+.lol .options li.help span {
+    display: block;
+    padding: 10px;
+}
+
+.lol .options li .procent {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+}
+
+.lol .options li .number {
+    padding: 5px 10px;
+    border-radius: 5px;
+    background: rgba(0, 0, 0, 0.3);
+    box-shadow: 0 0 10px #000 inset;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    position: absolute;
+    top: 5px;
+    left: 10px;
+}
+
+.lol .options li .bar {
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 5px;
+    height: 5px;
+    margin-left: 0;
+    margin-top: 5px;
+    margin-right: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.lol .options li .bar .bar-inner {
+    background: #fff;
+    height: 100%;
+    width: 0;
+    transition: width 1s;
+    position: relative;
+    border-radius: 5px;
+}
+
+.lol .options li .text {
+    line-height: 1.3;
+}
+
+.lol.active,
+.lol.finished {
+    opacity: 1;
+}
+
+.dota2 {
+    width: 262px;
+    background: url(/overlays/img/themes/dota2/bg.png);
+    box-shadow: 0 0 0 rgba(0, 0, 0, 0.9);
+    opacity: 0;
+    transition: opacity 1s;
+    border-bottom: 1px solid #111;
+}
+
+.dota2.topLeft {
+    margin-left: 0;
+    margin-top: 0;
+}
+
+.dota2.topCenter {
+    margin-top: 0;
+}
+
+.dota2.topRight {
+    margin-right: 0;
+    margin-top: 0;
+}
+
+.dota2.middleLeft {
+    margin-left: 0;
+}
+
+.dota2.middleRight {
+    margin-right: 0;
+}
+
+.dota2.bottomLeft {
+    margin-left: 0;
+    margin-bottom: 0;
+}
+
+.dota2.bottomCenter {
+    margin-bottom: 136px;
+}
+
+.dota2.bottomRight {
+    margin-right: 0;
+    margin-bottom: 60px;
+}
+
+.dota2 .metaInfo {
+    padding: 0 10px;
+}
+
+.dota2 .duration,
+.dota2 .total {
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    background: rgba(0, 0, 0, 0.4);
+    background: linear-gradient(bottom, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.15));
+    background: -ms-linear-gradient( bottom, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.15));
+    background: -moz-linear-gradient( center bottom, rgba(0, 0, 0, 0.1) 0, rgba(0, 0, 0, 0.15) 100%);
+    background: -webkit-gradient( linear, left bottom, left top, color-stop(0, rgba(0, 0, 0, 0.1)), color-stop(1, rgba(0, 0, 0, 0.15)));
+    float: left;
+    width: 49%;
+    text-align: center;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+}
+
+.dota2 .duration strong,
+.dota2 .total strong {
+    color: #ffa;
+}
+
+.dota2 .duration label,
+.dota2 .total label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.dota2 .total {
+    margin-right: 2%;
+}
+
+.dota2.finished .options li,
+.dota2.removing .options li {
+    opacity: 0.3;
+    transition: all 1s;
+}
+
+.dota2.finished .options li.highest,
+.dota2.removing .options li.highest {
+    color: #ffa;
+    opacity: 1;
+}
+
+.dota2.finished .options li.highest .bar .bar-inner,
+.dota2.removing .options li.highest .bar .bar-inner {
+    background: #ffa;
+}
+
+.dota2.finished .options li.help,
+.dota2.removing .options li.help {
+    height: 0;
+}
+
+.dota2.finished .metaInfo,
+.dota2.removing .metaInfo {
+    opacity: 0.3;
+}
+
+.dota2.active .options li.help {
+    height: 35px;
+}
+
+.dota2 .options li {
+    position: relative;
+    border: 1px;
+    padding: 10px;
+    color: #fff;
+    white-space: normal;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding-right: 55px;
+    padding-left: 50px;
+    font-size: 15px;
+}
+
+.dota2 .options li:nth-child(odd) {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.dota2 .options li.question {
+    padding: 10px 20px;
+    white-space: normal;
+    background: #000;
+    clear: both;
+    line-height: 1.3;
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.1) inset, 0 0 1px rgba(0, 0, 0, 0.9);
+    background: rgba(0, 0, 0, 0.1);
+    font-size: 20px;
+    position: relative;
+}
+
+.dota2 .options li.help {
+    color: #ffa;
+    font-size: 95%;
+    padding: 0;
+    background: 0 0;
+    text-align: center;
+    overflow: hidden;
+    height: 0;
+}
+
+.dota2 .options li.help span {
+    display: block;
+    padding: 10px;
+}
+
+.dota2 .options li .procent {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+}
+
+.dota2 .options li .number {
+    padding: 5px 10px;
+    border-radius: 5px;
+    background: rgba(0, 0, 0, 0.3);
+    box-shadow: 0 0 10px #000 inset;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    position: absolute;
+    top: 5px;
+    left: 10px;
+}
+
+.dota2 .options li .bar {
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 5px;
+    height: 5px;
+    margin-left: 0;
+    margin-top: 5px;
+    margin-right: 5px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.dota2 .options li .bar .bar-inner {
+    background: #fff;
+    height: 100%;
+    width: 0;
+    transition: width 1s;
+    position: relative;
+    border-radius: 5px;
+}
+
+.dota2 .options li .text {
+    line-height: 1.3;
+}
+
+.dota2.active,
+.dota2.finished {
+    opacity: 1;
+}
+
+@font-face {
+    font-family: belwe_bd_btbold;
+    src: url(/overlays/fonts/belwe-bd-bt-bold-webfont.woff2) format("woff2"), url(/overlays/fonts/belwe-bd-bt-bold-webfont.woff) format("woff");
+    font-weight: 400;
+    font-style: normal;
+}
+
+.hearthstone {
+    font-family: belwe_bd_btbold;
+    width: 250px;
+    background: 0 0;
+    box-shadow: 0 0 0 rgba(0, 0, 0, 0.9);
+    opacity: 0;
+    color: #000;
+    transition: opacity 1s;
+    border-style: solid;
+    border-width: 27px;
+    -webkit-border-image: url(/overlays/img/themes/hearthstone/bg.png) 27 stretch;
+    border-image: url(/overlays/img/themes/hearthstone/bg.png) 27 fill stretch;
+    color: #130d00;
+}
+
+.hearthstone.topLeft {
+    margin-left: 10px;
+    margin-top: 10px;
+}
+
+.hearthstone.topCenter {
+    margin-top: 10px;
+}
+
+.hearthstone.topRight {
+    margin-right: 10px;
+    margin-top: 10px;
+}
+
+.hearthstone.middleLeft {
+    margin-left: 10px;
+}
+
+.hearthstone.middleRight {
+    margin-right: 10px;
+}
+
+.hearthstone.bottomLeft {
+    margin-left: 10px;
+    margin-bottom: 10px;
+}
+
+.hearthstone.bottomCenter {
+    margin-bottom: 10px;
+}
+
+.hearthstone.bottomRight {
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+
+.hearthstone .metaInfo {
+    white-space: nowrap;
+    font-size: 13px;
+    overflow-x: hidden;
+    margin: 10px 0 0;
+    border-radius: 5px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.hearthstone .duration,
+.hearthstone .total {
+    float: left;
+    width: 49%;
+    text-align: center;
+    padding: 5px 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+}
+
+.hearthstone .duration label,
+.hearthstone .total label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.hearthstone .total {
+    margin-right: 2%;
+}
+
+.hearthstone.finished .options li,
+.hearthstone.removing .options li {
+    opacity: 0.3;
+    transition: all 1s;
+}
+
+.hearthstone.finished .options li.highest,
+.hearthstone.removing .options li.highest {
+    opacity: 1;
+}
+
+.hearthstone.finished .options li.highest .bar .bar-inner,
+.hearthstone.removing .options li.highest .bar .bar-inner {
+    background: #ffa;
+}
+
+.hearthstone.finished .options li.help,
+.hearthstone.removing .options li.help {
+    height: 0;
+}
+
+.hearthstone.finished .metaInfo,
+.hearthstone.removing .metaInfo {
+    opacity: 0.3;
+}
+
+.hearthstone.active .options li.help {
+    height: 45px;
+}
+
+.hearthstone .options li {
+    position: relative;
+    border: 1px;
+    padding: 10px 0;
+    white-space: normal;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding-right: 50px;
+    padding-left: 35px;
+    margin: 0 -10px;
+    font-size: 15px;
+}
+
+.hearthstone .options li:nth-child(odd) {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.hearthstone .options li.question {
+    padding: 0 10px 10px;
+    color: #fff;
+    text-shadow: 0 0 1px #000, 0 0 1px #000, 0 0 1px #000, 0 0 1px #000, 2px 2px 1px #000;
+    white-space: normal;
+    clear: both;
+    line-height: 1.2;
+    font-size: 20px;
+    position: relative;
+    background: 0 0;
+}
+
+.hearthstone .options li.help {
+    padding: 0;
+    color: #3d2e17;
+    background: 0 0;
+    line-height: 1.3;
+    text-align: center;
+    overflow: hidden;
+    height: 0;
+}
+
+.hearthstone .options li.help span {
+    display: block;
+    padding: 0 10px;
+}
+
+.hearthstone .options li .procent {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+.hearthstone .options li .number {
+    padding: 5px 0;
+    border-radius: 5px;
+    position: absolute;
+    font-size: 25px;
+    top: 5px;
+    left: 10px;
+}
+
+.hearthstone .options li .bar {
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 5px;
+    height: 5px;
+    margin-left: 0;
+    margin-right: 5px;
+    margin-top: 5px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.hearthstone .options li .bar .bar-inner {
+    background: #fff;
+    height: 100%;
+    width: 0;
+    transition: width 1s;
+    position: relative;
+    border-radius: 5px;
+}
+
+.hearthstone .options li .text {
+    line-height: 1.3;
+}
+
+.hearthstone.active,
+.hearthstone.finished {
+    opacity: 1;
+}
+
+.hearthstone .credits {
+    padding-top: 10px;
+}
+
+@font-face {
+    font-family: koverwatchregular;
+    src: url(/overlays/fonts/koverwatch-webfont.woff2) format("woff2"), url(/overlays/fonts/koverwatch-webfont.woff) format("woff");
+    font-weight: 400;
+    font-style: normal;
+}
+
+.overwatch {
+    font-family: koverwatchregular;
+    width: 400px;
+    opacity: 0;
+    color: #000;
+    transition: opacity 1s;
+}
+
+.overwatch .inner {
+    transform: skewX(-3deg);
+    background: rgba(255, 255, 255, 0.7);
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    box-shadow: 0 0 50px rgba(0, 0, 0, 0.2);
+}
+
+.overwatch.topLeft {
+    margin-left: 20px;
+    margin-top: 20px;
+}
+
+.overwatch.topCenter {
+    margin-top: 20px;
+}
+
+.overwatch.topRight {
+    margin-right: 30px;
+    margin-top: 20px;
+}
+
+.overwatch.middleLeft {
+    margin-left: 20px;
+}
+
+.overwatch.middleRight {
+    margin-right: 30px;
+}
+
+.overwatch.bottomLeft {
+    margin-left: 20px;
+    margin-bottom: 20px;
+}
+
+.overwatch.bottomCenter {
+    margin-bottom: 20px;
+}
+
+.overwatch.bottomRight {
+    margin-right: 30px;
+    margin-bottom: 20px;
+}
+
+.overwatch .metaInfo {
+    padding: 0 10px;
+}
+
+.overwatch .duration,
+.overwatch .total {
+    font-size: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.8);
+    float: left;
+    width: 49%;
+    text-align: center;
+    padding: 10px;
+    margin: 10px 0;
+}
+
+.overwatch .duration strong,
+.overwatch .total strong {
+    color: #000;
+}
+
+.overwatch .total {
+    margin-right: 2%;
+}
+
+.overwatch.finished .options li,
+.overwatch.removing .options li {
+    opacity: 0.3;
+    transition: all 1s;
+}
+
+.overwatch.finished .options li.highest,
+.overwatch.removing .options li.highest {
+    opacity: 1;
+}
+
+.overwatch.finished .options li.help,
+.overwatch.removing .options li.help {
+    height: 0;
+}
+
+.overwatch.finished .metaInfo,
+.overwatch.removing .metaInfo {
+    opacity: 0.3;
+}
+
+.overwatch.active .options li.help {
+    height: 35px;
+}
+
+.overwatch .options li {
+    position: relative;
+    border: 1px;
+    padding: 10px;
+    color: #000;
+    text-overflow: ellipsis;
+    padding-right: 55px;
+    padding-left: 55px;
+    font-size: 20px;
+    background: rgba(255, 255, 255, 0.4);
+    background: linear-gradient( bottom, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.4));
+    background: -ms-linear-gradient( bottom, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.4));
+    background: -moz-linear-gradient( center bottom, rgba(255, 255, 255, 0.2) 0, rgba(255, 255, 255, 0.4) 100%);
+    background: -webkit-gradient( linear, left bottom, left top, color-stop(0, rgba(255, 255, 255, 0.2)), color-stop(1, rgba(255, 255, 255, 0.4)));
+}
+
+.overwatch .options li.question {
+    padding: 10px 20px;
+    white-space: normal;
+    background: #000;
+    color: #fff;
+    clear: both;
+    line-height: 1.3;
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1) inset, 0 0 1px rgba(255, 255, 255, 0.7);
+    background: rgba(81, 98, 132, 0.5);
+    font-size: 30px;
+    position: relative;
+}
+
+.overwatch .options li.help {
+    color: #000;
+    padding: 0;
+    background: 0 0;
+    text-align: center;
+    overflow: hidden;
+    height: 0;
+}
+
+.overwatch .options li.help span {
+    display: block;
+    padding: 10px;
+}
+
+.overwatch .options li .procent {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+}
+
+.overwatch .options li .number {
+    padding: 5px 10px;
+    border-radius: 5px;
+    background: rgba(255, 255, 255, 0.3);
+    box-shadow: 0 0 10px #fff inset;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    position: absolute;
+    top: 5px;
+    left: 10px;
+}
+
+.overwatch .options li .bar {
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 5px;
+    height: 5px;
+    margin-top: 5px;
+    margin-right: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.overwatch .options li .bar .bar-inner {
+    background: #fff;
+    height: 100%;
+    width: 0;
+    transition: width 1s;
+    position: relative;
+    border-radius: 5px;
+}
+
+.overwatch .options li .text {
+    line-height: 1.3;
+}
+
+.overwatch.active,
+.overwatch.finished {
+    opacity: 1;
+}
+
+@font-face {
+    font-family: puristaregular;
+    src: url(/overlays/fonts/purista_medium-webfont.woff2) format("woff2"), url(/overlays/fonts/purista_medium-webfont.woff) format("woff");
+    font-weight: 400;
+    font-style: normal;
+}
+
+.counterstrike {
+    font-family: puristaregular;
+    width: 400px;
+    background: rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    transition: opacity 1s;
+    text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.5);
+}
+
+.counterstrike.topLeft {
+    margin-left: 20px;
+    margin-top: 20px;
+}
+
+.counterstrike.topCenter {
+    margin-top: 80px;
+}
+
+.counterstrike.topRight {
+    margin-right: 30px;
+    margin-top: 20px;
+}
+
+.counterstrike.middleLeft {
+    margin-left: 20px;
+}
+
+.counterstrike.middleRight {
+    margin-right: 30px;
+}
+
+.counterstrike.bottomLeft {
+    margin-left: 20px;
+    margin-bottom: 20px;
+}
+
+.counterstrike.bottomCenter {
+    margin-bottom: 20px;
+}
+
+.counterstrike.bottomRight {
+    margin-right: 30px;
+    margin-bottom: 70px;
+}
+
+.counterstrike .metaInfo {
+    padding: 0 10px;
+}
+
+.counterstrike .duration,
+.counterstrike .total {
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    background: rgba(0, 0, 0, 0.4);
+    background: linear-gradient(bottom, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.2));
+    background: -ms-linear-gradient( bottom, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.2));
+    background: -moz-linear-gradient( center bottom, rgba(0, 0, 0, 0.1) 0, rgba(0, 0, 0, 0.2) 100%);
+    background: -webkit-gradient( linear, left bottom, left top, color-stop(0, rgba(0, 0, 0, 0.1)), color-stop(1, rgba(0, 0, 0, 0.2)));
+    float: left;
+    width: 49%;
+    text-align: center;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+}
+
+.counterstrike .duration strong,
+.counterstrike .total strong {
+    color: #ffa;
+}
+
+.counterstrike .total {
+    margin-right: 2%;
+}
+
+.counterstrike.finished .options li,
+.counterstrike.removing .options li {
+    opacity: 0.3;
+    transition: all 1s;
+    color: #ffa;
+}
+
+.counterstrike.finished .options li.highest,
+.counterstrike.removing .options li.highest {
+    opacity: 1;
+}
+
+.counterstrike.finished .options li.highest .bar .bar-inner,
+.counterstrike.removing .options li.highest .bar .bar-inner {
+    background: #ffa;
+}
+
+.counterstrike.finished .options li.help,
+.counterstrike.removing .options li.help {
+    height: 0;
+}
+
+.counterstrike.finished .metaInfo,
+.counterstrike.removing .metaInfo {
+    opacity: 0.3;
+}
+
+.counterstrike.active .options li.help {
+    height: 35px;
+}
+
+.counterstrike .options li {
+    position: relative;
+    border: 1px;
+    padding: 10px;
+    color: #fff;
+    text-overflow: ellipsis;
+    padding-right: 55px;
+    padding-left: 55px;
+    font-size: 15px;
+}
+
+.counterstrike .options li.question {
+    padding: 10px 20px;
+    font-size: 20px;
+    white-space: normal;
+    background: #000;
+    clear: both;
+    line-height: 1.3;
+    background: rgba(0, 0, 0, 0.2);
+    font-size: 25px;
+    position: relative;
+}
+
+.counterstrike .options li.help {
+    color: #ffa;
+    padding: 0;
+    background: 0 0;
+    text-align: center;
+    overflow: hidden;
+    height: 0;
+}
+
+.counterstrike .options li.help span {
+    display: block;
+    padding: 10px;
+}
+
+.counterstrike .options li .procent {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+}
+
+.counterstrike .options li .number {
+    padding: 5px 10px;
+    border-radius: 5px;
+    background: rgba(0, 0, 0, 0.3);
+    box-shadow: 0 0 10px #000 inset;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    position: absolute;
+    top: 5px;
+    left: 10px;
+}
+
+.counterstrike .options li .bar {
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 5px;
+    height: 5px;
+    margin-top: 5px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.counterstrike .options li .bar .bar-inner {
+    background: #fff;
+    height: 100%;
+    width: 0;
+    transition: width 1s;
+    position: relative;
+    border-radius: 5px;
+}
+
+.counterstrike .options li .text {
+    line-height: 1.3;
+}
+
+.counterstrike.active,
+.counterstrike.finished {
+    opacity: 1;
+}
+
+.h1z1 {
+    width: 589px;
+    background: url(/overlays/img/themes/h1z1/middle.png);
+    background-size: 100% 100%;
+    opacity: 0;
+    padding: 0 107px 0 73px;
+    transition: opacity 1s;
+}
+
+.h1z1:before {
+    display: block;
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 100%;
+    height: 140px;
+    background: url(/overlays/img/themes/h1z1/top.png);
+}
+
+.h1z1:after {
+    display: block;
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 100%;
+    height: 100px;
+    background: url(/overlays/img/themes/h1z1/bottom.png);
+}
+
+.h1z1.topLeft {
+    margin-left: -10px;
+    margin-top: 40px;
+}
+
+.h1z1.topCenter {
+    margin-top: 40px;
+}
+
+.h1z1.topRight {
+    margin-right: -50px;
+    margin-top: 40px;
+}
+
+.h1z1.middleLeft {
+    margin-left: -10px;
+}
+
+.h1z1.middleRight {
+    margin-right: -50px;
+}
+
+.h1z1.bottomLeft {
+    margin-left: -10px;
+    margin-bottom: 40px;
+}
+
+.h1z1.bottomCenter {
+    margin-bottom: 40px;
+}
+
+.h1z1.bottomRight {
+    margin-right: -50px;
+    margin-bottom: 40px;
+}
+
+.h1z1 .metaInfo {
+    padding: 0 10px;
+}
+
+.h1z1 .duration,
+.h1z1 .total {
+    float: left;
+    width: 49%;
+    text-align: center;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+}
+
+.h1z1 .duration strong,
+.h1z1 .total strong {
+    color: #ffa;
+}
+
+.h1z1 .total {
+    margin-right: 2%;
+}
+
+.h1z1.finished .options li,
+.h1z1.removing .options li {
+    opacity: 0.3;
+    transition: all 1s;
+}
+
+.h1z1.finished .options li.highest,
+.h1z1.removing .options li.highest {
+    color: #ffa;
+    opacity: 1;
+}
+
+.h1z1.finished .options li.highest .bar .bar-inner,
+.h1z1.removing .options li.highest .bar .bar-inner {
+    background: #ffa;
+}
+
+.h1z1.finished .options li.help,
+.h1z1.removing .options li.help {
+    height: 0;
+}
+
+.h1z1.finished .metaInfo,
+.h1z1.removing .metaInfo {
+    opacity: 0.3;
+}
+
+.h1z1.active .options li.help {
+    height: 35px;
+}
+
+.h1z1 .options {
+    font-family: impact;
+}
+
+.h1z1 .options li {
+    position: relative;
+    border: 1px;
+    padding: 10px;
+    color: #fff;
+    text-overflow: ellipsis;
+    padding-right: 55px;
+    padding-left: 55px;
+    font-size: 20px;
+    text-shadow: 0 0 1px #000, 0 0 1px #000, 0 0 1px #000, 0 0 1px #000, 2px 2px 1px #000;
+}
+
+.h1z1 .options li.question {
+    padding: 10px 20px 10px 30px;
+    font-size: 20px;
+    white-space: normal;
+    clear: both;
+    line-height: 1.3;
+    background: url(/overlays/img/themes/h1z1/question-bg.png);
+    background-size: 100% 100%;
+    color: #ffc171;
+    font-size: 25px;
+    position: relative;
+}
+
+.h1z1 .options li.help {
+    color: #ffa;
+    padding: 0;
+    background: 0 0;
+    text-align: center;
+    overflow: hidden;
+    height: 0;
+}
+
+.h1z1 .options li.help span {
+    display: block;
+    padding: 10px;
+}
+
+.h1z1 .options li .procent {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+}
+
+.h1z1 .options li .number {
+    padding: 5px 10px;
+    border-radius: 5px;
+    background: rgba(0, 0, 0, 0.3);
+    box-shadow: 0 0 10px #000 inset;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    position: absolute;
+    top: 5px;
+    left: 10px;
+}
+
+.h1z1 .options li .bar {
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 5px;
+    height: 5px;
+    margin-top: 5px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.h1z1 .options li .bar .bar-inner {
+    background: #fff;
+    height: 100%;
+    width: 0;
+    transition: width 1s;
+    position: relative;
+    border-radius: 5px;
+}
+
+.h1z1 .options li .text {
+    line-height: 1.3;
+}
+
+.h1z1.active,
+.h1z1.finished {
+    opacity: 1;
+}
+
+@font-face {
+    font-family: Orbitron;
+    font-style: normal;
+    font-weight: 400;
+    src: url(https://fonts.gstatic.com/s/orbitron/v15/yMJMMIlzdpvBhQQL_SC3X9yhF25-T1nyGy6BoWg2.ttf) format("truetype");
+}
+
+.starcitizen {
+    width: 400px;
+    border: 1px solid #14375e;
+    background: rgba(28, 45, 67, 0.9);
+    background-image: url(/overlays/img/themes/starcitizen/rsi_menu_glow_noise.png);
+    font-family: Orbitron;
+    opacity: 0;
+    transition: opacity 1s;
+}
+
+.starcitizen.topLeft {
+    margin-left: 20px;
+    margin-top: 20px;
+}
+
+.starcitizen.topCenter {
+    margin-top: 20px;
+}
+
+.starcitizen.topRight {
+    margin-right: 30px;
+    margin-top: 20px;
+}
+
+.starcitizen.middleLeft {
+    margin-left: 20px;
+}
+
+.starcitizen.middleRight {
+    margin-right: 20px;
+}
+
+.starcitizen.bottomLeft {
+    margin-left: 20px;
+    margin-bottom: 20px;
+}
+
+.starcitizen.bottomCenter {
+    margin-bottom: 20px;
+}
+
+.starcitizen.bottomRight {
+    margin-right: 20px;
+    margin-bottom: 20px;
+}
+
+.starcitizen .metaInfo {
+    padding: 0 10px;
+}
+
+.starcitizen .duration,
+.starcitizen .total {
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    background: rgba(0, 0, 0, 0.2);
+    float: left;
+    width: 49%;
+    text-align: center;
+    padding: 10px;
+    margin: 10px 0;
+}
+
+.starcitizen .duration strong,
+.starcitizen .total strong {
+    display: block;
+    margin-top: 5px;
+    color: #ffa;
+}
+
+.starcitizen .total {
+    margin-right: 2%;
+}
+
+.starcitizen.finished .options li,
+.starcitizen.removing .options li {
+    opacity: 0.3;
+    transition: all 1s;
+}
+
+.starcitizen.finished .options li.highest,
+.starcitizen.removing .options li.highest {
+    color: #da9e00;
+    opacity: 1;
+}
+
+.starcitizen.finished .options li.highest .bar .bar-inner,
+.starcitizen.removing .options li.highest .bar .bar-inner {
+    background: #da9e00;
+}
+
+.starcitizen.finished .options li.help,
+.starcitizen.removing .options li.help {
+    height: 0;
+}
+
+.starcitizen.finished .metaInfo,
+.starcitizen.removing .metaInfo {
+    opacity: 0.3;
+}
+
+.starcitizen.active .options li.help {
+    height: 35px;
+}
+
+.starcitizen .options {
+    perspective: 50px;
+    perspective-origin: 50% -50%;
+}
+
+.starcitizen .options li {
+    position: relative;
+    border: 1px;
+    padding: 10px;
+    color: #b1d8f1;
+    text-overflow: ellipsis;
+    padding-right: 55px;
+    padding-left: 55px;
+    font-size: 15px;
+}
+
+.starcitizen .options li.question {
+    padding: 10px 20px;
+    clear: both;
+    line-height: 1.3;
+    background: #122337;
+    position: relative;
+    font: 500 22px/25px Orbitron;
+    color: #00f0ff;
+    text-shadow: 0 0 30px #00edff;
+    text-transform: uppercase;
+}
+
+.starcitizen .options li.question:before {
+    content: "";
+    display: block;
+    height: 2px;
+    width: 90%;
+    background-color: #45e7e9;
+    position: absolute;
+    left: 5%;
+    bottom: 100%;
+    transform: rotateX(45deg);
+    margin-bottom: 3px;
+}
+
+.starcitizen .options li.help {
+    color: #da9e00;
+    padding: 0;
+    background: 0 0;
+    text-align: center;
+    overflow: hidden;
+    height: 0;
+}
+
+.starcitizen .options li.help span {
+    display: block;
+    padding: 10px;
+}
+
+.starcitizen .options li .procent {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+}
+
+.starcitizen .options li .number {
+    padding: 5px 10px;
+    border-radius: 5px;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    position: absolute;
+    top: 5px;
+    left: 10px;
+}
+
+.starcitizen .options li .bar {
+    background: rgba(0, 0, 0, 0.2);
+    height: 5px;
+    margin-top: 10px;
+}
+
+.starcitizen .options li .bar .bar-inner {
+    background: #fff;
+    height: 100%;
+    width: 0;
+    transition: width 1s;
+    position: relative;
+}
+
+.starcitizen .options li .text {
+    line-height: 1.3;
+}
+
+.starcitizen.active,
+.starcitizen.finished {
+    opacity: 1;
+}
+
+.starcitizen .credits {
+    padding-top: 5px;
+}
+
+.poe {
+    width: 380px;
+    background: 0 0;
+    box-shadow: 0 0 0 rgba(0, 0, 0, 0.9);
+    opacity: 0;
+    transition: opacity 1s;
+    text-shadow: 0 0 1px #000, 0 0 1px #000, 0 0 1px #000, 0 0 1px #000, 2px 2px 1px #000;
+    border-style: solid;
+    border-width: 27px 50px 38px 44px;
+    border-image: url(/overlays/img/themes/poe/bg.png) 27 50 38 44 fill repeat round;
+}
+
+.poe.topLeft {
+    margin-left: -35px;
+    margin-top: 10px;
+}
+
+.poe.topCenter {
+    margin-top: 10px;
+}
+
+.poe.topRight {
+    margin-right: -35px;
+    margin-top: 10px;
+}
+
+.poe.middleLeft {
+    margin-left: -35px;
+}
+
+.poe.middleRight {
+    margin-right: -35px;
+}
+
+.poe.bottomLeft {
+    margin-left: -35px;
+    margin-bottom: 220px;
+}
+
+.poe.bottomCenter {
+    margin-bottom: 20px;
+}
+
+.poe.bottomRight {
+    margin-right: -35px;
+    margin-bottom: 220px;
+}
+
+.poe .metaInfo {
+    padding: 0 10px;
+    margin-bottom: -10px;
+    overflow: hidden;
+}
+
+.poe .duration,
+.poe .total {
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    background: rgba(0, 0, 0, 0.4);
+    background: linear-gradient(bottom, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.2));
+    background: -ms-linear-gradient( bottom, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.2));
+    background: -moz-linear-gradient( center bottom, rgba(0, 0, 0, 0.1) 0, rgba(0, 0, 0, 0.2) 100%);
+    background: -webkit-gradient( linear, left bottom, left top, color-stop(0, rgba(0, 0, 0, 0.1)), color-stop(1, rgba(0, 0, 0, 0.2)));
+    float: left;
+    width: 49%;
+    text-align: center;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+}
+
+.poe .duration strong,
+.poe .total strong {
+    color: #ffa;
+}
+
+.poe .duration label,
+.poe .total label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.poe .total {
+    margin-right: 2%;
+}
+
+.poe.finished .options li,
+.poe.removing .options li {
+    opacity: 0.3;
+    transition: all 1s;
+}
+
+.poe.finished .options li.highest,
+.poe.removing .options li.highest {
+    color: #ffa;
+    opacity: 1;
+}
+
+.poe.finished .options li.highest .bar .bar-inner,
+.poe.removing .options li.highest .bar .bar-inner {
+    background: #ffa;
+}
+
+.poe.finished .options li.help,
+.poe.removing .options li.help {
+    height: 0;
+}
+
+.poe.finished .metaInfo,
+.poe.removing .metaInfo {
+    opacity: 0.3;
+}
+
+.poe.active .options li.help {
+    height: 35px;
+}
+
+.poe .options li {
+    position: relative;
+    border: 1px;
+    padding: 10px;
+    color: #fff;
+    white-space: normal;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding-right: 55px;
+    padding-left: 55px;
+    font-size: 15px;
+}
+
+.poe .options li.question {
+    padding: 10px 20px;
+    white-space: normal;
+    clear: both;
+    line-height: 1.3;
+    margin: 0 -10px;
+    font-size: 20px;
+    position: relative;
+}
+
+.poe .options li.help {
+    color: #ffa;
+    padding: 0;
+    background: 0 0;
+    text-align: center;
+    overflow: hidden;
+    height: 0;
+}
+
+.poe .options li.help span {
+    display: block;
+    padding: 10px;
+}
+
+.poe .options li .procent {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+}
+
+.poe .options li .number {
+    padding: 5px 10px;
+    border-radius: 5px;
+    background: rgba(0, 0, 0, 0.3);
+    box-shadow: 0 0 10px #000 inset;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    position: absolute;
+    top: 5px;
+    left: 10px;
+}
+
+.poe .options li .bar {
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 5px;
+    height: 5px;
+    margin-left: 0;
+    margin-top: 5px;
+    margin-right: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.poe .options li .bar .bar-inner {
+    background: #fff;
+    height: 100%;
+    width: 0;
+    transition: width 1s;
+    position: relative;
+    border-radius: 5px;
+}
+
+.poe .options li .text {
+    line-height: 1.3;
+}
+
+.poe.active,
+.poe.finished {
+    opacity: 1;
+}
+
+.poe .credits {
+    padding-top: 10px;
+}
+
+.inOverlay.stream-poll .border {
+    position: absolute;
+    border-style: solid;
+    top: -2px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 2;
+}
+
+@font-face {
+    font-family: eurostile;
+    src: url(/overlays/fonts/eurostiletot-regular-webfont.woff) format("woff");
+    font-weight: 400;
+    font-style: normal;
+}
+
+.stream-poll.starcraft {
+    font-family: eurostile;
+    background-image: -webkit-gradient( linear, left bottom, left top, color-stop(0, rgba(0, 0, 0, 0.2)), color-stop(1, rgba(0, 0, 0, 0.5))), url(/overlays/img/bg-blue.jpg);
+    box-shadow: 0 0 50px rgba(0, 0, 0, 0.9);
+    width: 400px;
+    opacity: 0;
+    transition: opacity 1s;
+}
+
+.stream-poll.starcraft.topLeft {
+    top: 20px;
+    left: 20px;
+}
+
+.stream-poll.starcraft.topCenter {
+    top: 20px;
+    left: 50%;
+    transform: translate(-50%, 0);
+}
+
+.stream-poll.starcraft.topRight {
+    top: 20px;
+    right: 20px;
+}
+
+.stream-poll.starcraft.middleLeft {
+    top: 50%;
+    transform: translate(0, -50%);
+    left: 20px;
+}
+
+.stream-poll.starcraft.middleCenter {
+    top: 50%;
+    transform: translate(-50%, -50%);
+    left: 50%;
+}
+
+.stream-poll.starcraft.middleRight {
+    top: 50%;
+    transform: translate(0, -50%);
+    right: 20px;
+}
+
+.stream-poll.starcraft.bottomLeft {
+    bottom: 20px;
+    left: 20px;
+}
+
+.stream-poll.starcraft.bottomCenter {
+    bottom: 20px;
+    left: 50%;
+    transform: translate(-50%, 0);
+}
+
+.stream-poll.starcraft.bottomRight {
+    bottom: 20px;
+    right: 20px;
+}
+
+.stream-poll.starcraft .metaInfo {
+    padding: 0 10px;
+}
+
+.stream-poll.starcraft .duration,
+.stream-poll.starcraft .total {
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    background: rgba(0, 0, 0, 0.4);
+    background: linear-gradient(bottom, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.2));
+    background: -ms-linear-gradient( bottom, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.2));
+    background: -moz-linear-gradient( center bottom, rgba(0, 0, 0, 0.1) 0, rgba(0, 0, 0, 0.2) 100%);
+    background: -webkit-gradient( linear, left bottom, left top, color-stop(0, rgba(0, 0, 0, 0.1)), color-stop(1, rgba(0, 0, 0, 0.2)));
+    float: left;
+    width: 49%;
+    text-align: center;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+}
+
+.stream-poll.starcraft .duration strong,
+.stream-poll.starcraft .total strong {
+    color: #ffa;
+    display: block;
+}
+
+.stream-poll.starcraft .total {
+    margin-right: 2%;
+}
+
+.stream-poll.starcraft.finished .options li,
+.stream-poll.starcraft.removing .options li {
+    opacity: 0.3;
+    transition: all 1s;
+}
+
+.stream-poll.starcraft.finished .options li.highest,
+.stream-poll.starcraft.removing .options li.highest {
+    color: #ffa;
+    opacity: 1;
+}
+
+.stream-poll.starcraft.finished .options li.highest .bar .bar-inner,
+.stream-poll.starcraft.removing .options li.highest .bar .bar-inner {
+    background: #ffa;
+}
+
+.stream-poll.starcraft.finished .options li.help,
+.stream-poll.starcraft.removing .options li.help {
+    height: 0;
+}
+
+.stream-poll.starcraft.finished .metaInfo,
+.stream-poll.starcraft.removing .metaInfo {
+    opacity: 0.3;
+}
+
+.stream-poll.starcraft.active .options li.help {
+    height: 35px;
+}
+
+.stream-poll.starcraft .options li {
+    position: relative;
+    border: 1px;
+    padding: 10px;
+    color: #fff;
+    text-overflow: ellipsis;
+    padding-right: 55px;
+    padding-left: 55px;
+    font-size: 15px;
+}
+
+.stream-poll.starcraft .options li.question {
+    padding: 10px 20px;
+    white-space: normal;
+    background: #000;
+    clear: both;
+    line-height: 1.3;
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.1) inset, 0 0 1px rgba(0, 0, 0, 0.7);
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid #141414;
+    font-size: 20px;
+    position: relative;
+}
+
+.stream-poll.starcraft .options li.help {
+    color: #ffa;
+    padding: 0;
+    background: 0 0;
+    text-align: center;
+    overflow: hidden;
+    height: 0;
+}
+
+.stream-poll.starcraft .options li.help span {
+    display: block;
+    padding: 10px;
+}
+
+.stream-poll.starcraft .options li .procent {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+}
+
+.stream-poll.starcraft .options li .number {
+    padding: 5px 10px;
+    border-radius: 5px;
+    background: rgba(0, 0, 0, 0.3);
+    box-shadow: 0 0 10px #000 inset;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    position: absolute;
+    top: 5px;
+    left: 10px;
+}
+
+.stream-poll.starcraft .options li .bar {
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 5px;
+    height: 5px;
+    margin-top: 5px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.stream-poll.starcraft .options li .bar .bar-inner {
+    background: #fff;
+    height: 100%;
+    width: 0;
+    transition: width 1s;
+    position: relative;
+    border-radius: 5px;
+}
+
+.stream-poll.starcraft .options li .text {
+    line-height: 1.3;
+}
+
+.stream-poll.starcraft.active,
+.stream-poll.starcraft.finished {
+    opacity: 1;
+}
+
+.stream-poll.starcraft .inner {
+    padding: 20px 15px 15px 15px;
+}
+
+.stream-poll.starcraft .border {
+    border-width: 26px 35px 24px 36px;
+    -webkit-border-image: url(/overlays/img/border.png) 26 35 24 36 stretch;
+    border-image: url(/overlays/img/border.png) 26 35 24 36 fill stretch;
+}
+
+@font-face {
+    font-family: Cinzel;
+    font-style: normal;
+    font-weight: 400;
+    src: local("Cinzel Regular"), local("Cinzel-Regular"), url(https://fonts.gstatic.com/s/cinzel/v9/8vIJ7ww63mVu7gt79mT-.ttf) format("truetype");
+}
+
+.stream-poll.metal {
+    font-family: Cinzel;
+    background-image: -webkit-gradient( linear, left bottom, left top, color-stop(0, rgba(0, 0, 0, 0)), color-stop(1, rgba(0, 0, 0, 0.5))), url(/overlays/img/bg-grid.jpg);
+    box-shadow: 0 0 50px rgba(0, 0, 0, 0.9);
+    width: 400px;
+    opacity: 0;
+    transition: opacity 1s;
+    padding: 12px 13px 15px 15px;
+}
+
+.stream-poll.metal.topLeft {
+    top: 20px;
+    left: 20px;
+}
+
+.stream-poll.metal.topCenter {
+    top: 20px;
+    left: 50%;
+    transform: translate(-50%, 0);
+}
+
+.stream-poll.metal.topRight {
+    top: 20px;
+    right: 20px;
+}
+
+.stream-poll.metal.middleLeft {
+    top: 50%;
+    transform: translate(0, -50%);
+    left: 20px;
+}
+
+.stream-poll.metal.middleCenter {
+    top: 50%;
+    transform: translate(-50%, -50%);
+    left: 50%;
+}
+
+.stream-poll.metal.middleRight {
+    top: 50%;
+    transform: translate(0, -50%);
+    right: 20px;
+}
+
+.stream-poll.metal.bottomLeft {
+    bottom: 20px;
+    left: 20px;
+}
+
+.stream-poll.metal.bottomCenter {
+    bottom: 20px;
+    left: 50%;
+    transform: translate(-50%, 0);
+}
+
+.stream-poll.metal.bottomRight {
+    bottom: 20px;
+    right: 20px;
+}
+
+.stream-poll.metal .metaInfo {
+    padding: 0 10px;
+}
+
+.stream-poll.metal .duration,
+.stream-poll.metal .total {
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    background: rgba(0, 0, 0, 0.4);
+    background: linear-gradient(bottom, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.2));
+    background: -ms-linear-gradient( bottom, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.2));
+    background: -moz-linear-gradient( center bottom, rgba(0, 0, 0, 0.1) 0, rgba(0, 0, 0, 0.2) 100%);
+    background: -webkit-gradient( linear, left bottom, left top, color-stop(0, rgba(0, 0, 0, 0.1)), color-stop(1, rgba(0, 0, 0, 0.2)));
+    float: left;
+    width: 49%;
+    text-align: center;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+}
+
+.stream-poll.metal .duration strong,
+.stream-poll.metal .total strong {
+    color: #ffa;
+    display: block;
+}
+
+.stream-poll.metal .total {
+    margin-right: 2%;
+}
+
+.stream-poll.metal.finished .options li,
+.stream-poll.metal.removing .options li {
+    opacity: 0.3;
+    transition: all 1s;
+}
+
+.stream-poll.metal.finished .options li.highest,
+.stream-poll.metal.removing .options li.highest {
+    color: #ffa;
+    opacity: 1;
+}
+
+.stream-poll.metal.finished .options li.highest .bar .bar-inner,
+.stream-poll.metal.removing .options li.highest .bar .bar-inner {
+    background: #ffa;
+}
+
+.stream-poll.metal.finished .options li.help,
+.stream-poll.metal.removing .options li.help {
+    height: 0;
+}
+
+.stream-poll.metal.finished .metaInfo,
+.stream-poll.metal.removing .metaInfo {
+    opacity: 0.3;
+}
+
+.stream-poll.metal.active .options li.help {
+    height: 35px;
+}
+
+.stream-poll.metal .options li {
+    position: relative;
+    border: 1px;
+    padding: 10px;
+    color: #fff;
+    text-overflow: ellipsis;
+    padding-right: 55px;
+    padding-left: 55px;
+    font-size: 15px;
+}
+
+.stream-poll.metal .options li.question {
+    padding: 10px 20px;
+    white-space: normal;
+    background: #000;
+    clear: both;
+    line-height: 1.3;
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.1) inset, 0 0 1px rgba(0, 0, 0, 0.7);
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid #141414;
+    font-size: 20px;
+    position: relative;
+}
+
+.stream-poll.metal .options li.help {
+    color: #ffa;
+    padding: 0;
+    background: 0 0;
+    text-align: center;
+    overflow: hidden;
+    height: 0;
+}
+
+.stream-poll.metal .options li.help span {
+    display: block;
+    padding: 10px;
+}
+
+.stream-poll.metal .options li .procent {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+}
+
+.stream-poll.metal .options li .number {
+    padding: 5px 10px;
+    border-radius: 5px;
+    background: rgba(0, 0, 0, 0.3);
+    box-shadow: 0 0 10px #000 inset;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    position: absolute;
+    top: 5px;
+    left: 10px;
+}
+
+.stream-poll.metal .options li .bar {
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 5px;
+    height: 5px;
+    margin-top: 5px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.stream-poll.metal .options li .bar .bar-inner {
+    background: #fff;
+    height: 100%;
+    width: 0;
+    transition: width 1s;
+    position: relative;
+    border-radius: 5px;
+}
+
+.stream-poll.metal .options li .text {
+    line-height: 1.3;
+}
+
+.stream-poll.metal.active,
+.stream-poll.metal.finished {
+    opacity: 1;
+}
+
+.stream-poll.metal .border {
+    border-width: 12px 13px 15px 15px;
+    -webkit-border-image: url(/overlays/img/camelot-border.png) 12 13 15 15 stretch;
+    border-image: url(/overlays/img/camelot-border.png) 12 13 15 15 fill stretch;
+}
+
+.stream-poll.medival {
+    font-family: Cinzel;
+    background-image: -webkit-gradient( linear, left bottom, left top, color-stop(0, rgba(0, 0, 0, 0.2)), color-stop(1, rgba(0, 0, 0, 0.7))), url(/overlays/img/widget-bg.png);
+    box-shadow: 0 0 50px rgba(0, 0, 0, 0.9);
+    width: 400px;
+    opacity: 0;
+    transition: opacity 1s;
+    padding: 20px 15px 20px 15px;
+}
+
+.stream-poll.medival.topLeft {
+    top: 20px;
+    left: 20px;
+}
+
+.stream-poll.medival.topCenter {
+    top: 20px;
+    left: 50%;
+    transform: translate(-50%, 0);
+}
+
+.stream-poll.medival.topRight {
+    top: 20px;
+    right: 20px;
+}
+
+.stream-poll.medival.middleLeft {
+    top: 50%;
+    transform: translate(0, -50%);
+    left: 20px;
+}
+
+.stream-poll.medival.middleCenter {
+    top: 50%;
+    transform: translate(-50%, -50%);
+    left: 50%;
+}
+
+.stream-poll.medival.middleRight {
+    top: 50%;
+    transform: translate(0, -50%);
+    right: 20px;
+}
+
+.stream-poll.medival.bottomLeft {
+    bottom: 20px;
+    left: 20px;
+}
+
+.stream-poll.medival.bottomCenter {
+    bottom: 20px;
+    left: 50%;
+    transform: translate(-50%, 0);
+}
+
+.stream-poll.medival.bottomRight {
+    bottom: 20px;
+    right: 20px;
+}
+
+.stream-poll.medival .metaInfo {
+    padding: 0 10px;
+}
+
+.stream-poll.medival .duration,
+.stream-poll.medival .total {
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    background: rgba(0, 0, 0, 0.4);
+    background: linear-gradient(bottom, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.2));
+    background: -ms-linear-gradient( bottom, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.2));
+    background: -moz-linear-gradient( center bottom, rgba(0, 0, 0, 0.1) 0, rgba(0, 0, 0, 0.2) 100%);
+    background: -webkit-gradient( linear, left bottom, left top, color-stop(0, rgba(0, 0, 0, 0.1)), color-stop(1, rgba(0, 0, 0, 0.2)));
+    float: left;
+    width: 49%;
+    text-align: center;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+}
+
+.stream-poll.medival .duration strong,
+.stream-poll.medival .total strong {
+    color: #ffa;
+    display: block;
+}
+
+.stream-poll.medival .total {
+    margin-right: 2%;
+}
+
+.stream-poll.medival.finished .options li,
+.stream-poll.medival.removing .options li {
+    opacity: 0.3;
+    transition: all 1s;
+}
+
+.stream-poll.medival.finished .options li.highest,
+.stream-poll.medival.removing .options li.highest {
+    color: #ffa;
+    opacity: 1;
+}
+
+.stream-poll.medival.finished .options li.highest .bar .bar-inner,
+.stream-poll.medival.removing .options li.highest .bar .bar-inner {
+    background: #ffa;
+}
+
+.stream-poll.medival.finished .options li.help,
+.stream-poll.medival.removing .options li.help {
+    height: 0;
+}
+
+.stream-poll.medival.finished .metaInfo,
+.stream-poll.medival.removing .metaInfo {
+    opacity: 0.3;
+}
+
+.stream-poll.medival.active .options li.help {
+    height: 35px;
+}
+
+.stream-poll.medival .options li {
+    position: relative;
+    border: 1px;
+    padding: 10px;
+    color: #fff;
+    text-overflow: ellipsis;
+    padding-right: 55px;
+    padding-left: 55px;
+    font-size: 15px;
+}
+
+.stream-poll.medival .options li.question {
+    padding: 10px 20px;
+    white-space: normal;
+    background: #000;
+    clear: both;
+    line-height: 1.3;
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.1) inset, 0 0 1px rgba(0, 0, 0, 0.7);
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid #141414;
+    font-size: 20px;
+    position: relative;
+}
+
+.stream-poll.medival .options li.help {
+    color: #ffa;
+    padding: 0;
+    background: 0 0;
+    text-align: center;
+    overflow: hidden;
+    height: 0;
+}
+
+.stream-poll.medival .options li.help span {
+    display: block;
+    padding: 10px;
+}
+
+.stream-poll.medival .options li .procent {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+}
+
+.stream-poll.medival .options li .number {
+    padding: 5px 10px;
+    border-radius: 5px;
+    background: rgba(0, 0, 0, 0.3);
+    box-shadow: 0 0 10px #000 inset;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    position: absolute;
+    top: 5px;
+    left: 10px;
+}
+
+.stream-poll.medival .options li .bar {
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 5px;
+    height: 5px;
+    margin-top: 5px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.stream-poll.medival .options li .bar .bar-inner {
+    background: #fff;
+    height: 100%;
+    width: 0;
+    transition: width 1s;
+    position: relative;
+    border-radius: 5px;
+}
+
+.stream-poll.medival .options li .text {
+    line-height: 1.3;
+}
+
+.stream-poll.medival.active,
+.stream-poll.medival.finished {
+    opacity: 1;
+}
+
+.stream-poll.medival .border {
+    border-width: 21px 24px 17px 26px;
+    -webkit-border-image: url(/overlays/img/camelot2-border.png) 21 24 17 26 stretch;
+    border-image: url(/overlays/img/camelot2-border.png) 21 24 17 26 fill stretch;
+}
+
+.stream-poll.golden {
+    font-family: belwe_bd_btbold;
+    background-image: -webkit-gradient( linear, left bottom, left top, color-stop(0, rgba(0, 0, 0, 0.2)), color-stop(1, rgba(0, 0, 0, 0.7))), url(/overlays/img/widget-bg.png);
+    box-shadow: 0 0 50px rgba(0, 0, 0, 0.9);
+    width: 400px;
+    opacity: 0;
+    transition: opacity 1s;
+    padding: 10px;
+}
+
+.stream-poll.golden.topLeft {
+    top: 20px;
+    left: 20px;
+}
+
+.stream-poll.golden.topCenter {
+    top: 20px;
+    left: 50%;
+    transform: translate(-50%, 0);
+}
+
+.stream-poll.golden.topRight {
+    top: 20px;
+    right: 20px;
+}
+
+.stream-poll.golden.middleLeft {
+    top: 50%;
+    transform: translate(0, -50%);
+    left: 20px;
+}
+
+.stream-poll.golden.middleCenter {
+    top: 50%;
+    transform: translate(-50%, -50%);
+    left: 50%;
+}
+
+.stream-poll.golden.middleRight {
+    top: 50%;
+    transform: translate(0, -50%);
+    right: 20px;
+}
+
+.stream-poll.golden.bottomLeft {
+    bottom: 20px;
+    left: 20px;
+}
+
+.stream-poll.golden.bottomCenter {
+    bottom: 20px;
+    left: 50%;
+    transform: translate(-50%, 0);
+}
+
+.stream-poll.golden.bottomRight {
+    bottom: 20px;
+    right: 20px;
+}
+
+.stream-poll.golden .metaInfo {
+    padding: 0 10px;
+}
+
+.stream-poll.golden .duration,
+.stream-poll.golden .total {
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    background: rgba(0, 0, 0, 0.4);
+    background: linear-gradient(bottom, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.2));
+    background: -ms-linear-gradient( bottom, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.2));
+    background: -moz-linear-gradient( center bottom, rgba(0, 0, 0, 0.1) 0, rgba(0, 0, 0, 0.2) 100%);
+    background: -webkit-gradient( linear, left bottom, left top, color-stop(0, rgba(0, 0, 0, 0.1)), color-stop(1, rgba(0, 0, 0, 0.2)));
+    float: left;
+    width: 49%;
+    text-align: center;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+}
+
+.stream-poll.golden .duration strong,
+.stream-poll.golden .total strong {
+    color: #ffa;
+    display: block;
+}
+
+.stream-poll.golden .total {
+    margin-right: 2%;
+}
+
+.stream-poll.golden.finished .options li,
+.stream-poll.golden.removing .options li {
+    opacity: 0.3;
+    transition: all 1s;
+}
+
+.stream-poll.golden.finished .options li.highest,
+.stream-poll.golden.removing .options li.highest {
+    color: #ffa;
+    opacity: 1;
+}
+
+.stream-poll.golden.finished .options li.highest .bar .bar-inner,
+.stream-poll.golden.removing .options li.highest .bar .bar-inner {
+    background: #ffa;
+}
+
+.stream-poll.golden.finished .options li.help,
+.stream-poll.golden.removing .options li.help {
+    height: 0;
+}
+
+.stream-poll.golden.finished .metaInfo,
+.stream-poll.golden.removing .metaInfo {
+    opacity: 0.3;
+}
+
+.stream-poll.golden.active .options li.help {
+    height: 35px;
+}
+
+.stream-poll.golden .options li {
+    position: relative;
+    border: 1px;
+    padding: 10px;
+    color: #fff;
+    text-overflow: ellipsis;
+    padding-right: 55px;
+    padding-left: 55px;
+    font-size: 15px;
+}
+
+.stream-poll.golden .options li.question {
+    padding: 10px 20px;
+    white-space: normal;
+    background: #000;
+    clear: both;
+    line-height: 1.3;
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.1) inset, 0 0 1px rgba(0, 0, 0, 0.7);
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid #141414;
+    font-size: 20px;
+    position: relative;
+}
+
+.stream-poll.golden .options li.help {
+    color: #ffa;
+    padding: 0;
+    background: 0 0;
+    text-align: center;
+    overflow: hidden;
+    height: 0;
+}
+
+.stream-poll.golden .options li.help span {
+    display: block;
+    padding: 10px;
+}
+
+.stream-poll.golden .options li .procent {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+}
+
+.stream-poll.golden .options li .number {
+    padding: 5px 10px;
+    border-radius: 5px;
+    background: rgba(0, 0, 0, 0.3);
+    box-shadow: 0 0 10px #000 inset;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    position: absolute;
+    top: 5px;
+    left: 10px;
+}
+
+.stream-poll.golden .options li .bar {
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 5px;
+    height: 5px;
+    margin-top: 5px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.stream-poll.golden .options li .bar .bar-inner {
+    background: #fff;
+    height: 100%;
+    width: 0;
+    transition: width 1s;
+    position: relative;
+    border-radius: 5px;
+}
+
+.stream-poll.golden .options li .text {
+    line-height: 1.3;
+}
+
+.stream-poll.golden.active,
+.stream-poll.golden.finished {
+    opacity: 1;
+}
+
+.stream-poll.golden .border {
+    border-width: 10px;
+    -webkit-border-image: url(/overlays/img/border-decorative.png) 10 repeat;
+    border-image: url(/overlays/img/border-decorative.png) 10 fill repeat;
+}
+
+@font-face {
+    font-family: Alegreya;
+    font-style: normal;
+    font-weight: 400;
+    src: local("Alegreya Regular"), local("Alegreya-Regular"), url(https://fonts.gstatic.com/s/alegreya/v13/4UaBrEBBsBhlBjvfkSLhx60.ttf) format("truetype");
+}
+
+.stream-poll.spikes {
+    font-family: Alegreya, sans-serif;
+    background-image: url(/overlays/img/bg-grunge.jpg);
+    box-shadow: 0 0 50px rgba(0, 0, 0, 0.9);
+    width: 400px;
+    opacity: 0;
+    transition: opacity 1s;
+    padding: 14px;
+}
+
+.stream-poll.spikes.topLeft {
+    top: 20px;
+    left: 20px;
+}
+
+.stream-poll.spikes.topCenter {
+    top: 20px;
+    left: 50%;
+    transform: translate(-50%, 0);
+}
+
+.stream-poll.spikes.topRight {
+    top: 20px;
+    right: 20px;
+}
+
+.stream-poll.spikes.middleLeft {
+    top: 50%;
+    transform: translate(0, -50%);
+    left: 20px;
+}
+
+.stream-poll.spikes.middleCenter {
+    top: 50%;
+    transform: translate(-50%, -50%);
+    left: 50%;
+}
+
+.stream-poll.spikes.middleRight {
+    top: 50%;
+    transform: translate(0, -50%);
+    right: 20px;
+}
+
+.stream-poll.spikes.bottomLeft {
+    bottom: 20px;
+    left: 20px;
+}
+
+.stream-poll.spikes.bottomCenter {
+    bottom: 20px;
+    left: 50%;
+    transform: translate(-50%, 0);
+}
+
+.stream-poll.spikes.bottomRight {
+    bottom: 20px;
+    right: 20px;
+}
+
+.stream-poll.spikes .metaInfo {
+    padding: 0 10px;
+}
+
+.stream-poll.spikes .duration,
+.stream-poll.spikes .total {
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    background: rgba(0, 0, 0, 0.4);
+    background: linear-gradient(bottom, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.2));
+    background: -ms-linear-gradient( bottom, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.2));
+    background: -moz-linear-gradient( center bottom, rgba(0, 0, 0, 0.1) 0, rgba(0, 0, 0, 0.2) 100%);
+    background: -webkit-gradient( linear, left bottom, left top, color-stop(0, rgba(0, 0, 0, 0.1)), color-stop(1, rgba(0, 0, 0, 0.2)));
+    float: left;
+    width: 49%;
+    text-align: center;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+}
+
+.stream-poll.spikes .duration strong,
+.stream-poll.spikes .total strong {
+    color: #ffa;
+    display: block;
+}
+
+.stream-poll.spikes .total {
+    margin-right: 2%;
+}
+
+.stream-poll.spikes.finished .options li,
+.stream-poll.spikes.removing .options li {
+    opacity: 0.3;
+    transition: all 1s;
+}
+
+.stream-poll.spikes.finished .options li.highest,
+.stream-poll.spikes.removing .options li.highest {
+    color: #ffa;
+    opacity: 1;
+}
+
+.stream-poll.spikes.finished .options li.highest .bar .bar-inner,
+.stream-poll.spikes.removing .options li.highest .bar .bar-inner {
+    background: #ffa;
+}
+
+.stream-poll.spikes.finished .options li.help,
+.stream-poll.spikes.removing .options li.help {
+    height: 0;
+}
+
+.stream-poll.spikes.finished .metaInfo,
+.stream-poll.spikes.removing .metaInfo {
+    opacity: 0.3;
+}
+
+.stream-poll.spikes.active .options li.help {
+    height: 35px;
+}
+
+.stream-poll.spikes .options li {
+    position: relative;
+    border: 1px;
+    padding: 10px;
+    color: #fff;
+    text-overflow: ellipsis;
+    padding-right: 55px;
+    padding-left: 55px;
+    font-size: 15px;
+}
+
+.stream-poll.spikes .options li.question {
+    padding: 10px 20px;
+    white-space: normal;
+    background: #000;
+    clear: both;
+    line-height: 1.3;
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.1) inset, 0 0 1px rgba(0, 0, 0, 0.7);
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid #141414;
+    font-size: 20px;
+    position: relative;
+}
+
+.stream-poll.spikes .options li.help {
+    color: #ffa;
+    padding: 0;
+    background: 0 0;
+    text-align: center;
+    overflow: hidden;
+    height: 0;
+}
+
+.stream-poll.spikes .options li.help span {
+    display: block;
+    padding: 10px;
+}
+
+.stream-poll.spikes .options li .procent {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+}
+
+.stream-poll.spikes .options li .number {
+    padding: 5px 10px;
+    border-radius: 5px;
+    background: rgba(0, 0, 0, 0.3);
+    box-shadow: 0 0 10px #000 inset;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    position: absolute;
+    top: 5px;
+    left: 10px;
+}
+
+.stream-poll.spikes .options li .bar {
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 5px;
+    height: 5px;
+    margin-top: 5px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.stream-poll.spikes .options li .bar .bar-inner {
+    background: #fff;
+    height: 100%;
+    width: 0;
+    transition: width 1s;
+    position: relative;
+    border-radius: 5px;
+}
+
+.stream-poll.spikes .options li .text {
+    line-height: 1.3;
+}
+
+.stream-poll.spikes.active,
+.stream-poll.spikes.finished {
+    opacity: 1;
+}
+
+.stream-poll.spikes .border {
+    border-width: 14px;
+    -webkit-border-image: url(/overlays/img/border-spikes.png) 14 repeat;
+    border-image: url(/overlays/img/border-spikes.png) 14 repeat;
+}
+
+.stream-poll.goldSwivel {
+    font-family: belwe_bd_btbold;
+    background-image: url(/overlays/img/bg-grunge.jpg);
+    box-shadow: 0 0 50px rgba(0, 0, 0, 0.9);
+    width: 400px;
+    opacity: 0;
+    transition: opacity 1s;
+    padding: 5px 10px 10px 10px;
+}
+
+.stream-poll.goldSwivel.topLeft {
+    top: 20px;
+    left: 20px;
+}
+
+.stream-poll.goldSwivel.topCenter {
+    top: 20px;
+    left: 50%;
+    transform: translate(-50%, 0);
+}
+
+.stream-poll.goldSwivel.topRight {
+    top: 20px;
+    right: 20px;
+}
+
+.stream-poll.goldSwivel.middleLeft {
+    top: 50%;
+    transform: translate(0, -50%);
+    left: 20px;
+}
+
+.stream-poll.goldSwivel.middleCenter {
+    top: 50%;
+    transform: translate(-50%, -50%);
+    left: 50%;
+}
+
+.stream-poll.goldSwivel.middleRight {
+    top: 50%;
+    transform: translate(0, -50%);
+    right: 20px;
+}
+
+.stream-poll.goldSwivel.bottomLeft {
+    bottom: 20px;
+    left: 20px;
+}
+
+.stream-poll.goldSwivel.bottomCenter {
+    bottom: 20px;
+    left: 50%;
+    transform: translate(-50%, 0);
+}
+
+.stream-poll.goldSwivel.bottomRight {
+    bottom: 20px;
+    right: 20px;
+}
+
+.stream-poll.goldSwivel .metaInfo {
+    padding: 0 10px;
+}
+
+.stream-poll.goldSwivel .duration,
+.stream-poll.goldSwivel .total {
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    background: rgba(0, 0, 0, 0.4);
+    background: linear-gradient(bottom, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.2));
+    background: -ms-linear-gradient( bottom, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.2));
+    background: -moz-linear-gradient( center bottom, rgba(0, 0, 0, 0.1) 0, rgba(0, 0, 0, 0.2) 100%);
+    background: -webkit-gradient( linear, left bottom, left top, color-stop(0, rgba(0, 0, 0, 0.1)), color-stop(1, rgba(0, 0, 0, 0.2)));
+    float: left;
+    width: 49%;
+    text-align: center;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+}
+
+.stream-poll.goldSwivel .duration strong,
+.stream-poll.goldSwivel .total strong {
+    color: #ffa;
+    display: block;
+}
+
+.stream-poll.goldSwivel .total {
+    margin-right: 2%;
+}
+
+.stream-poll.goldSwivel.finished .options li,
+.stream-poll.goldSwivel.removing .options li {
+    opacity: 0.3;
+    transition: all 1s;
+}
+
+.stream-poll.goldSwivel.finished .options li.highest,
+.stream-poll.goldSwivel.removing .options li.highest {
+    color: #ffa;
+    opacity: 1;
+}
+
+.stream-poll.goldSwivel.finished .options li.highest .bar .bar-inner,
+.stream-poll.goldSwivel.removing .options li.highest .bar .bar-inner {
+    background: #ffa;
+}
+
+.stream-poll.goldSwivel.finished .options li.help,
+.stream-poll.goldSwivel.removing .options li.help {
+    height: 0;
+}
+
+.stream-poll.goldSwivel.finished .metaInfo,
+.stream-poll.goldSwivel.removing .metaInfo {
+    opacity: 0.3;
+}
+
+.stream-poll.goldSwivel.active .options li.help {
+    height: 35px;
+}
+
+.stream-poll.goldSwivel .options li {
+    position: relative;
+    border: 1px;
+    padding: 10px;
+    color: #fff;
+    text-overflow: ellipsis;
+    padding-right: 55px;
+    padding-left: 55px;
+    font-size: 15px;
+}
+
+.stream-poll.goldSwivel .options li.question {
+    padding: 10px 20px;
+    white-space: normal;
+    background: #000;
+    clear: both;
+    line-height: 1.3;
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.1) inset, 0 0 1px rgba(0, 0, 0, 0.7);
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid #141414;
+    font-size: 20px;
+    position: relative;
+}
+
+.stream-poll.goldSwivel .options li.help {
+    color: #ffa;
+    padding: 0;
+    background: 0 0;
+    text-align: center;
+    overflow: hidden;
+    height: 0;
+}
+
+.stream-poll.goldSwivel .options li.help span {
+    display: block;
+    padding: 10px;
+}
+
+.stream-poll.goldSwivel .options li .procent {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+}
+
+.stream-poll.goldSwivel .options li .number {
+    padding: 5px 10px;
+    border-radius: 5px;
+    background: rgba(0, 0, 0, 0.3);
+    box-shadow: 0 0 10px #000 inset;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    position: absolute;
+    top: 5px;
+    left: 10px;
+}
+
+.stream-poll.goldSwivel .options li .bar {
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 5px;
+    height: 5px;
+    margin-top: 5px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.stream-poll.goldSwivel .options li .bar .bar-inner {
+    background: #fff;
+    height: 100%;
+    width: 0;
+    transition: width 1s;
+    position: relative;
+    border-radius: 5px;
+}
+
+.stream-poll.goldSwivel .options li .text {
+    line-height: 1.3;
+}
+
+.stream-poll.goldSwivel.active,
+.stream-poll.goldSwivel.finished {
+    opacity: 1;
+}
+
+.stream-poll.goldSwivel .border {
+    border-width: 28px 16px 21px 18px;
+    -webkit-border-image: url(/overlays/img/bg-gold-swirl.png) 28 16 21 18 stretch;
+    border-image: url(/overlays/img/bg-gold-swirl.png) 28 16 21 18 fill stretch;
+}
+
+.stream-poll.ancient {
+    font-family: Alegreya, sans-serif;
+    background-image: url(/overlays/img/bg-grunge.jpg);
+    box-shadow: 0 0 50px rgba(0, 0, 0, 0.9);
+    width: 400px;
+    opacity: 0;
+    transition: opacity 1s;
+    padding: 7px 9px 7px;
+}
+
+.stream-poll.ancient.topLeft {
+    top: 20px;
+    left: 20px;
+}
+
+.stream-poll.ancient.topCenter {
+    top: 20px;
+    left: 50%;
+    transform: translate(-50%, 0);
+}
+
+.stream-poll.ancient.topRight {
+    top: 20px;
+    right: 20px;
+}
+
+.stream-poll.ancient.middleLeft {
+    top: 50%;
+    transform: translate(0, -50%);
+    left: 20px;
+}
+
+.stream-poll.ancient.middleCenter {
+    top: 50%;
+    transform: translate(-50%, -50%);
+    left: 50%;
+}
+
+.stream-poll.ancient.middleRight {
+    top: 50%;
+    transform: translate(0, -50%);
+    right: 20px;
+}
+
+.stream-poll.ancient.bottomLeft {
+    bottom: 20px;
+    left: 20px;
+}
+
+.stream-poll.ancient.bottomCenter {
+    bottom: 20px;
+    left: 50%;
+    transform: translate(-50%, 0);
+}
+
+.stream-poll.ancient.bottomRight {
+    bottom: 20px;
+    right: 20px;
+}
+
+.stream-poll.ancient .metaInfo {
+    padding: 0 10px;
+}
+
+.stream-poll.ancient .duration,
+.stream-poll.ancient .total {
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    background: rgba(0, 0, 0, 0.4);
+    background: linear-gradient(bottom, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.2));
+    background: -ms-linear-gradient( bottom, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.2));
+    background: -moz-linear-gradient( center bottom, rgba(0, 0, 0, 0.1) 0, rgba(0, 0, 0, 0.2) 100%);
+    background: -webkit-gradient( linear, left bottom, left top, color-stop(0, rgba(0, 0, 0, 0.1)), color-stop(1, rgba(0, 0, 0, 0.2)));
+    float: left;
+    width: 49%;
+    text-align: center;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+}
+
+.stream-poll.ancient .duration strong,
+.stream-poll.ancient .total strong {
+    color: #ffa;
+    display: block;
+}
+
+.stream-poll.ancient .total {
+    margin-right: 2%;
+}
+
+.stream-poll.ancient.finished .options li,
+.stream-poll.ancient.removing .options li {
+    opacity: 0.3;
+    transition: all 1s;
+}
+
+.stream-poll.ancient.finished .options li.highest,
+.stream-poll.ancient.removing .options li.highest {
+    color: #ffa;
+    opacity: 1;
+}
+
+.stream-poll.ancient.finished .options li.highest .bar .bar-inner,
+.stream-poll.ancient.removing .options li.highest .bar .bar-inner {
+    background: #ffa;
+}
+
+.stream-poll.ancient.finished .options li.help,
+.stream-poll.ancient.removing .options li.help {
+    height: 0;
+}
+
+.stream-poll.ancient.finished .metaInfo,
+.stream-poll.ancient.removing .metaInfo {
+    opacity: 0.3;
+}
+
+.stream-poll.ancient.active .options li.help {
+    height: 35px;
+}
+
+.stream-poll.ancient .options li {
+    position: relative;
+    border: 1px;
+    padding: 10px;
+    color: #fff;
+    text-overflow: ellipsis;
+    padding-right: 55px;
+    padding-left: 55px;
+    font-size: 15px;
+}
+
+.stream-poll.ancient .options li.question {
+    padding: 10px 20px;
+    white-space: normal;
+    background: #000;
+    clear: both;
+    line-height: 1.3;
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.1) inset, 0 0 1px rgba(0, 0, 0, 0.7);
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid #141414;
+    font-size: 20px;
+    position: relative;
+}
+
+.stream-poll.ancient .options li.help {
+    color: #ffa;
+    padding: 0;
+    background: 0 0;
+    text-align: center;
+    overflow: hidden;
+    height: 0;
+}
+
+.stream-poll.ancient .options li.help span {
+    display: block;
+    padding: 10px;
+}
+
+.stream-poll.ancient .options li .procent {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+}
+
+.stream-poll.ancient .options li .number {
+    padding: 5px 10px;
+    border-radius: 5px;
+    background: rgba(0, 0, 0, 0.3);
+    box-shadow: 0 0 10px #000 inset;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    position: absolute;
+    top: 5px;
+    left: 10px;
+}
+
+.stream-poll.ancient .options li .bar {
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 5px;
+    height: 5px;
+    margin-top: 5px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.stream-poll.ancient .options li .bar .bar-inner {
+    background: #fff;
+    height: 100%;
+    width: 0;
+    transition: width 1s;
+    position: relative;
+    border-radius: 5px;
+}
+
+.stream-poll.ancient .options li .text {
+    line-height: 1.3;
+}
+
+.stream-poll.ancient.active,
+.stream-poll.ancient.finished {
+    opacity: 1;
+}
+
+.stream-poll.ancient .border {
+    border-width: 29px 29px 28px;
+    -webkit-border-image: url(/overlays/img/bg-ancient.png) 29 29 28 stretch;
+    border-image: url(/overlays/img/bg-ancient.png) 29 29 28 fill stretch;
+}
+
+@font-face {
+    font-family: "Carter One";
+    font-style: normal;
+    font-weight: 400;
+    src: local("Carter One"), local("CarterOne"), url(https://fonts.gstatic.com/s/carterone/v11/q5uCsoe5IOB2-pXv9UcNExN8gQ.ttf) format("truetype");
+}
+
+.stonehearth {
+    width: 350px;
+    background: 0 0;
+    box-shadow: 0 0 0 rgba(0, 0, 0, 0.9);
+    opacity: 0;
+    transition: opacity 1s;
+    border-style: solid;
+    border-width: 15px;
+    border-image: url(/overlays/img/themes/stonehearth/bg.png) 15 fill repeat;
+    font-family: "Carter One";
+    text-shadow: 0 0 1px #000, 0 0 1px #000, 0 0 1px #000, 0 0 1px #000, 2px 2px 1px #000;
+}
+
+.stonehearth.topLeft {
+    margin-left: 20px;
+    margin-top: 20px;
+}
+
+.stonehearth.topCenter {
+    margin-top: 20px;
+}
+
+.stonehearth.topRight {
+    margin-right: 30px;
+    margin-top: 20px;
+}
+
+.stonehearth.middleLeft {
+    margin-left: 20px;
+}
+
+.stonehearth.middleRight {
+    margin-right: 20px;
+}
+
+.stonehearth.bottomLeft {
+    margin-left: 20px;
+    margin-bottom: 20px;
+}
+
+.stonehearth.bottomCenter {
+    margin-bottom: 20px;
+}
+
+.stonehearth.bottomRight {
+    margin-right: 20px;
+    margin-bottom: 20px;
+}
+
+.stonehearth .metaInfo {
+    padding: 0 10px;
+    border-style: solid;
+    border-width: 10px;
+    border-image: url(/overlays/img/themes/stonehearth/meta.png) 10 fill repeat;
+    overflow: hidden;
+    margin-bottom: 5px;
+    margin-top: 10px;
+}
+
+.stonehearth .duration,
+.stonehearth .total {
+    float: left;
+    width: 49%;
+    text-align: center;
+    margin: 5px 0;
+    border-radius: 5px;
+}
+
+.stonehearth .duration strong,
+.stonehearth .total strong {
+    color: #ffa;
+}
+
+.stonehearth .duration label,
+.stonehearth .total label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.stonehearth .total {
+    margin-right: 2%;
+}
+
+.stonehearth.finished .options li,
+.stonehearth.removing .options li {
+    opacity: 0.3;
+    transition: all 1s;
+}
+
+.stonehearth.finished .options li.highest,
+.stonehearth.removing .options li.highest {
+    color: #ffa;
+    opacity: 1;
+}
+
+.stonehearth.finished .options li.highest .bar .bar-inner,
+.stonehearth.removing .options li.highest .bar .bar-inner {
+    background: #ffa;
+}
+
+.stonehearth.finished .options li.help,
+.stonehearth.removing .options li.help {
+    height: 0;
+}
+
+.stonehearth.finished .metaInfo,
+.stonehearth.removing .metaInfo {
+    opacity: 0.3;
+}
+
+.stonehearth.active .options li.help {
+    height: 35px;
+}
+
+.stonehearth .options li {
+    position: relative;
+    border: 1px;
+    padding: 10px;
+    color: #fff;
+    white-space: normal;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding-right: 55px;
+    padding-left: 55px;
+    font-size: 15px;
+}
+
+.stonehearth .options li.question {
+    padding: 0 0 4px;
+    white-space: normal;
+    clear: both;
+    line-height: 1.3;
+    margin: -6px -6px 0;
+    border-style: solid;
+    border-width: 15px;
+    border-image: url(/overlays/img/themes/stonehearth/header.png) 15 fill repeat;
+    color: #fbbe0d;
+    font-size: 20px;
+    position: relative;
+}
+
+.stonehearth .options li.help {
+    color: #ffa;
+    padding: 0;
+    background: 0 0;
+    text-align: center;
+    overflow: hidden;
+    white-space: nowrap;
+    height: 0;
+}
+
+.stonehearth .options li.help span {
+    display: block;
+    padding: 10px;
+}
+
+.stonehearth .options li .procent {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+}
+
+.stonehearth .options li .number {
+    padding: 5px 10px;
+    border-radius: 5px;
+    background: rgba(0, 0, 0, 0.3);
+    box-shadow: 0 0 10px #000 inset;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    position: absolute;
+    top: 5px;
+    left: 10px;
+}
+
+.stonehearth .options li .bar {
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 5px;
+    height: 5px;
+    margin-left: 0;
+    margin-top: 5px;
+    margin-right: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.stonehearth .options li .bar .bar-inner {
+    background: #fff;
+    height: 100%;
+    width: 0;
+    transition: width 1s;
+    position: relative;
+    border-radius: 5px;
+}
+
+.stonehearth .options li .text {
+    line-height: 1.3;
+}
+
+.stonehearth.active,
+.stonehearth.finished {
+    opacity: 1;
+}
+
+@font-face {
+    font-family: visitor1;
+    src: url(/overlays/fonts/visitor1.ttf);
+}
+
+.rocketleague {
+    width: 400px;
+    border-style: solid;
+    border-width: 27px;
+    border-image: url(/overlays/img/themes/rocketleague/bg.png) 27 fill stretch;
+    opacity: 0;
+    padding: 0;
+    transition: opacity 1s;
+}
+
+.rocketleague .inner {
+    margin: -20px;
+}
+
+.rocketleague.topLeft {
+    margin-left: 20px;
+    margin-top: 20px;
+}
+
+.rocketleague.topCenter {
+    margin-top: 20px;
+}
+
+.rocketleague.topRight {
+    margin-right: 30px;
+    margin-top: 20px;
+}
+
+.rocketleague.middleLeft {
+    margin-left: 20px;
+}
+
+.rocketleague.middleRight {
+    margin-right: 20px;
+}
+
+.rocketleague.bottomLeft {
+    margin-left: 20px;
+    margin-bottom: 20px;
+}
+
+.rocketleague.bottomCenter {
+    margin-bottom: 20px;
+}
+
+.rocketleague.bottomRight {
+    margin-right: 20px;
+    margin-bottom: 20px;
+}
+
+.rocketleague .metaInfo {
+    padding: 0 10px;
+}
+
+.rocketleague .duration,
+.rocketleague .total {
+    float: left;
+    width: 49%;
+    text-align: center;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+}
+
+.rocketleague .duration strong,
+.rocketleague .total strong {
+    color: #ffa;
+}
+
+.rocketleague .total {
+    margin-right: 2%;
+}
+
+.rocketleague.finished .options li,
+.rocketleague.removing .options li {
+    opacity: 0.3;
+    transition: all 1s;
+}
+
+.rocketleague.finished .options li.highest,
+.rocketleague.removing .options li.highest {
+    color: #ffa;
+    opacity: 1;
+}
+
+.rocketleague.finished .options li.highest .bar .bar-inner,
+.rocketleague.removing .options li.highest .bar .bar-inner {
+    background: #ffa;
+}
+
+.rocketleague.finished .options li.help,
+.rocketleague.removing .options li.help {
+    height: 0;
+}
+
+.rocketleague.finished .metaInfo,
+.rocketleague.removing .metaInfo {
+    opacity: 0.3;
+}
+
+.rocketleague.active .options li.help {
+    height: 35px;
+}
+
+.rocketleague .options li {
+    position: relative;
+    border: 1px;
+    padding: 10px;
+    color: #fff;
+    text-overflow: ellipsis;
+    padding-right: 55px;
+    padding-left: 55px;
+    font-size: 20px;
+}
+
+.rocketleague .options li.question {
+    padding: 10px;
+    font-size: 20px;
+    white-space: normal;
+    clear: both;
+    line-height: 1.3;
+    background: url(/overlays/img/themes/rocketleague/header.png);
+    background-size: 100% 100%;
+    color: #fff;
+    font-size: 25px;
+    position: relative;
+    text-transform: uppercase;
+}
+
+.rocketleague .options li.help {
+    color: #ffa;
+    padding: 0;
+    background: 0 0;
+    text-align: center;
+    overflow: hidden;
+    height: 0;
+}
+
+.rocketleague .options li.help span {
+    display: block;
+    padding: 10px;
+}
+
+.rocketleague .options li .procent {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+}
+
+.rocketleague .options li .number {
+    padding: 5px 10px;
+    border-radius: 5px;
+    background: rgba(0, 0, 0, 0.3);
+    box-shadow: 0 0 10px #000 inset;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    position: absolute;
+    top: 5px;
+    left: 10px;
+}
+
+.rocketleague .options li .bar {
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 5px;
+    height: 5px;
+    margin-top: 5px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.rocketleague .options li .bar .bar-inner {
+    background: #fff;
+    height: 100%;
+    width: 0;
+    transition: width 1s;
+    position: relative;
+    border-radius: 5px;
+}
+
+.rocketleague .options li .text {
+    line-height: 1.3;
+}
+
+.rocketleague.active,
+.rocketleague.finished {
+    opacity: 1;
+}
+
+@font-face {
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 400;
+    src: local("Roboto"), local("Roboto-Regular"), url(https://fonts.gstatic.com/s/roboto/v20/KFOmCnqEu92Fr1Mu4mxP.ttf) format("truetype");
+}
+
+.deadbydaylight {
+    width: 589px;
+    background: url(/overlays/img/themes/deadbydaylight/bg.png);
+    background-size: 100% 100%;
+    opacity: 0;
+    font-family: Roboto;
+    padding: 120px 107px 140px 73px;
+    transition: opacity 1s;
+}
+
+.deadbydaylight.topLeft {
+    margin-left: -43px;
+    margin-top: -90px;
+}
+
+.deadbydaylight.topCenter {
+    margin-top: -90px;
+}
+
+.deadbydaylight.topRight {
+    margin-right: -77px;
+    margin-top: -90px;
+}
+
+.deadbydaylight.middleLeft {
+    margin-left: -43px;
+}
+
+.deadbydaylight.middleRight {
+    margin-right: -77px;
+}
+
+.deadbydaylight.bottomLeft {
+    margin-left: -43px;
+    margin-bottom: -110px;
+}
+
+.deadbydaylight.bottomCenter {
+    margin-bottom: -110px;
+}
+
+.deadbydaylight.bottomRight {
+    margin-right: -77px;
+    margin-bottom: -110px;
+}
+
+.deadbydaylight .metaInfo {
+    padding: 0 10px;
+}
+
+.deadbydaylight .duration,
+.deadbydaylight .total {
+    float: left;
+    width: 49%;
+    text-align: center;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+}
+
+.deadbydaylight .duration strong,
+.deadbydaylight .total strong {
+    color: #ffa;
+}
+
+.deadbydaylight .total {
+    margin-right: 2%;
+}
+
+.deadbydaylight.finished .options li,
+.deadbydaylight.removing .options li {
+    opacity: 0.3;
+    transition: all 1s;
+}
+
+.deadbydaylight.finished .options li.highest,
+.deadbydaylight.removing .options li.highest {
+    color: #ffa;
+    opacity: 1;
+}
+
+.deadbydaylight.finished .options li.highest .bar .bar-inner,
+.deadbydaylight.removing .options li.highest .bar .bar-inner {
+    background: #ffa;
+}
+
+.deadbydaylight.finished .options li.help,
+.deadbydaylight.removing .options li.help {
+    height: 0;
+}
+
+.deadbydaylight.finished .metaInfo,
+.deadbydaylight.removing .metaInfo {
+    opacity: 0.3;
+}
+
+.deadbydaylight.active .options li.help {
+    height: 35px;
+}
+
+.deadbydaylight .options li {
+    position: relative;
+    border: 1px;
+    padding: 10px;
+    color: #fff;
+    text-overflow: ellipsis;
+    padding-right: 55px;
+    padding-left: 55px;
+    font-size: 20px;
+    text-shadow: 0 0 1px #000, 0 0 1px #000, 0 0 1px #000, 0 0 1px #000, 2px 2px 1px #000;
+}
+
+.deadbydaylight .options li.question {
+    padding: 5px 20px;
+    font-size: 20px;
+    white-space: normal;
+    clear: both;
+    line-height: 1.3;
+    font-size: 28px;
+    position: relative;
+    font-weight: 900;
+    font-family: Abel;
+}
+
+.deadbydaylight .options li.help {
+    color: #516274;
+    padding: 0 0 10px;
+    background: 0 0;
+    text-align: center;
+    overflow: hidden;
+    height: 0;
+}
+
+.deadbydaylight .options li.help span {
+    display: block;
+    padding: 10px;
+}
+
+.deadbydaylight .options li .procent {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+}
+
+.deadbydaylight .options li .number {
+    padding: 5px 10px;
+    border-radius: 5px;
+    background: rgba(0, 0, 0, 0.3);
+    box-shadow: 0 0 10px #000 inset;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    position: absolute;
+    top: 5px;
+    left: 10px;
+}
+
+.deadbydaylight .options li .bar {
+    background: rgba(255, 255, 255, 0.04);
+    height: 5px;
+    margin-top: 5px;
+}
+
+.deadbydaylight .options li .bar .bar-inner {
+    background: #fff;
+    height: 100%;
+    width: 0;
+    transition: width 1s;
+    position: relative;
+    border-radius: 5px;
+}
+
+.deadbydaylight .options li .text {
+    line-height: 1.3;
+}
+
+.deadbydaylight.active,
+.deadbydaylight.finished {
+    opacity: 1;
+}
+
+@font-face {
+    font-family: stardew_valleyregular;
+    src: url(/overlays/fonts/stardew_valley-webfont.woff2) format("woff2"), url(/overlays/fonts/stardew_valley-webfont.woff) format("woff");
+    font-weight: 400;
+    font-style: normal;
+}
+
+.stardewvalley {
+    width: 400px;
+    background: 0 0;
+    box-shadow: 0 0 0 rgba(0, 0, 0, 0.9);
+    opacity: 0;
+    transition: opacity 1s;
+    border-style: solid;
+    border-width: 30px;
+    border-image: url(/overlays/img/themes/stardew/bg.png) 30 fill stretch;
+    font-family: stardew_valleyregular;
+    text-shadow: 0 0 1px #000, 0 0 1px #00, 0 0 1px #000, 0 0 1px #000, 2px 2px 1px #000;
+    color: #56160c;
+}
+
+.stardewvalley.topLeft {
+    margin-left: 20px;
+    margin-top: 20px;
+}
+
+.stardewvalley.topCenter {
+    margin-top: 20px;
+}
+
+.stardewvalley.topRight {
+    margin-right: 30px;
+    margin-top: 20px;
+}
+
+.stardewvalley.middleLeft {
+    margin-left: 20px;
+}
+
+.stardewvalley.middleRight {
+    margin-right: 20px;
+}
+
+.stardewvalley.bottomLeft {
+    margin-left: 20px;
+    margin-bottom: 20px;
+}
+
+.stardewvalley.bottomCenter {
+    margin-bottom: 20px;
+}
+
+.stardewvalley.bottomRight {
+    margin-right: 20px;
+    margin-bottom: 20px;
+}
+
+.stardewvalley .metaInfo {
+    padding: 0 10px;
+    overflow: hidden;
+    margin-bottom: 5px;
+    font-size: 30px;
+    white-space: normal;
+    clear: both;
+    line-height: 0.8;
+    margin: -2px -7px 0;
+    background: url(/overlays/img/themes/stardew/bottom.png) top left no-repeat;
+    background-size: 100% auto;
+    padding: 20px 15px 5px;
+    color: #fff;
+    font-size: 32px;
+    position: relative;
+}
+
+.stardewvalley .duration,
+.stardewvalley .total {
+    float: left;
+    width: 49%;
+    text-align: center;
+    margin: 5px 0;
+    border-radius: 5px;
+}
+
+.stardewvalley .duration label,
+.stardewvalley .total label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.stardewvalley .total {
+    margin-right: 2%;
+}
+
+.stardewvalley.finished .options li,
+.stardewvalley.removing .options li {
+    transition: all 1s;
+}
+
+.stardewvalley.finished .options li .bar,
+.stardewvalley.finished .options li .number,
+.stardewvalley.finished .options li .procent,
+.stardewvalley.finished .options li .text,
+.stardewvalley.removing .options li .bar,
+.stardewvalley.removing .options li .number,
+.stardewvalley.removing .options li .procent,
+.stardewvalley.removing .options li .text {
+    opacity: 0.2;
+}
+
+.stardewvalley.finished .options li.highest,
+.stardewvalley.removing .options li.highest {
+    opacity: 1;
+}
+
+.stardewvalley.finished .options li.highest .bar,
+.stardewvalley.finished .options li.highest .number,
+.stardewvalley.finished .options li.highest .procent,
+.stardewvalley.finished .options li.highest .text,
+.stardewvalley.removing .options li.highest .bar,
+.stardewvalley.removing .options li.highest .number,
+.stardewvalley.removing .options li.highest .procent,
+.stardewvalley.removing .options li.highest .text {
+    opacity: 1;
+}
+
+.stardewvalley.finished .options li.help,
+.stardewvalley.removing .options li.help {
+    height: 0;
+}
+
+.stardewvalley.active .options li.help {
+    height: 70px;
+}
+
+.stardewvalley .credits {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    font-size: 40px;
+    color: #fff;
+    height: 100px;
+    margin-top: 20px;
+    text-shadow: 0 0 1px #000, 0 0 1px #000, 0 0 1px #000, 0 0 1px #000, 2px 2px 1px #000;
+}
+
+.stardewvalley .options {
+    padding-bottom: 10px;
+}
+
+.stardewvalley .options li {
+    position: relative;
+    border: 1px;
+    padding: 10px;
+    white-space: normal;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding-right: 55px;
+    padding-left: 55px;
+    font-size: 28px;
+}
+
+.stardewvalley .options li.question {
+    white-space: normal;
+    clear: both;
+    line-height: 1.3;
+    margin: -2px -7px 0;
+    background: url(/overlays/img/themes/stardew/header.png) bottom left no-repeat;
+    background-size: 100% auto;
+    padding: 15px 15px 33px;
+    color: #fff;
+    font-size: 32px;
+    position: relative;
+    max-height: 150px;
+}
+
+.stardewvalley .options li.help {
+    color: rgba(0, 0, 0, 0.5);
+    padding: 0;
+    background: 0 0;
+    text-align: center;
+    overflow: hidden;
+    height: 0;
+}
+
+.stardewvalley .options li.help span {
+    display: block;
+    padding: 10px;
+}
+
+.stardewvalley .options li .procent {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+}
+
+.stardewvalley .options li .number {
+    padding: 5px 10px;
+    border-radius: 5px;
+    background: rgba(0, 0, 0, 0.1);
+    position: absolute;
+    top: 5px;
+    left: 10px;
+}
+
+.stardewvalley .options li .bar {
+    background: rgba(0, 0, 0, 0.1);
+    height: 5px;
+    margin-left: 0;
+    margin-top: 5px;
+    margin-right: 10px;
+}
+
+.stardewvalley .options li .bar .bar-inner {
+    background: #56160c;
+    height: 100%;
+    width: 0;
+    transition: width 1s;
+    position: relative;
+    border-radius: 5px;
+}
+
+.stardewvalley .options li .text {
+    line-height: 1;
+}
+
+.stardewvalley.active,
+.stardewvalley.finished {
+    opacity: 1;
+}
+
+.elite {
+    box-shadow: 0 0 50px rgba(0, 0, 0, 0.9);
+    width: 400px;
+    opacity: 0;
+    transition: opacity 1s;
+    box-shadow: 0 0 0 transparent;
+}
+
+.elite .metaInfo {
+    padding: 0 10px;
+}
+
+.elite .duration,
+.elite .total {
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    background: rgba(0, 0, 0, 0.4);
+    background: linear-gradient(bottom, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.2));
+    background: -ms-linear-gradient( bottom, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.2));
+    background: -moz-linear-gradient( center bottom, rgba(0, 0, 0, 0.1) 0, rgba(0, 0, 0, 0.2) 100%);
+    background: -webkit-gradient( linear, left bottom, left top, color-stop(0, rgba(0, 0, 0, 0.1)), color-stop(1, rgba(0, 0, 0, 0.2)));
+    float: left;
+    width: 49%;
+    text-align: center;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+}
+
+.elite .duration strong,
+.elite .total strong {
+    color: #ffa;
+    display: block;
+}
+
+.elite .total {
+    margin-right: 2%;
+}
+
+.elite.finished .options li,
+.elite.removing .options li {
+    opacity: 0.3;
+    transition: all 1s;
+}
+
+.elite.finished .options li.highest,
+.elite.removing .options li.highest {
+    color: #ffa;
+    opacity: 1;
+}
+
+.elite.finished .options li.highest .bar .bar-inner,
+.elite.removing .options li.highest .bar .bar-inner {
+    background: #ffa;
+}
+
+.elite.finished .options li.help,
+.elite.removing .options li.help {
+    height: 0;
+}
+
+.elite.finished .metaInfo,
+.elite.removing .metaInfo {
+    opacity: 0.3;
+}
+
+.elite.active .options li.help {
+    height: 35px;
+}
+
+.elite .options li {
+    position: relative;
+    border: 1px;
+    padding: 10px;
+    color: #fff;
+    text-overflow: ellipsis;
+    padding-right: 55px;
+    padding-left: 55px;
+    font-size: 15px;
+}
+
+.elite .options li.question {
+    padding: 10px 20px;
+    white-space: normal;
+    background: #000;
+    clear: both;
+    line-height: 1.3;
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.1) inset, 0 0 1px rgba(0, 0, 0, 0.7);
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid #141414;
+    font-size: 20px;
+    position: relative;
+}
+
+.elite .options li.help {
+    color: #ffa;
+    padding: 0;
+    background: 0 0;
+    text-align: center;
+    overflow: hidden;
+    height: 0;
+}
+
+.elite .options li.help span {
+    display: block;
+    padding: 10px;
+}
+
+.elite .options li .procent {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+}
+
+.elite .options li .number {
+    padding: 5px 10px;
+    border-radius: 5px;
+    background: rgba(0, 0, 0, 0.3);
+    box-shadow: 0 0 10px #000 inset;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    position: absolute;
+    top: 5px;
+    left: 10px;
+}
+
+.elite .options li .bar {
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 5px;
+    height: 5px;
+    margin-top: 5px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.elite .options li .bar .bar-inner {
+    background: #fff;
+    height: 100%;
+    width: 0;
+    transition: width 1s;
+    position: relative;
+    border-radius: 5px;
+}
+
+.elite .options li .text {
+    line-height: 1.3;
+}
+
+.elite.active,
+.elite.finished {
+    opacity: 1;
+}
+
+.elite .inner {
+    background: rgba(0, 0, 0, 0.9);
+    border-top: 2px solid #ff7200;
+    border-bottom: 2px solid #ff7200;
+    font-family: eurostile;
+}
+
+.elite.inOverlay.topLeft {
+    top: 30px;
+    left: 30px;
+}
+
+.elite.inOverlay.topCenter {
+    top: 30px;
+    left: 50%;
+    transform: translate(-50%, 0);
+}
+
+.elite.inOverlay.topRight {
+    top: 30px;
+    right: 30px;
+}
+
+.elite.inOverlay.middleLeft {
+    top: 50%;
+    transform: translate(0, -50%);
+    left: 30px;
+}
+
+.elite.inOverlay.middleCenter {
+    top: 50%;
+    transform: translate(-50%, -50%);
+    left: 50%;
+}
+
+.elite.inOverlay.middleRight {
+    top: 50%;
+    transform: translate(0, -50%);
+    right: 30px;
+}
+
+.elite.inOverlay.bottomLeft {
+    bottom: 30px;
+    left: 30px;
+}
+
+.elite.inOverlay.bottomCenter {
+    bottom: 30px;
+    left: 50%;
+    transform: translate(-50%, 0);
+}
+
+.elite.inOverlay.bottomRight {
+    bottom: 30px;
+    right: 30px;
+}
+
+.elite.inOverlay.topLeft {
+    transform-style: preserve-3d;
+    perspective-origin: bottom left;
+    perspective: 500px;
+    top: 60px;
+}
+
+.elite.inOverlay.topLeft .inner {
+    transform: rotateY(14deg);
+}
+
+.elite.inOverlay.topRight {
+    transform-style: preserve-3d;
+    perspective-origin: bottom right;
+    perspective: 500px;
+    top: 60px;
+}
+
+.elite.inOverlay.topRight .inner {
+    transform: rotateY(-14deg);
+}
+
+.elite * {
+    color: #ff7200 !important;
+}
+
+.elite .question {
+    text-transform: uppercase;
+    font-size: 25px !important;
+    border-bottom: 2px solid #ff7200 !important;
+}
+
+.elite .metaInfo {
+    line-height: 1.5;
+}
+
+.elite .metaInfo * {
+    padding: 0;
+}
+
+.elite .options li .bar .bar-inner {
+    background: #ff7200;
+}
+
+@font-face {
+    font-family: king_arthur_legendregular;
+    src: url(/overlays/fonts/11b9313c156261bdee0bc8b745b34450.woff2) format("woff2"), url(/overlays/fonts/11b9313c156261bdee0bc8b745b34450.woff) format("woff");
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: Ubuntu;
+    font-style: normal;
+    font-weight: 400;
+    src: local("Ubuntu Regular"), local("Ubuntu-Regular"), url(https://fonts.gstatic.com/s/ubuntu/v14/4iCs6KVjbNBYlgoKfw7z.ttf) format("truetype");
+}
+
+.darkestdungeon {
+    width: 350px;
+    background: 0 0;
+    box-shadow: 0 0 0 rgba(0, 0, 0, 0.9);
+    opacity: 0;
+    transition: opacity 1s;
+    border-style: solid;
+    border-width: 24px 29px 22px 31px;
+    border-image: url(/overlays/img/themes/darkestdungeon/bg.png) 24 29 22 31 fill repeat;
+    font-family: Ubuntu;
+}
+
+.darkestdungeon.inOverlay.topLeft {
+    top: 20px;
+    left: 20px;
+}
+
+.darkestdungeon.inOverlay.topCenter {
+    top: 20px;
+    left: 50%;
+    transform: translate(-50%, 0);
+}
+
+.darkestdungeon.inOverlay.topRight {
+    top: 20px;
+    right: 20px;
+}
+
+.darkestdungeon.inOverlay.middleLeft {
+    top: 50%;
+    transform: translate(0, -50%);
+    left: 20px;
+}
+
+.darkestdungeon.inOverlay.middleCenter {
+    top: 50%;
+    transform: translate(-50%, -50%);
+    left: 50%;
+}
+
+.darkestdungeon.inOverlay.middleRight {
+    top: 50%;
+    transform: translate(0, -50%);
+    right: 20px;
+}
+
+.darkestdungeon.inOverlay.bottomLeft {
+    bottom: 20px;
+    left: 20px;
+}
+
+.darkestdungeon.inOverlay.bottomCenter {
+    bottom: 20px;
+    left: 50%;
+    transform: translate(-50%, 0);
+}
+
+.darkestdungeon.inOverlay.bottomRight {
+    bottom: 20px;
+    right: 20px;
+}
+
+.darkestdungeon .metaInfo {
+    padding: 0 10px;
+}
+
+.darkestdungeon .duration,
+.darkestdungeon .total {
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    background: rgba(0, 0, 0, 0.4);
+    background: linear-gradient(bottom, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.2));
+    background: -ms-linear-gradient( bottom, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.2));
+    background: -moz-linear-gradient( center bottom, rgba(0, 0, 0, 0.1) 0, rgba(0, 0, 0, 0.2) 100%);
+    background: -webkit-gradient( linear, left bottom, left top, color-stop(0, rgba(0, 0, 0, 0.1)), color-stop(1, rgba(0, 0, 0, 0.2)));
+    float: left;
+    width: 49%;
+    text-align: center;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+}
+
+.darkestdungeon .duration strong,
+.darkestdungeon .total strong {
+    color: #ffa;
+}
+
+.darkestdungeon .duration label,
+.darkestdungeon .total label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.darkestdungeon .total {
+    margin-right: 2%;
+}
+
+.darkestdungeon.finished .options li,
+.darkestdungeon.removing .options li {
+    opacity: 0.3;
+    transition: all 1s;
+}
+
+.darkestdungeon.finished .options li.highest,
+.darkestdungeon.removing .options li.highest {
+    color: #ffa;
+    opacity: 1;
+}
+
+.darkestdungeon.finished .options li.highest .bar .bar-inner,
+.darkestdungeon.removing .options li.highest .bar .bar-inner {
+    background: #ffa;
+}
+
+.darkestdungeon.finished .options li.help,
+.darkestdungeon.removing .options li.help {
+    height: 0;
+}
+
+.darkestdungeon.finished .metaInfo,
+.darkestdungeon.removing .metaInfo {
+    opacity: 0.3;
+}
+
+.darkestdungeon.active .options li.help {
+    height: 35px;
+}
+
+.darkestdungeon .options li {
+    position: relative;
+    border: 1px;
+    padding: 10px;
+    color: #fff;
+    white-space: normal;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding-right: 55px;
+    padding-left: 55px;
+    font-size: 15px;
+}
+
+.darkestdungeon .options li.question {
+    padding: 10px 20px 0;
+    white-space: normal;
+    color: #c8b46e;
+    clear: both;
+    line-height: 1.1;
+    font-size: 30px;
+    position: relative;
+    font-family: king_arthur_legendregular;
+}
+
+.darkestdungeon .options li.help {
+    color: #939188;
+    padding: 0;
+    background: 0 0;
+    text-align: center;
+    overflow: hidden;
+    font-size: 90%;
+    height: 0;
+}
+
+.darkestdungeon .options li.help span {
+    display: block;
+    padding: 10px;
+}
+
+.darkestdungeon .options li .procent {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+}
+
+.darkestdungeon .options li .number {
+    padding: 5px 10px;
+    border-radius: 5px;
+    background: rgba(0, 0, 0, 0.3);
+    box-shadow: 0 0 10px #000 inset;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    position: absolute;
+    top: 5px;
+    left: 10px;
+}
+
+.darkestdungeon .options li .bar {
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 5px;
+    height: 5px;
+    margin-left: 0;
+    margin-top: 5px;
+    margin-right: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.darkestdungeon .options li .bar .bar-inner {
+    background: #fff;
+    height: 100%;
+    width: 0;
+    transition: width 1s;
+    position: relative;
+    border-radius: 5px;
+}
+
+.darkestdungeon .options li .text {
+    line-height: 1.3;
+}
+
+.darkestdungeon.active,
+.darkestdungeon.finished {
+    opacity: 1;
+}
+
+.finalfantasy {
+    font-family: Ubuntu;
+    width: 350px;
+    background: 0 0;
+    box-shadow: 0 0 0 rgba(0, 0, 0, 0.9);
+    opacity: 0;
+    color: #fff;
+    transition: opacity 1s;
+    border-style: solid;
+    border-width: 78px 27px 27px;
+    border-image: url(/overlays/img/themes/finalfantasy/bg.png) 78 27 27 fill repeat stretch;
+    text-shadow: 0 0 1px #000, 0 0 1px #000, 0 0 1px #000, 0 0 1px #000, 2px 2px 1px #000;
+}
+
+.finalfantasy.topLeft {
+    margin-left: 10px;
+    margin-top: 10px;
+}
+
+.finalfantasy.topCenter {
+    margin-top: 10px;
+}
+
+.finalfantasy.topRight {
+    margin-right: 10px;
+    margin-top: 10px;
+}
+
+.finalfantasy.middleLeft {
+    margin-left: 10px;
+}
+
+.finalfantasy.middleRight {
+    margin-right: 10px;
+}
+
+.finalfantasy.bottomLeft {
+    margin-left: 10px;
+    margin-bottom: 10px;
+}
+
+.finalfantasy.bottomCenter {
+    margin-bottom: 10px;
+}
+
+.finalfantasy.bottomRight {
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+
+.finalfantasy .metaInfo {
+    white-space: nowrap;
+    font-size: 13px;
+    overflow-x: hidden;
+    margin: 10px 0 -10px;
+    border-radius: 5px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.finalfantasy .duration,
+.finalfantasy .total {
+    float: left;
+    width: 49%;
+    text-align: center;
+    padding: 5px 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+}
+
+.finalfantasy .duration label,
+.finalfantasy .total label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.finalfantasy .total {
+    margin-right: 2%;
+}
+
+.finalfantasy.finished .options li,
+.finalfantasy.removing .options li {
+    opacity: 0.3;
+    transition: all 1s;
+}
+
+.finalfantasy.finished .options li.highest,
+.finalfantasy.removing .options li.highest {
+    opacity: 1;
+}
+
+.finalfantasy.finished .options li.highest .bar .bar-inner,
+.finalfantasy.removing .options li.highest .bar .bar-inner {
+    background: #ffa;
+}
+
+.finalfantasy.finished .options li.help,
+.finalfantasy.removing .options li.help {
+    height: 0;
+}
+
+.finalfantasy.finished .metaInfo,
+.finalfantasy.removing .metaInfo {
+    opacity: 0.3;
+}
+
+.finalfantasy.active .options li.help {
+    height: 25px;
+}
+
+.finalfantasy .options {
+    margin-top: -50px;
+    padding: 0 5px;
+}
+
+.finalfantasy .options li {
+    position: relative;
+    border: 1px;
+    padding: 10px 0;
+    white-space: normal;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding-right: 50px;
+    padding-left: 35px;
+    margin: 0 -10px;
+    font-size: 15px;
+}
+
+.finalfantasy .options li.question {
+    padding: 0 10px 10px;
+    color: #fff;
+    font-size: 20px;
+    white-space: normal;
+    clear: both;
+    line-height: 1.2;
+    font-size: 23px;
+    position: relative;
+    background: 0 0;
+}
+
+.finalfantasy .options li.help {
+    padding: 0;
+    background: 0 0;
+    line-height: 1.3;
+    text-align: center;
+    overflow: hidden;
+    font-size: 13px;
+    height: 0;
+}
+
+.finalfantasy .options li.help span {
+    display: block;
+    padding: 0 10px;
+}
+
+.finalfantasy .options li .procent {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+.finalfantasy .options li .number {
+    padding: 5px 0;
+    border-radius: 5px;
+    position: absolute;
+    font-size: 25px;
+    top: 5px;
+    left: 10px;
+    color: #fec190;
+}
+
+.finalfantasy .options li .bar {
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 5px;
+    height: 5px;
+    margin-left: 0;
+    margin-right: 5px;
+    margin-top: 5px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.finalfantasy .options li .bar .bar-inner {
+    background: #fff;
+    height: 100%;
+    width: 0;
+    transition: width 1s;
+    position: relative;
+    border-radius: 5px;
+}
+
+.finalfantasy .options li .text {
+    line-height: 1.3;
+}
+
+.finalfantasy.active,
+.finalfantasy.finished {
+    opacity: 1;
+}
+
+.finalfantasy .credits {
+    padding-top: 10px;
+}
+
+@font-face {
+    font-family: upheaval_tt_brkregular;
+    src: url(/overlays/fonts/upheavtt-webfont.woff2) format("woff2"), url(/overlays/fonts/upheavtt-webfont.woff) format("woff");
+    font-weight: 400;
+    font-style: normal;
+}
+
+.isaacs {
+    font-family: upheaval_tt_brkregular;
+    width: 350px;
+    background: 0 0;
+    box-shadow: 0 0 0 rgba(0, 0, 0, 0.9);
+    opacity: 0;
+    color: #000;
+    transition: opacity 1s;
+    border-style: solid;
+    border-width: 50px 68px 54px 61px;
+    border-image: url(/overlays/img/themes/isaacs/bg.png) 50 68 54 61 fill stretch;
+}
+
+.isaacs.topLeft {
+    margin-left: 10px;
+    margin-top: 10px;
+}
+
+.isaacs.topCenter {
+    margin-top: 10px;
+}
+
+.isaacs.topRight {
+    margin-right: 10px;
+    margin-top: 10px;
+}
+
+.isaacs.middleLeft {
+    margin-left: 10px;
+}
+
+.isaacs.middleRight {
+    margin-right: 10px;
+}
+
+.isaacs.bottomLeft {
+    margin-left: 10px;
+    margin-bottom: 10px;
+}
+
+.isaacs.bottomCenter {
+    margin-bottom: 10px;
+}
+
+.isaacs.bottomRight {
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+
+.isaacs .metaInfo {
+    white-space: nowrap;
+    font-size: 16px;
+    overflow-x: hidden;
+    margin: 10px -20px -10px;
+}
+
+.isaacs .duration,
+.isaacs .total {
+    float: left;
+    width: 49%;
+    text-align: center;
+    padding: 5px 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+}
+
+.isaacs .duration label,
+.isaacs .total label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.isaacs .total {
+    margin-right: 2%;
+}
+
+.isaacs.finished .options li,
+.isaacs.removing .options li {
+    opacity: 0.3;
+    transition: all 1s;
+}
+
+.isaacs.finished .options li.highest,
+.isaacs.removing .options li.highest {
+    opacity: 1;
+}
+
+.isaacs.finished .options li.highest .bar .bar-inner,
+.isaacs.removing .options li.highest .bar .bar-inner {
+    background: #fff;
+}
+
+.isaacs.finished .options li.help,
+.isaacs.removing .options li.help {
+    height: 0;
+}
+
+.isaacs.finished .metaInfo,
+.isaacs.removing .metaInfo {
+    opacity: 0.3;
+}
+
+.isaacs.active .options li.help {
+    height: 45px;
+}
+
+.isaacs .options {
+    margin: 0 -20px 0;
+    padding: 0 5px;
+}
+
+.isaacs .options li {
+    position: relative;
+    border: 1px;
+    padding: 10px 0;
+    white-space: normal;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding-right: 50px;
+    padding-left: 35px;
+    margin: 0 -10px;
+    font-size: 20px;
+}
+
+.isaacs .options li.question {
+    padding: 0 10px 10px;
+    font-size: 20px;
+    white-space: normal;
+    clear: both;
+    line-height: 1.2;
+    font-size: 25px;
+    position: relative;
+    background: 0 0;
+}
+
+.isaacs .options li.help {
+    padding: 0;
+    background: 0 0;
+    line-height: 1.3;
+    text-align: center;
+    overflow: hidden;
+    font-size: 16px;
+    opacity: 0.5;
+    height: 0;
+}
+
+.isaacs .options li.help span {
+    display: block;
+    padding: 0 10px;
+}
+
+.isaacs .options li .procent {
+    position: absolute;
+    top: 12px;
+    right: 0;
+}
+
+.isaacs .options li .number {
+    padding: 5px 0;
+    border-radius: 5px;
+    position: absolute;
+    font-size: 25px;
+    top: 7px;
+    left: 10px;
+    opacity: 0.5;
+}
+
+.isaacs .options li .bar {
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 5px;
+    height: 5px;
+    margin-left: 0;
+    margin-right: 5px;
+    margin-top: 5px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.isaacs .options li .bar .bar-inner {
+    background: #fff;
+    height: 100%;
+    width: 0;
+    transition: width 1s;
+    position: relative;
+    border-radius: 5px;
+}
+
+.isaacs .options li .text {
+    line-height: 1.3;
+}
+
+.isaacs.active,
+.isaacs.finished {
+    opacity: 1;
+}
+
+.isaacs .credits {
+    padding-top: 10px;
+}
+
+@font-face {
+    font-family: pixelmixregular;
+    src: url(/overlays/fonts/pixelmix-webfont.woff2) format("woff2"), url(/overlays/fonts/pixelmix-webfont.woff) format("woff");
+    font-weight: 400;
+    font-style: normal;
+}
+
+.gungeon {
+    font-family: pixelmixregular;
+    width: 350px;
+    background: 0 0;
+    box-shadow: 0 0 0 rgba(0, 0, 0, 0.9);
+    opacity: 0;
+    color: #000;
+    transition: opacity 1s;
+    border-style: solid;
+    border-width: 20px 40px 40px 20px;
+    border-image: url(/overlays/img/themes/gungeon/bg.png) 20 40 40 20 fill stretch;
+}
+
+.gungeon.topLeft {
+    margin-left: 30px;
+    margin-top: 30px;
+}
+
+.gungeon.topCenter {
+    margin-top: 30px;
+}
+
+.gungeon.topRight {
+    margin-right: 30px;
+    margin-top: 30px;
+}
+
+.gungeon.middleLeft {
+    margin-left: 30px;
+}
+
+.gungeon.middleRight {
+    margin-right: 30px;
+}
+
+.gungeon.bottomLeft {
+    margin-left: 30px;
+    margin-bottom: 30px;
+}
+
+.gungeon.bottomCenter {
+    margin-bottom: 30px;
+}
+
+.gungeon.bottomRight {
+    margin-right: 30px;
+    margin-bottom: 30px;
+}
+
+.gungeon .metaInfo {
+    white-space: nowrap;
+    font-size: 16px;
+    overflow-x: hidden;
+    margin: 10px 0 -10px;
+}
+
+.gungeon .duration,
+.gungeon .total {
+    float: left;
+    width: 49%;
+    text-align: center;
+    padding: 5px 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+}
+
+.gungeon .duration label,
+.gungeon .total label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.gungeon .total {
+    margin-right: 2%;
+}
+
+.gungeon.finished .options li,
+.gungeon.removing .options li {
+    opacity: 0.3;
+    transition: all 1s;
+}
+
+.gungeon.finished .options li.highest,
+.gungeon.removing .options li.highest {
+    opacity: 1;
+}
+
+.gungeon.finished .options li.highest .bar .bar-inner,
+.gungeon.removing .options li.highest .bar .bar-inner {
+    background: #fff;
+}
+
+.gungeon.finished .options li.help,
+.gungeon.removing .options li.help {
+    height: 0;
+}
+
+.gungeon.finished .metaInfo,
+.gungeon.removing .metaInfo {
+    opacity: 0.3;
+}
+
+.gungeon.active .options li.help {
+    height: 45px;
+}
+
+.gungeon .options {
+    padding: 0 5px;
+}
+
+.gungeon .options li {
+    position: relative;
+    border: 1px;
+    padding: 10px 0;
+    white-space: normal;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding-right: 50px;
+    padding-left: 45px;
+    margin: 0 -10px;
+    font-size: 16px;
+}
+
+.gungeon .options li.question {
+    padding: 0 10px 10px;
+    font-size: 20px;
+    white-space: normal;
+    clear: both;
+    line-height: 1.2;
+    font-size: 24px;
+    position: relative;
+    background: 0 0;
+}
+
+.gungeon .options li.help {
+    padding: 0;
+    background: 0 0;
+    line-height: 1.3;
+    text-align: center;
+    overflow: hidden;
+    font-size: 16px;
+    opacity: 0.5;
+    height: 0;
+}
+
+.gungeon .options li.help span {
+    display: block;
+    padding: 0 10px;
+}
+
+.gungeon .options li .procent {
+    position: absolute;
+    top: 12px;
+    right: 0;
+}
+
+.gungeon .options li .number {
+    padding: 5px 0;
+    border-radius: 5px;
+    position: absolute;
+    font-size: 25px;
+    top: 7px;
+    left: 10px;
+    opacity: 0.5;
+}
+
+.gungeon .options li .bar {
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 5px;
+    height: 5px;
+    margin-left: 0;
+    margin-right: 5px;
+    margin-top: 5px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.gungeon .options li .bar .bar-inner {
+    background: #fff;
+    height: 100%;
+    width: 0;
+    transition: width 1s;
+    position: relative;
+    border-radius: 5px;
+}
+
+.gungeon .options li .text {
+    line-height: 1.3;
+}
+
+.gungeon.active,
+.gungeon.finished {
+    opacity: 1;
+}
+
+.gungeon .credits {
+    padding-top: 10px;
+}
+
+.night {
+    background: #18272f;
+    box-shadow: 0 0 50px rgba(0, 0, 0, 0.9);
+    width: 400px;
+    opacity: 0;
+    transition: opacity 1s;
+}
+
+.night.topLeft {
+    margin-left: 20px;
+    margin-top: 20px;
+}
+
+.night.topCenter {
+    margin-top: 20px;
+}
+
+.night.topRight {
+    margin-right: 30px;
+    margin-top: 20px;
+}
+
+.night.middleLeft {
+    margin-left: 20px;
+}
+
+.night.middleRight {
+    margin-right: 20px;
+}
+
+.night.bottomLeft {
+    margin-left: 20px;
+    margin-bottom: 20px;
+}
+
+.night.bottomCenter {
+    margin-bottom: 20px;
+}
+
+.night.bottomRight {
+    margin-right: 20px;
+    margin-bottom: 20px;
+}
+
+.night .inner {
+    padding: 0 0 10px;
+}
+
+.night .metaInfo {
+    padding: 0 10px;
+}
+
+.night .duration,
+.night .total {
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    background: rgba(0, 0, 0, 0.4);
+    background: linear-gradient(bottom, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.2));
+    background: -ms-linear-gradient( bottom, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.2));
+    background: -moz-linear-gradient( center bottom, rgba(0, 0, 0, 0.1) 0, rgba(0, 0, 0, 0.2) 100%);
+    background: -webkit-gradient( linear, left bottom, left top, color-stop(0, rgba(0, 0, 0, 0.1)), color-stop(1, rgba(0, 0, 0, 0.2)));
+    float: left;
+    width: 49%;
+    text-align: center;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+}
+
+.night .duration strong,
+.night .total strong {
+    color: rgba(255, 255, 255, 0.8);
+    display: block;
+}
+
+.night .total {
+    margin-right: 2%;
+}
+
+.night.finished .options li,
+.night.removing .options li {
+    opacity: 0.3;
+    transition: all 1s;
+}
+
+.night.finished .options li.highest,
+.night.removing .options li.highest {
+    color: rgba(255, 255, 255, 0.8);
+    opacity: 1;
+}
+
+.night.finished .options li.highest .bar .bar-inner,
+.night.removing .options li.highest .bar .bar-inner {
+    background: rgba(255, 255, 255, 0.8);
+}
+
+.night.finished .options li.help,
+.night.removing .options li.help {
+    height: 0;
+}
+
+.night.finished .metaInfo,
+.night.removing .metaInfo {
+    opacity: 0.3;
+}
+
+.night.active .options li.help {
+    height: 35px;
+}
+
+.night .options li {
+    position: relative;
+    border: 1px;
+    padding: 10px;
+    color: #fff;
+    text-overflow: ellipsis;
+    padding-right: 55px;
+    padding-left: 55px;
+    font-size: 15px;
+}
+
+.night .options li.question {
+    padding: 10px 20px;
+    white-space: normal;
+    background: #000;
+    clear: both;
+    line-height: 1.3;
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.1) inset, 0 0 1px rgba(0, 0, 0, 0.7);
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid #141414;
+    font-size: 20px;
+    position: relative;
+}
+
+.night .options li.help {
+    color: rgba(255, 255, 255, 0.8);
+    padding: 0;
+    background: 0 0;
+    text-align: center;
+    overflow: hidden;
+    height: 0;
+}
+
+.night .options li.help span {
+    display: block;
+    padding: 10px;
+}
+
+.night .options li .procent {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+}
+
+.night .options li .number {
+    padding: 5px 10px;
+    border-radius: 5px;
+    background: rgba(0, 0, 0, 0.3);
+    box-shadow: 0 0 10px #000 inset;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    position: absolute;
+    top: 5px;
+    left: 10px;
+}
+
+.night .options li .bar {
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 5px;
+    height: 5px;
+    margin-top: 5px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.night .options li .bar .bar-inner {
+    background: #fff;
+    height: 100%;
+    width: 0;
+    transition: width 1s;
+    position: relative;
+    border-radius: 5px;
+}
+
+.night .options li .text {
+    line-height: 1.3;
+}
+
+.night.active,
+.night.finished {
+    opacity: 1;
+}
+
+.night .options li.question {
+    background: 0 0;
+    border: 0;
+    font-size: 27px;
+    color: #ffff64;
+}
+
+.night .metaInfo {
+    line-height: 1.5;
+    overflow: hidden;
+    margin-bottom: -10px;
+}
+
+.night .metaInfo div {
+    border-radius: 0;
+    background: rgba(0, 0, 0, 0.1);
+}
+
+@font-face {
+    font-family: "Gochi Hand";
+    font-style: normal;
+    font-weight: 400;
+    src: local("Gochi Hand"), local("GochiHand-Regular"), url(https://fonts.gstatic.com/s/gochihand/v10/hES06XlsOjtJsgCkx1Pkfon__g.ttf) format("truetype");
+}
+
+.pink {
+    font-family: Gochi Hand;
+    box-shadow: 0 0 50px rgba(0, 0, 0, 0.9);
+    width: 400px;
+    opacity: 0;
+    transition: opacity 1s;
+    background: #ec4989;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+}
+
+.pink.topLeft {
+    margin-left: 20px;
+    margin-top: 20px;
+}
+
+.pink.topCenter {
+    margin-top: 20px;
+}
+
+.pink.topRight {
+    margin-right: 30px;
+    margin-top: 20px;
+}
+
+.pink.middleLeft {
+    margin-left: 20px;
+}
+
+.pink.middleRight {
+    margin-right: 20px;
+}
+
+.pink.bottomLeft {
+    margin-left: 20px;
+    margin-bottom: 20px;
+}
+
+.pink.bottomCenter {
+    margin-bottom: 20px;
+}
+
+.pink.bottomRight {
+    margin-right: 20px;
+    margin-bottom: 20px;
+}
+
+.pink .inner {
+    padding: 0 0 10px;
+}
+
+.pink .metaInfo {
+    padding: 0 10px;
+    line-height: 1.5;
+    overflow: hidden;
+    margin-bottom: -10px;
+}
+
+.pink .duration,
+.pink .total {
+    float: left;
+    width: 49%;
+    text-align: center;
+    padding: 10px;
+    margin: 10px 0;
+    font-size: 16px;
+    white-space: nowrap;
+    background: #ee5c95;
+}
+
+.pink .duration strong,
+.pink .total strong {
+    color: #fff;
+}
+
+.pink .total {
+    margin-right: 2%;
+}
+
+.pink.finished .options li,
+.pink.removing .options li {
+    opacity: 0.3;
+    transition: all 1s;
+}
+
+.pink.finished .options li.highest,
+.pink.removing .options li.highest {
+    color: #fff;
+    opacity: 1;
+}
+
+.pink.finished .options li.highest .bar .bar-inner,
+.pink.removing .options li.highest .bar .bar-inner {
+    background: #fff;
+}
+
+.pink.finished .options li.help,
+.pink.removing .options li.help {
+    height: 0;
+}
+
+.pink.finished .metaInfo,
+.pink.removing .metaInfo {
+    opacity: 0.3;
+}
+
+.pink.active .options li.help {
+    height: 35px;
+}
+
+.pink .options li {
+    position: relative;
+    border: 1px;
+    padding: 10px;
+    color: #fff;
+    text-overflow: ellipsis;
+    padding-right: 65px;
+    padding-left: 55px;
+    font-size: 17px;
+}
+
+.pink .options li.question {
+    padding: 10px 20px;
+    font-size: 20px;
+    white-space: normal;
+    clear: both;
+    line-height: 1.3;
+    background: #ee5c95;
+    position: relative;
+    font-size: 27px;
+}
+
+.pink .options li.help {
+    color: #fff;
+    padding: 0;
+    background: 0 0;
+    text-align: center;
+    overflow: hidden;
+    height: 0;
+}
+
+.pink .options li.help span {
+    display: block;
+    padding: 10px;
+}
+
+.pink .options li .procent {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+}
+
+.pink .options li .number {
+    padding: 5px 10px;
+    border-radius: 5px;
+    background: rgba(0, 0, 0, 0.3);
+    box-shadow: 0 0 10px #000 inset;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    position: absolute;
+    top: 5px;
+    left: 10px;
+}
+
+.pink .options li .bar {
+    background: #c32361;
+    height: 5px;
+    margin-top: 5px;
+}
+
+.pink .options li .bar .bar-inner {
+    background: #fff;
+    height: 100%;
+    width: 0;
+    transition: width 1s;
+    position: relative;
+}
+
+.pink .options li .text {
+    line-height: 1.3;
+}
+
+.pink.active,
+.pink.finished {
+    opacity: 1;
+}
+
+.pink .options li .number {
+    background: 0 0;
+    box-shadow: 0 0 0 transparent;
+    font-size: 20px;
+    background: rgba(0, 0, 0, 0.05);
+}
+
+.svg-icon {
+    display: inline-block;
+}
+
+.wishList {
+    padding: 20px;
+}
+
+.wishList .submission {
+    display: flex;
+}
+
+.wishList input {
+    flex: auto;
+    background: #1e1e1e;
+    color: #fff;
+    font-family: abel;
+    border: 1px solid #282828;
+    border-radius: 5px;
+    font-size: 18px;
+    padding: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.4) inset;
+    width: 100%;
+}
+
+.wishList .name {
+    width: 240px;
+    margin-right: 10px;
+}
+
+.wishList .feedback {
+    text-align: center;
+    font-size: 30px;
+    -webkit-animation: ani_2 1s ease;
+}
+
+@-webkit-keyframes ani_2 {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+
+/*  custom */
+
+.winner {
+    background: rgba(255, 0, 0, 0);
+    border-radius: 10px;
+    -webkit-transition: background 0.5s ease-in-out;
+    -moz-transition: background 0.5s ease-in-out;
+    transition: background 0.5s ease-in-out;
+}
+
+
+.emote {
+    position: relative;
+    max-height: 30px;
+    width: auto;
+    height: auto;
+  }
+  .winner .emote{
+    max-height: 20px!important;
+  }

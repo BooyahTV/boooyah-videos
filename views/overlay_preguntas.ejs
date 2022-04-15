@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<!-- saved from url=(0092)https://poll.ma.pe/overlay/b166b015e9bfa3d52d927a27f3a0c126a4ae05a4c89cead61345f9f8897ad1ef/ -->
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <!--  <link rel="shortcut icon" type="image/x-icon" href="https://poll.ma.pe/favicon.ico" />-->
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="theme-color" content="#000000" />
+    <title>Booyah Poll Overlay - Overlay</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.1.3/socket.io.min.js"
+      integrity="sha512-fB746S+jyTdN2LSWbYSGP2amFYId226wpOeV4ApumcDpIttPxvk1ZPOgnwqwQziRAtZkiFJVx9F64GLAtoIlCQ=="
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" type="text/css" href="/overlays/css/preguntas.css" />
+  </head>
+
+  <body>
+    <div id="app">
+      <div v-show="visible">
+        
+        <div class="question-container emoteAside" :style="{backgroundImage:`url(${emoteurl})`}">
+          <div class="header emoteAside">
+            <p class="author">
+              <span :style="{ color: authorColor}" class="username">{{question.author}} </span> {{label}}
+              
+              <span class="command">usen <span style="color:rgb(230, 119, 45)">!{{command}}</span>
+            </p>
+          </div>
+
+          <p class="question" id="label"></p>
+          
+        </div>
+
+
+        
+      </div>
+    </div>
+
+    <script>
+      channel = '<%= channel %>'
+    </script>
+
+    <script src="/overlays/js/preguntas.js"></script>
+    <script src="/overlays/js/emotes.js"></script>
+
+  </body>
+</html>
