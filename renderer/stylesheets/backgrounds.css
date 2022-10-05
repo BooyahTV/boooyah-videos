@@ -1,0 +1,19 @@
+.background-card{
+    background:#444444;
+}
+.background-card img{
+    max-height:100%;
+    max-width:100%;
+}
+.remove-background{
+    color: white;
+    float: right;
+    font-size: 20px;
+}
+.disableanimation{
+    -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
+    filter: grayscale(100%);
+}
+.background-card:hover{
+    background-color: #2e2e2e;
+}

@@ -13,14 +13,15 @@ var stores = [
 ];
 
 var tabs = [
-    { id: "videos", label: "Videos" },
-    { id: "watchlater", label: "Ver más tarde" },
-    { id: "songrequest", label: "Song Request" },
-    { id: "poll", label: "Encuestas" },
-    { id: "questions", label: "Preguntas" },
-    { id: "clips", label: "Clips" },
-    { id: "channels", label: "Canales" },
-    { id: "products", label: "Tiendas" },
+    { id: "videos", label: "Videos",checked: true },
+    { id: "watchlater", label: "Ver más tarde",checked: true },
+    { id: "songrequest", label: "Song Request",checked: true },
+    { id: "poll", label: "Encuestas,checked: true" },
+    { id: "questions", label: "Preguntas",checked: true },
+    { id: "clips", label: "Clips",checked: false },
+    { id: "channels", label: "Canales",checked: false },
+    { id: "products", label: "Tiendas",checked: true },
+    { id: "backgrounds", label: "Fondos",checked: true },
 ];
 
 var videodata = [
@@ -62,7 +63,7 @@ tabs.forEach((tab,index) => {
         id: tab.id,
         type: "checkbox",
         label: tab.label,
-        checked: index < 6,
+        checked: tab.checked,
         click: function (item, browser) {
             BrowserWindow.getAllWindows()[0].webContents.send("toggleTab", {
                 id: tab.id,
@@ -225,7 +226,7 @@ var menu = Menu.buildFromTemplate([
         },
       },
       {
-        label: "Fondo",
+        label: "Fondos",
         click: function (item, browser) {
           clipboard.writeText('http://localhost:8080/overlaybackground', 'clipboard')
         },

@@ -28,10 +28,10 @@
 
     <link rel="stylesheet" href="./stylesheets/songrequest.css" />
     <link rel="stylesheet" href="./stylesheets/questions.css" />
-    <link rel="stylesheet" href="./stylesheets/character.css" />
+    <link rel="stylesheet" href="./stylesheets/backgrounds.css" />
     
     <link rel="stylesheet" href="./stylesheets/notification.css" />
-    
+
     <script src="./javascript/libs/tmi.min.js"></script>
     <script src="./javascript/libs/moment.js"></script>
     <script src="./javascript/libs/moment-duration-format.js"></script>
@@ -70,16 +70,12 @@
       <div class="ui modal">
         <i class="close fas fa-times"></i>
 
-        <div class="header" style="font-size:30px!important">Booyah videos v1.16 <img src="https://cdn.betterttv.net/emote/5e4e7a1f08b4447d56a92967/1x" alt=""> </div>
+        <div class="header" style="font-size:30px!important">Stream Kit v1.47 <img src="https://static-cdn.jtvnw.net/emoticons/v2/emotesv2_b5beecf2a9314e458ff9c1c14b9357c5/default/dark/1.0" alt=""></div>
         <div style="color:black!important" class="content">
           <h2>¿Que hay de nuevo?</h2>
-          <h3><img src="https://cdn.betterttv.net/emote/5aa16eb65d4a424654d7e3e5/1x" alt=""> Encuestas  </h3>
-          <p>
-            <ul>
-              <li>Poder guardar encuestas</li>
-            </ul>
-          </p>
-          <p style="text-align:right">~elmarceloc</p>
+          <h3><img src="https://cdn.betterttv.net/emote/5f1b0186cf6d2144653d2970/1x" alt=""> No musica otaku </h3>
+        
+          <p style="text-align:right">~elmarceloc 28-04-2022</p>
         </div>
       </div>
 
@@ -400,7 +396,7 @@
       <div class="header">
         <img style="display:inline" src="https://cdn.betterttv.net/emote/5fb6d395c242076f1a04d83e/2x" width="26px"></img> Manden canciones chiaaat!!
       </div>
-      <p>Simplemente manden el link. se requiere tener booyah tv</p>
+      <p>Simplemente manden el link.</p>
     </div>
 
   </div>
@@ -576,17 +572,10 @@
         </div>
       </div>
 
-      
-      
-     
-
-     
-
-
       <div style="margin-bottom: 60px;" class="ui inverted segment" v-if="questions.length > 0">
         <div class="ui inverted relaxed divided list">
-          <div class="item question" :class="{ selectedquestion: index==currentQuestion&&isQuestionOnStream }" v-for="(question, index) in questions" :key="index" @click="selectQuestion(index)">
-            <div class="content">
+          <div class="item question" :class="{ selectedquestion: index==currentQuestion && isQuestionOnStream }" v-for="(question, index) in questions" :key="index" @click="selectQuestion(index)">
+            <div class="content" :class="{ uberduck: question.uberduck }">
               {{question.label}}
             </div>
           </div>
@@ -600,6 +589,9 @@
 
 
   <div v-if="currentTab=='backgrounds'">
+    <div class="ui four column container">
+
+      <h1>Fondo: </h1>
 
       <div class="ui input" bis_skin_checked="1">
         <input v-model="background" type="text" placeholder="URL">
@@ -608,28 +600,35 @@
         Guardar
       </button>
       <br>
-
+      <h3>Animación: </h3>
+      <button @click="selectAnimation('')" :class="{primary: currentAnimation == ''}" class="ui icon labeled button">
+        Ninguna
+      </button>
+      <button @click="selectAnimation(animation)" :class="{primary: animation == currentAnimation}" v-for="animation in animations" class="ui icon labeled button">
+        {{animation}}
+      </button>
+      <div style="margin-bottom: 50px;"></div>
       <div class="ui grid">
-        <div @click="selectBackground(url)" class="four wide column" v-for="(url,index) in backgrounds">
+        <div @click="selectBackground('')" class="four wide column" >
           <div class="ui card background-card" bis_skin_checked="1">
-            <div class="image" bis_skin_checked="1">
-              <img :src="url">
+            <div class="image image-no-border" bis_skin_checked="1">
+              <img src="https://i.imgur.com/xnloFbD.png">
             </div>
-            <div v-if="index < 9" class="content" bis_skin_checked="1">
-              <a class="header">ALT + {{index +1}}</a>
+            <div class="content" bis_skin_checked="1">
+              <a>Ninguno</a>
+              <a><i class="fas fa-keyboard"></i>(ALT + 1)</a>
             </div>
           </div>
         </div>
-       
-      </div>
+        <div @click="selectBackground(url)" class="four wide column" v-for="(url,index) in backgrounds">
 
-      <h3>Chat</h3>
-
-      <div class="ui grid">
-        <div @click="selectBackground(url)" class="four wide column" v-for="(url,index) in chatBackgrounds">
-          <div class="ui card character-card" bis_skin_checked="1">
-            <div class="image" bis_skin_checked="1">
+          <div class="ui card background-card" bis_skin_checked="1">
+            <span class="remove-background" @click="removeBackground(url)">X</span>
+            <div class="image image-no-border" bis_skin_checked="1">
               <img :src="url">
+            </div>
+            <div v-if="index < 9" class="content" bis_skin_checked="1">
+              <a><i class="fas fa-keyboard"></i>ALT + {{index +2}}</a>
             </div>
           </div>
         </div>
@@ -638,7 +637,7 @@
       
 
   </div>
-
+</div>
 
 </div>
 
@@ -650,9 +649,9 @@
 
     <script>
 
-        var currentDate = new Date().getDay();
-        console.log(currentDate)
-        if (currentDate ==  3){
+        /*var currentDate = new Date().getDay();
+
+        if (currentDate < 30){
               
             $('.modal').modal('show')
 
@@ -660,13 +659,12 @@
               $('.modal').modal('hide')
             })
 
-       }
+       }*/
 
       
     </script>
     <script src="./javascript/scroll.js"></script>
     <script src="./javascript/contextMenu.js"></script>
-    <script src="./javascript/uberduck.js"></script>
-    <script src="./javascript/main.js"></script>
+    <script src="./javascript/main.js?23=2324"></script>
   </body>
 </html>

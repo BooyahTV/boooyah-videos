@@ -74,6 +74,13 @@ var twitchEmotes = [
 
 ];
 
+bttvGlobalEmotes = []
+frankerFaceZ = []
+bttvChannelEmotes = []
+channelSubsEmotes = []
+sevenTvChannelEmotes = []
+channelBadges = []
+
 Promise.all([
         fetch(globalBetterttvURL).then((value) => value.json()),
         
@@ -83,12 +90,6 @@ Promise.all([
         fetch('https://api.7tv.app/v2/users/'+channelname+'/emotes').then((value) => value.json()),
     ])
     .then(([globalBetterttv, channelBetterttv, channelFrankerfaceZ, subsEmotes, channelSeventvEmotes]) => {
-        bttvGlobalEmotes = []
-        frankerFaceZ = []
-        bttvChannelEmotes = []
-        channelSubsEmotes = []
-        sevenTvChannelEmotes = []
-        channelBadges = []
 
         
         // guardamos los emotes globales de bttv
@@ -135,11 +136,30 @@ Promise.all([
             })
 
         }
-        if(subsEmotes.subEmotes.length > 0 ){
+
+        /*if(subsEmotes.subEmotes.length > 0 ){
             channelSubsEmotes = subsEmotes.subEmotes[0].emotes
-        }
+        }*/
+
+
+        channelSeventvEmotes = channelSeventvEmotes.filter(stv => {
+            return !bttvGlobalEmotes.some((bttvEmote) => bttvEmote.code == stv.name);  
+        })
+
+        channelSeventvEmotes = channelSeventvEmotes.filter(stv => {
+            return !bttvChannelEmotes.some((bttvEmote) => bttvEmote.code == stv.name);  
+        })
+
+        channelSeventvEmotes = channelSeventvEmotes.filter(stv => {
+            return !frankerFaceZ.some((ffzEmote) => ffzEmote.name == stv.name);  
+        })
+
+        channelSeventvEmotes = channelSeventvEmotes.filter(stv => {
+            return !frankerFaceZ.some((ffzEmote) => ffzEmote.name == stv.name);  
+        })
 
         sevenTvChannelEmotes = channelSeventvEmotes
+
 
         console.log("[BOOYAH.TV] subsEmotes: ", channelSubsEmotes);
         console.log("[BOOYAH.TV] channelBadges: ", channelBadges);

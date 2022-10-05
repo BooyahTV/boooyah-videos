@@ -1,0 +1,80 @@
+#background{
+    width: 100%;
+    max-width: 100%;
+    max-height: 100%;
+    bottom: 0;
+    left: 0;
+    margin: auto;
+    overflow: auto;
+    position: fixed;
+    right: 0;
+    top: 0;
+    -o-object-fit: contain;
+    object-fit: contain;
+}
+@keyframes flip{
+    0%{
+        -webkit-transform: scaleX(1);
+        transform: scaleX(1);
+    }
+    49%{
+        -webkit-transform: scaleX(1);
+        transform: scaleX(1);
+    }
+    50%{
+        -webkit-transform: scaleX(-1);
+        transform: scaleX(-1);
+    }
+    100%{
+        -webkit-transform: scaleX(-1);
+        transform: scaleX(-1);
+
+    }
+}
+
+@keyframes hop{
+    8%{
+        transform: translateX(250px) translateY(0px) scaleX(-1);
+    }
+    16%{
+        transform: translateX(150px) translateY(100px) scaleX(-1);
+    }
+    24%{
+        transform: translateX(50px) translateY(0px) scaleX(-1); 
+    }
+    32%{
+        transform: translateX(-50px) translateY(100px) scaleX(-1);
+    }
+    40%{
+        transform: translateX(-150px) translateY(0px) scaleX(-1);
+    }
+    48%{
+        transform: translateX(-250px) translateY(100px) scaleX(-1);
+    }
+    56%{
+        transform: translateX(-250px) translateY(100px) scaleX(1);
+    }
+    64%{
+        transform: translateX(-150px) translateY(0px) scaleX(1);
+    }
+    72%{
+        transform: translateX(-50px) translateY(100px) scaleX(1);
+    }
+    80%{
+        transform: translateX(50px) translateY(0px) scaleX(1);
+    }
+    88%{
+        transform: translateX(150px) translateY(100px) scaleX(1); 
+    }
+    96%{
+        transform: translateX(250px) translateY(0px) scaleX(1);
+    }
+}
+.hop{
+    animation:hop 3s linear infinite both;
+    width: 40%!important;
+    transform-origin: center center;
+}
+.flip{
+    animation:flip .5s linear infinite alternate both;
+}

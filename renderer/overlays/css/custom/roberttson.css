@@ -1,0 +1,101 @@
+@font-face {
+    font-family: roberttson;
+    src: url("./roberttson.otf") format("opentype")
+}
+
+body{
+    /*background: url('./test.png');*/
+    background-size: 1920px 1080px;
+    font-family: roberttson!important;
+    font-weight: 100!important;
+}
+.question-container{
+    background-image: url('pattern.png')!important;
+    background-size: 9px;
+    background-repeat: repeat;
+    border: 2px solid white;
+    border-left: none;
+    border-right: none;
+    border-radius: 0px;
+    transform: translateY(700px);
+    width: 100%!important;
+    max-width: 1100px;
+    height: 250px!important;
+}
+.header {
+    width: 240px;
+    height: 55px;
+    background-color: transparent!important;
+    border: none;
+    transform: translateY(-20px) translateX(120px);
+    border-radius: 0px;
+    font-family: roberttson!important
+}
+.username{
+    background-image: url('author_bg.png')!important;
+    text-transform: capitalize;
+}
+.arrow{
+    display: block;
+    height: 60px;
+}
+.left_arrow{
+    position: absolute;
+    left: 116px;
+    top: -29px;
+}
+.header .username{
+    color: white!important;
+    padding-left: 50px;
+    padding-right: 50px;
+    padding-top: 0px;
+}
+.author{
+    top: -35px!important;
+}
+#label{
+    padding-left: 250px!important;
+}
+#label,.username{
+    font-family: roberttson!important;
+    font-size: 39px;
+    background-size: contain;
+    font-weight: 100;
+
+}
+#username_label{
+    display: none;
+}
+.question-container p.question{
+    top: 15px!important;
+    width:1000px;
+    max-height: 200px!important;
+    overflow: hidden!important;
+}
+
+.command{
+    position: absolute;
+    top: 246px;
+    background-color: white;
+    left: 1132px;
+    font-size: 30px;
+    color: black;
+    font-family: 'roberttson';
+    display: none;
+}
+#gradient{
+    z-index: -10;
+    background-color: #000000d5;
+    background-image: url('pattern.png')!important;
+    background-size: 9px;
+    background-repeat: repeat;
+    width: 450px;
+    height: 250px;
+    -webkit-mask-image: linear-gradient(90deg, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 1), transparent 100%);
+    border: 2px solid white;
+    position: absolute;
+    border-left: none;
+    border-right: none;
+    top: 700px;
+    left: 1100px;
+}

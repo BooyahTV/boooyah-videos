@@ -1,5 +1,2 @@
-[x] ajustar tamaño
-[x] poner fondo
-[x] hacer que no se muestren los videos musicales mientras ta el song request
-[x] poner el changelog
-[ ] compatibilidad con streamdeck
+[ ] game overlay
+[ ] contador (link externo por ahora)

@@ -95,3 +95,6 @@ body {
     width: 25px;
     padding-right: 3px;
 }
+.arrow{
+    display: none;
+}

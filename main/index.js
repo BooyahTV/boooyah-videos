@@ -189,10 +189,16 @@ async function createWindow() {
     settings.get("songrequest.volume").then((volume) => {
       mainWindow.webContents.send("getVolume", volume || 100); // default volume of 100
     });
-    // volume
+
+    // polls
     settings.get("polls.slots").then((polls) => {
-      mainWindow.webContents.send("setPolls", polls); // default volume of 100
+      mainWindow.webContents.send("setPolls", polls  || []); // default volume of 100
     });
+
+    settings.get("backgrounds.backgrounds").then((backgrounds) => {
+      mainWindow.webContents.send("backgrounds", backgrounds || []);
+    });
+
 
   });
 
@@ -209,6 +215,47 @@ async function createWindow() {
       volume: volume,
     });
   })
+
+  // save background
+
+
+  ipcMain.on("saveBackground", function (e, background) {
+
+    settings.get("backgrounds.backgrounds").then((backgrounds) => {
+      if (backgrounds == null) backgrounds = [];
+
+      if (backgrounds.includes(background)) return;
+
+      const newBackgrounds = [...backgrounds, background];
+
+      console.log("new backgrounds: ", newBackgrounds);
+
+      settings.set("backgrounds", {
+        backgrounds: newBackgrounds,
+      });
+      
+    });
+
+  })
+
+  
+
+  ipcMain.on("removeBackground", function (e, targetBackground) {
+    settings.get("backgrounds.backgrounds").then((backgrounds) => {
+      
+      if (backgrounds == null) backgrounds = [];
+            
+      newBackgrounds = backgrounds.filter(function(background) {
+          return background !== targetBackground
+      })
+
+      console.log("backgrounds: ", backgrounds.length);
+
+      settings.set("backgrounds", {
+        backgrounds: newBackgrounds,
+      });
+    });
+  });
 
   // saves a video by its id in the system
   ipcMain.on("storeVideo", function (e, videoId) {
@@ -357,20 +404,28 @@ async function createWindow() {
     
   });
 
-  ipcMain.on('uberduck', function (id, message) {
-      getAudioUrl(
-        'pub_ieyjizcjizsdjdcgmn', 
-        'pk_8ae7bb6a-019f-4aa8-bf26-002f87c87041', 
-        'fernanfloo', 
-        message)
-    .then((url) => {
-        console.log('uberduck', url)
-        mainWindow.webContents.send('uberduck', {
-          url: url,
-          id: id
-        })
+  var list = ['fernanfloo', 'homero']
 
-    })
+  ipcMain.on('uberduck', function (event, question) {
+    var randomValue = list[Math.floor(list.length * Math.random())];
+
+      getAudioUrl(
+        'pub_inqajoxwegyxvysxkx', 
+        'pk_a45d0106-f7e0-47dc-bc7b-fc6b9fe49f20', 
+        randomValue, 
+        question.label)
+        .then((url) => {
+            console.log('uberduck', url)
+
+            mainWindow.webContents.send('uberduck', {
+              uberduck: true,
+              url: url,
+              label: question.label,
+              author: question.author,
+              tags: question.tags
+            })
+
+        })
     
   })
 
@@ -479,6 +534,16 @@ app.whenReady().then(() => {
 
   }
 
+  // backgrounds (0 - 0)
+  for (let i = 0; i <= 9; i++) {
+
+    globalShortcut.register('Alt+'+i, () => {
+      
+      mainWindow.webContents.send('setBackground', i)
+
+    })
+
+  }
  
   /*mainWindow.on('close', (event) => {
     event.preventDefault(); 

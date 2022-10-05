@@ -15,6 +15,9 @@ var app = new Vue({
     },*/
 });
 
+if (channel == 'roberttson'){
+    loadCSS('roberttson')
+}
 
 socket.on("changeTtsLabel", (newLabel) => {
     app.label = newLabel;
@@ -38,10 +41,26 @@ socket.on("showQuestionOnStream", (question) => {
     app.question.author = question.author
     app.authorColor = question.tags.color  
 
-    document.getElementById('label').innerHTML = question.label
-    
+    if (channel == 'roberttson'){
+        writeDiscourse(question.label)
+    }else{
+        document.getElementById('label').innerHTML = question.label
+    }
+
+    let emote = getEmoteFromMessage(question.label)
+
+    console.log(emote)
+
+    if(emote){
+        app.emoteurl = emote.url
+    }else{
+        app.emoteurl = 'https://i.imgur.com/rOt0jD6.gif'
+    }
+
     console.log(question)
     
+    if (channel == 'roberttson') return
+
     $('.question, .text')
         .not(":has(img)")
         .each(function() {
@@ -66,5 +85,14 @@ socket.on("hideQuestionOnStream", () => {
 
     app.visible = false
 
+    stopBlip()
+
 });
 
+function loadCSS(filename) {
+    let link = document.createElement('link');
+    link.href = '/overlays/css/custom/'+filename+'.css';
+    link.rel = 'stylesheet';
+
+    document.head.append(link);
+}

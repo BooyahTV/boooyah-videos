@@ -282,7 +282,10 @@ io.on("connection", async(socket) => {
         console.log(url)
         io.emit("selectBackground", url);
     });
-
+    socket.on("selectAnimation", (url) => {
+        console.log(url)
+        io.emit("selectAnimation", url);
+    });
     
     
 
@@ -323,6 +326,8 @@ settings.get("twitch.name").then((channel) => {
     console.log('poll channel',channel)
 
     client.on('message', (channel, tags, message, self) => {
+        io.emit("message", message, tags["display-name"])
+
         for (let i = 0; i < 9; i++) {
             if (message == i + 1 && !users[tags["display-name"]]) {
                 votes[i]++;

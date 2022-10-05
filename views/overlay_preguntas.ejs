@@ -25,9 +25,15 @@
       <div v-show="visible">
         
         <div class="question-container emoteAside" :style="{backgroundImage:`url(${emoteurl})`}">
+          <img class="arrow left_arrow" src="/overlays/css/custom/left_arrow.png" alt="">
           <div class="header emoteAside">
             <p class="author">
-              <span :style="{ color: authorColor}" class="username">{{question.author}} </span> {{label}}
+
+              <span :style="{ color: authorColor}" class="username">{{question.author}} </span>
+              <span id="username_label">{{label}}</span>
+              <img class="arrow" src="/overlays/css/custom/right_arrow.png" alt="">
+
+              
               
               <span class="command">usen <span style="color:rgb(230, 119, 45)">!{{command}}</span>
             </p>
@@ -36,16 +42,18 @@
           <p class="question" id="label"></p>
           
         </div>
+        <div id="gradient"></div>
 
 
         
       </div>
+      <audio id="blip" src="/overlays/css/custom/blip.wav"></audio>
     </div>
 
     <script>
       channel = '<%= channel %>'
     </script>
-
+    <script src="/overlays/js/text_dialog.js"></script>
     <script src="/overlays/js/preguntas.js"></script>
     <script src="/overlays/js/emotes.js"></script>
 

@@ -6946,13 +6946,13 @@ blockquote cite:before {
 
 @font-face {
     font-family: pixelmixregular;
-    src: url(/overlays/fonts/pixelmix-webfont.woff2) format("woff2"), url(/overlays/fonts/pixelmix-webfont.woff) format("woff");
+    src: url(/overlays/fonts/pixelmix.ttf) format("ttf");
     font-weight: 400;
     font-style: normal;
 }
 
 .gungeon {
-    font-family: pixelmixregular;
+    font-family: pixelmixregular!important;
     width: 350px;
     background: 0 0;
     box-shadow: 0 0 0 rgba(0, 0, 0, 0.9);

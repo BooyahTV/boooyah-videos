@@ -2,7 +2,7 @@ var isDev = false;
 
 const socket = io("ws://localhost:8080");
 
-const key = "AIzaSyAv2ie_VWHHlbjLyF7xh7aJYdj4lIqsk_c";
+const key = "AIzaSyAE5ywHoAJGOK2jcif8rrFmiWAyrRwvwFI";
 const videoParts = "snippet,statistics,contentDetails";
 const channelParts = "snippet,statistics,contentDetails,brandingSettings";
 
@@ -177,7 +177,7 @@ var app = new Vue({
       { id: "channels", name: "Canales", enabled: false },
       { id: "products", name: "Tiendas", enabled: false },
     ],
-    currentTab: "backgrounds",
+    currentTab: "videos",
     questionPoll: "",
     alternatives: [""],
     stateBtn: 'Iniciar',
@@ -192,12 +192,14 @@ var app = new Vue({
     showAutoOnStream: true,
     ttsLabel: 'dice',
     ttsCommand: 'pregunta',
+    ttsAudio: false,
     voice: 'Mia',
     randomvoice: true,
     emotes: [],
     background: '',
     backgrounds: ['https://cdn.betterttv.net/emote/583089f4737a8e61abb0186b/3x'],
-    chatBackgrounds: []
+    animations: ['hop', 'flip','shake'],
+    currentAnimation: ''
   },
   methods: {
     setTab: function (tab) {
@@ -577,13 +579,14 @@ var app = new Vue({
       console.log('slots after', this.pollSlots)
     },
     showQuestionOnStream: function(){
+      const question = this.questions[this.currentQuestion]
       this.isQuestionOnStream = true
-      socket.emit('showQuestionOnStream', this.questions[this.currentQuestion])
+      socket.emit('showQuestionOnStream', question)
 
       // play tts
       if (this.questionTts) {
 
-        const message = encodeURIComponent(`${this.questions[this.currentQuestion].label}`)
+        const message = encodeURIComponent(`${question.label}`)
         
         var voice = this.voice
         
@@ -592,14 +595,27 @@ var app = new Vue({
           voice = voices[Math.floor(Math.random()*voices.length)];
         }
 
-        var audio = new Audio(`https://api.streamelements.com/kappa/v2/speech?voice=${voice}&text=${message}`);
-        audio.play();
+        //if (this.ttsAudio) this.ttsAudio.stop()
+
+
+        if (question.uberduck){
+          this.ttsAudio = new Audio(question.url);
+        }else{
+          this.ttsAudio = new Audio(`https://api.streamelements.com/kappa/v2/speech?voice=${voice}&text=${message}`);
+        }
+
+        this.ttsAudio.play();
+
+
       }
 
     },
     hideQuestionOnStream: function(){
       this.isQuestionOnStream = false
       socket.emit('hideQuestionOnStream')
+      if (this.ttsAudio){
+        this.ttsAudio.pause()
+      }
     },
     nextQuestion: function(){
       // if the next question exists
@@ -659,14 +675,54 @@ var app = new Vue({
     clearTts:function() {
        this.questions = []
     },
+    removeBackground: function(url) {
+
+      let response = dialog.showMessageBoxSync({
+          type: 'question',
+          buttons: ['Yes', 'No'],
+          title: '¿Borrar fondo?',
+          message: '¿Borrar fondo?'
+      });
+  
+      if(response == 1) {
+        return
+      }
+      ipcRenderer.send("removeBackground", url);
+      
+      const index = this.backgrounds.indexOf(url);
+      if (index > -1) {
+        this.backgrounds.splice(index, 1); // 2nd parameter means remove one item only
+      }
+    },
     saveBackground: function() {
       console.log(this.background)
-      this.backgrounds.push(this.background)
+      // check if it is a valid url
+      var expression = /[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)?/gi;
+      var isURL = new RegExp(expression);
+
+      if (this.background.match(isURL)) {
+        // Enhance twitch, bttv, ffz, 7tv emote size
+        if (this.background.includes('cdn.betterttv.net')) this.background = this.background.substring(0, this.background.length-2) + '3x'
+        if (this.background.includes('cdn.frankerfacez.com/emote')) this.background = this.background.substring(0, this.background.length-1) + '4'
+        if (this.background.includes('cdn.7tv.app')) this.background = this.background.substring(0, this.background.length-2) + '4x'
+        if (this.background.includes('static-cdn.jtvnw.net')) this.background = this.background.substring(0, this.background.length-3) + '4.0'
+
+        this.backgrounds.push(this.background)
+
+        ipcRenderer.send("saveBackground",this.background);
+      }else{
+        new AWN().warning('URL invalido')
+      }
+      this.background = ''
       // TODO: save in settings
     },
     selectBackground: function(url) {
       socket.emit('selectBackground', url)
-    }
+    },
+    selectAnimation(animation) {
+      socket.emit('selectAnimation', animation)
+      this.currentAnimation = animation
+    },
   },
   computed: {
     reversevideos() {
@@ -779,12 +835,22 @@ ipcRenderer.on("getVolume", function (event, volume) {
 
 
 var client;
-
+var twitchUsername = ''
 ipcRenderer.on("twitchChannel", function (event, channelName) {
   console.log("channelName: ", channelName);
-
+  twitchUsername = channelName
+  console.log(twitchUsername)
   client = new tmi.Client({
-    channels: [channelName]
+    channels: [channelName],
+    identity: {
+      username: 'cristianghost',
+      password: 'oauth:fi2z3lcov0vi8nmm1uxbf5dtrq84nt'
+    }, 
+    connection: {
+      reconnect: true,
+      maxReconnectInterval:3000,
+      timeout: 40000
+    }
   });
   
   client.connect();
@@ -792,21 +858,39 @@ ipcRenderer.on("twitchChannel", function (event, channelName) {
     
   client.on("message", (channel, tags, message, self) => {
      
-    if (message.startsWith('!fondo')){
-      const url = message.replace('!fondo','')
-      app.chatBackgrounds.push(url)
+    const youtube = /http(?:s?):\/\/(?:www\.)?youtu(?:be\.com\/watch\?v=|\.be\/)([\w\-\_]*)(&(amp;)?‌​[\w\?‌​=]*)?/g;
+    var videos = message.match(youtube)
+    console.log(videos)
+
+    if(videos){
+      videos.forEach(video => {
+        addVideo(video.split('v=')[1], 'twitch', tags["display-name"])
+        addMusicVideo(video.split('v=')[1], 'twitch', tags["display-name"])
+      })
     }
+    
+
 
     if (message.startsWith('!'+app.ttsCommand) || message.startsWith(app.ttsCommand)){
 
-      if (!app.questions.includes(message)){
-          cleanedQuestion = removeCommand(message)
-          
-          app.questions.push({
-            label: cleanedQuestion,
-            author: tags["display-name"],
-            tags: tags
-          })
+      cleanedQuestion = removeCommand(message)
+      
+      if (app.questions.filter(e => e.label === cleanedQuestion).length > 0) return
+
+      let question = {
+        label: cleanedQuestion,
+        author: tags["display-name"],
+        tags: tags
+      }
+
+      const random =  Math.floor( Math.random() * 15 )
+
+
+      if (random == 0){
+        
+        ipcRenderer.send("uberduck", question);
+      }else{
+        app.questions.push(question)
       }
     }
 
@@ -816,7 +900,11 @@ ipcRenderer.on("twitchChannel", function (event, channelName) {
 
 });
 
+ipcRenderer.on("uberduck", function(event, question) {
 
+  app.questions.push(question)
+
+})
 
 // song reuquest
 ipcRenderer.on("toggleSongRequest", function(event) {
@@ -861,7 +949,10 @@ ipcRenderer.on("reduceVolume", function(event) {
     app.setYoutubeVolume(0)
   }
 })
-
+//refactor
+ipcRenderer.on("message", function(event, message, username) {
+  ipcRenderer.send("sendLink", username, message, "twitch");
+})
 
 // poll
 ipcRenderer.on("startBasicPoll", function(event) {
@@ -893,17 +984,26 @@ ipcRenderer.on("setPolls", function (event, polls) {
   console.log(polls)
 })
 
+
+
 ipcRenderer.on("pollSlot", function (event, slot) {
   console.log('poll slot #', slot)
 
   app.selectPoll(slot)
 })
 
-ipcRenderer.on("background", function (event, url) {
-  app.chatBackgrounds.push(url)
+ipcRenderer.on("setBackground", function (event, background) {
+  if(app.backgrounds[background-2] != null){
+    socket.emit('selectBackground', app.backgrounds[background-2])
+  }else{
+    socket.emit('selectBackground', '')
+  }
 })
 
 
+ipcRenderer.on("backgrounds", function (event, backgrounds) {
+  app.backgrounds = backgrounds
+})
 
 
 ipcRenderer.on("isDev", function(event, bool) {
@@ -992,8 +1092,6 @@ function addVideo(id, platform, username) {
 
 function addMusicVideo(id, platform, username, message) {
 
-  console.log(message)
-
   if (app.sentInSessionMusic.includes(id) || !app.songrequstison) return;
 
   app.sentInSessionMusic.push(id);
@@ -1008,6 +1106,10 @@ function addMusicVideo(id, platform, username, message) {
     );
 
     if (durationSecounds > 500) return
+
+    console.log(isOtaku(youtubeVideo.items[0].snippet.title))
+
+    if (isOtaku(youtubeVideo.items[0].snippet.title) && twitchUsername == 'cristianghost') return
 
     // si el video es musical
     if(youtubeVideo.items[0].snippet.categoryId == "10"){
@@ -1136,4 +1238,12 @@ function removeCommand(str) {
   }
 
   return str.substring(indexOfSpace + 1);
+}
+
+function isOtaku(title) {
+  // check whether a string contains a japoneses character https://stackoverflow.com/questions/15033196/using-javascript-to-check-whether-a-string-contains-japanese-characters-includi
+  const isOtakuRegex = new RegExp(/[\u3000-\u303f\u3040-\u309f\u30a0-\u30ff\uff00-\uff9f\u4e00-\u9faf\u3400-\u4dbf]|anime|amv|opening|op|kawaii|ending/i)
+  if (isOtakuRegex.test(title)) return true
+
+  return false
 }

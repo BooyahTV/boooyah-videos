@@ -18,29 +18,13 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 
     <link rel="stylesheet" type="text/css" href="/overlays/css/lib/shake.css" />
+    <link rel="stylesheet" type="text/css" href="/overlays/css/backgrounds.css" />
   </head>
 
   <body>
-    <style>
-        #background{
-            width: 100%;
-            max-width: 100%;
-            max-height: 100%;
-            bottom: 0;
-            left: 0;
-            margin: auto;
-            overflow: auto;
-            position: fixed;
-            right: 0;
-            top: 0;
-            -o-object-fit: contain;
-            object-fit: contain;
-        }
-    </style>
-
-
     <div id="app">
-      <img class="shake-hard shake-constant" id="background" :src="image" alt="" srcset="">
+      <!-- shake-constant shake-hard -->
+      <img id="background" class="shake-constant" :class="{ 'hop': animation == 'hop', 'flip': animation == 'flip','shake-hard': animation == 'shake', '': animation == 'none' }" :src="image" alt="" srcset="">
     </div>
     <script src="/overlays/js/backgrounds.js"></script>
 

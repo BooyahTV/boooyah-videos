@@ -11,6 +11,9 @@ iframe, object, embed {
   max-width: 100%;
   max-height: 100%;
 }
+.container h1,.container h2,.container h3,.container h4,.container h5{
+  color: white;
+}
 
 /* SCROLLBAR */
 
@@ -71,7 +74,9 @@ iframe, object, embed {
 .ui.card:hover:not(.watched){
   filter: brightness(1.05);
 }
-
+.image-no-border{
+  border: none!important;
+}
 .image{
   border: #1e1e1e solid 4px;
 }
